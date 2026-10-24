@@ -1,4 +1,4 @@
-import { and, asc, eq, inArray } from "drizzle-orm";
+import { and, asc, eq, inArray, min } from "drizzle-orm";
 import type { createDb } from "@/db/connection";
 import { ayahs, surahs } from "@/db/schema";
 
@@ -26,6 +26,17 @@ export function listSurahs(db: Db) {
 }
 
 export type SurahSummary = Awaited<ReturnType<typeof listSurahs>>[number];
+
+/** The first ayah of every juz, ordered by juz. */
+export function listJuzStarts(db: Db) {
+  const firstAyahs = db.select({ id: min(ayahs.id) }).from(ayahs).groupBy(ayahs.juz);
+
+  return db
+    .select({ juz: ayahs.juz, surahNumber: ayahs.surahNumber, ayah: ayahs.number })
+    .from(ayahs)
+    .where(inArray(ayahs.id, firstAyahs))
+    .orderBy(asc(ayahs.juz));
+}
 
 /** Surahs commonly read on their own, in the order they are featured. */
 export const featuredSurahNumbers = [1, 18, 36, 55, 56, 67];

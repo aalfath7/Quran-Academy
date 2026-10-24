@@ -8,7 +8,7 @@ import { categoryInfo, lessonCategories } from "@/lib/categories";
 import { saveLesson, type LessonFormState } from "./actions";
 
 const inputClass =
-  "mt-2 w-full rounded-2xl border border-forest/15 bg-white/70 px-4 py-3 text-ink outline-none transition placeholder:text-ink-soft/40 focus:border-gold focus:bg-white focus:ring-4 focus:ring-gold-soft/30 aria-invalid:border-red-700/50";
+  "mt-2 w-full rounded-2xl border border-forest/15 bg-surface/70 px-4 py-3 text-ink outline-none transition placeholder:text-ink-soft/40 focus:border-gold focus:bg-surface focus:ring-4 focus:ring-gold-soft/30 aria-invalid:border-red-700/50";
 
 function Field({
   label,
@@ -53,7 +53,7 @@ export function LessonForm({ lesson }: { lesson?: Lesson }) {
     <form action={action} className="grid gap-8 lg:grid-cols-[1fr_18rem]">
       {lesson && <input type="hidden" name="id" value={lesson.id} />}
 
-      <div className="space-y-6 rounded-[1.75rem] border border-forest/10 bg-white/60 p-6 md:p-8">
+      <div className="space-y-6 rounded-[1.75rem] border border-forest/10 bg-surface/60 p-6 md:p-8">
         <Field label="Judul" error={errors.title}>
           <input
             className={inputClass}
@@ -83,7 +83,7 @@ export function LessonForm({ lesson }: { lesson?: Lesson }) {
             defaultValue={initial.arabicText}
           />
         </Field>
-        <Field label="Isi materi" hint="Pisahkan paragraf dengan satu baris kosong." error={errors.content}>
+        <Field label="Isi materi" hint="Pisahkan paragraf dengan satu baris kosong. Paragraf yang hanya berisi teks Arab (bait atau ayat) tampil sebagai kutipan Arab." error={errors.content}>
           <textarea
             className={`${inputClass} min-h-80 leading-7`}
             name="content"
@@ -95,7 +95,7 @@ export function LessonForm({ lesson }: { lesson?: Lesson }) {
       </div>
 
       <aside className="space-y-6">
-        <div className="space-y-6 rounded-[1.75rem] border border-forest/10 bg-white/60 p-6">
+        <div className="space-y-6 rounded-[1.75rem] border border-forest/10 bg-surface/60 p-6">
           <Field label="Kategori" error={errors.category}>
             <select
               className={inputClass}
@@ -158,14 +158,14 @@ export function LessonForm({ lesson }: { lesson?: Lesson }) {
           <button
             type="submit"
             disabled={pending}
-            className="flex flex-1 items-center justify-center gap-2 rounded-full bg-forest px-6 py-3.5 text-sm font-semibold text-paper shadow-xl shadow-forest/20 transition hover:bg-forest-deep disabled:opacity-70"
+            className="flex flex-1 items-center justify-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-cream shadow-xl shadow-brand/20 transition hover:bg-brand-deep disabled:opacity-70"
           >
             {pending && <LoaderCircle aria-hidden="true" size={16} className="animate-spin" />}
             {pending ? "Menyimpan…" : "Simpan"}
           </button>
           <Link
             href="/admin"
-            className="rounded-full border border-forest/15 px-5 py-3.5 text-sm font-medium text-forest-deep transition hover:bg-white/70"
+            className="rounded-full border border-forest/15 px-5 py-3.5 text-sm font-medium text-forest-deep transition hover:bg-surface/70"
           >
             Batal
           </Link>

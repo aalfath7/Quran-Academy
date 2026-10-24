@@ -29,7 +29,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
         </div>
         <Link
           href="/admin/materi/baru"
-          className="inline-flex items-center gap-2 self-start rounded-full bg-forest px-6 py-3.5 text-sm font-semibold text-paper shadow-xl shadow-forest/20 transition hover:bg-forest-deep sm:self-auto"
+          className="inline-flex items-center gap-2 self-start rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-cream shadow-xl shadow-brand/20 transition hover:bg-brand-deep sm:self-auto"
         >
           <Plus aria-hidden="true" size={16} />
           Tambah materi
@@ -48,7 +48,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
           <p className="mt-2 text-ink-soft">Tambahkan materi pertama untuk mengisi halaman belajar.</p>
         </div>
       ) : (
-        <div className="mt-10 overflow-hidden rounded-[1.75rem] border border-forest/10 bg-white/60">
+        <div className="mt-10 overflow-hidden rounded-[1.75rem] border border-forest/10 bg-surface/60">
           <table className="w-full text-left text-sm">
             <thead className="border-b border-forest/10 bg-paper-deep/40 text-xs uppercase tracking-[0.14em] text-ink-soft">
               <tr>
@@ -63,7 +63,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
             </thead>
             <tbody className="divide-y divide-forest/5">
               {lessons.map((lesson) => (
-                <tr key={lesson.id} className="transition hover:bg-white/80">
+                <tr key={lesson.id} className="transition hover:bg-surface/80">
                   <td className="px-6 py-4">
                     <p className="font-medium text-forest-deep">{lesson.title}</p>
                     <p className="mt-0.5 text-xs text-ink-soft/70">/belajar/{lesson.slug}</p>
@@ -73,7 +73,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
                   <td className="px-4 py-4">
                     <span
                       className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                        lesson.published ? "bg-forest/10 text-forest" : "bg-gold-soft/40 text-[#7a5a1f]"
+                        lesson.published ? "bg-forest/10 text-forest" : "bg-gold-soft/40 text-[#7a5a1f] dark:bg-gold-soft/15 dark:text-gold-soft"
                       }`}
                     >
                       {lesson.published ? "Terbit" : "Draf"}

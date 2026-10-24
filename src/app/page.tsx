@@ -1,11 +1,11 @@
-import { ArrowRight, BookOpenCheck, Heart, Sparkles } from "lucide-react";
+import { ArrowRight, Clock, GraduationCap, Library } from "lucide-react";
 import Link from "next/link";
 import { LessonCard } from "@/components/lesson-card";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { Star } from "@/components/star";
 import { SurahCard } from "@/components/surah-card";
 import { getDb } from "@/db";
-import { categoryInfo, lessonCategories } from "@/lib/categories";
+import { categoryHref, categoryInfo, lessonCategories } from "@/lib/categories";
 import { listLatestLessons } from "@/lib/lessons";
 import { featuredSurahNumbers, listSurahsByNumber } from "@/lib/quran";
 
@@ -13,19 +13,19 @@ export const dynamic = "force-dynamic";
 
 const highlights = [
   {
-    icon: BookOpenCheck,
-    title: "Belajar bertahap",
-    description: "Bangun kebiasaan membaca dan memahami Al-Qur'an setahap demi setahap."
+    icon: GraduationCap,
+    title: "Dari dasar hingga mahir",
+    description: "Materi tersusun berjenjang, mulai dari huruf hijaiyah, tajwid, hingga tadabbur ayat."
   },
   {
-    icon: Sparkles,
-    title: "Progres yang terarah",
-    description: "Pantau perjalanan belajar dan tentukan target harian yang realistis."
+    icon: Library,
+    title: "Materi beragam dan lengkap",
+    description: "Bacaan, tajwid, hafalan, terjemahan, dan tafsir ringkas tersedia dalam satu platform."
   },
   {
-    icon: Heart,
-    title: "Untuk setiap langkah",
-    description: "Ruang belajar yang nyaman untuk memulai, mengulang, dan bertumbuh."
+    icon: Clock,
+    title: "Siap dipelajari kapan saja",
+    description: "Akses materi sesuai ritmemu dan ulangi sebanyak yang dibutuhkan."
   }
 ];
 
@@ -44,7 +44,7 @@ export default async function Home() {
       {/* Hero */}
       <section className="relative mx-auto grid max-w-6xl items-center gap-14 px-6 pb-24 pt-12 md:grid-cols-[1.1fr_0.9fr] md:pb-32 md:pt-20">
         <div className="rise">
-          <p className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-white/50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+          <p className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-surface/50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
             <span className="size-1.5 rounded-full bg-gold" />
             Langkah kecil, istiqamah
           </p>
@@ -53,19 +53,19 @@ export default async function Home() {
             <em className="font-normal italic text-gold">setiap hari.</em>
           </h1>
           <p className="mt-7 max-w-xl text-lg leading-8 text-ink-soft">
-            Temukan pengalaman belajar yang membantu Anda membaca, memahami tajwid,
+            Temukan pengalaman belajar yang membantumu membaca, memahami tajwid,
             dan menjaga hafalan dengan lebih terarah.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <Link
-              className="group inline-flex items-center gap-2 rounded-full bg-forest px-7 py-4 text-sm font-semibold text-paper shadow-xl shadow-forest/20 transition hover:-translate-y-0.5 hover:bg-forest-deep"
+              className="group inline-flex items-center gap-2 rounded-full bg-brand px-7 py-4 text-sm font-semibold text-cream shadow-xl shadow-brand/20 transition hover:-translate-y-0.5 hover:bg-brand-deep"
               href="/belajar"
             >
               Mulai belajar
               <ArrowRight aria-hidden="true" size={16} className="transition group-hover:translate-x-1" />
             </Link>
             <Link
-              className="inline-flex items-center rounded-full border border-forest/20 bg-white/50 px-7 py-4 text-sm font-semibold text-forest-deep transition hover:-translate-y-0.5 hover:border-forest/40 hover:bg-white"
+              className="inline-flex items-center rounded-full border border-forest/20 bg-surface/50 px-7 py-4 text-sm font-semibold text-forest-deep transition hover:-translate-y-0.5 hover:border-forest/40 hover:bg-surface"
               href="/quran"
             >
               Baca Al-Qur&apos;an
@@ -76,9 +76,9 @@ export default async function Home() {
         {/* Mihrab arch */}
         <div className="rise relative mx-auto w-full max-w-sm [animation-delay:150ms]">
           <Star className="spin-slow absolute -right-10 -top-10 size-36 text-gold/40" />
-          <div className="relative rounded-t-full bg-forest p-3 shadow-2xl shadow-forest-deep/30">
+          <div className="relative rounded-t-full bg-brand p-3 shadow-2xl shadow-brand-deep/30">
             <div className="pattern-girih relative flex aspect-[3/4] flex-col items-center justify-center overflow-hidden rounded-t-full border border-gold-soft/40 px-8 pt-16 pb-10 text-center">
-              <div className="absolute inset-0 bg-gradient-to-b from-forest/40 via-forest/80 to-forest" />
+              <div className="absolute inset-0 bg-gradient-to-b from-brand/40 via-brand/80 to-brand" />
               <div className="relative">
                 <Star className="mx-auto size-10 text-gold-soft" />
                 <p
@@ -93,7 +93,7 @@ export default async function Home() {
                   <span className="size-1.5 rotate-45 bg-gold-soft/80" />
                   <span className="h-px w-10 bg-gold-soft/50" />
                 </div>
-                <p className="font-display text-sm italic leading-6 text-paper/80">
+                <p className="font-display text-sm italic leading-6 text-cream/80">
                   &ldquo;Dan sungguh, telah Kami mudahkan Al-Qur&apos;an untuk peringatan,
                   maka adakah orang yang mau mengambil pelajaran?&rdquo;
                 </p>
@@ -115,7 +115,7 @@ export default async function Home() {
             return (
               <Link
                 key={category}
-                href={`/belajar?kategori=${category}`}
+                href={categoryHref(category)}
                 className="group flex items-center gap-5 py-8 md:px-8 md:first:pl-0 md:last:pr-0"
               >
                 <span className="font-arabic text-4xl text-gold" lang="ar" dir="rtl">
@@ -171,23 +171,24 @@ export default async function Home() {
             <div className="max-w-xl">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold">Perjalanan belajar</p>
               <h2 className="mt-4 font-display text-4xl font-light leading-tight tracking-tight text-forest-deep md:text-5xl">
-                Tumbuh dalam ilmu dan <em className="italic text-gold">kebiasaan baik.</em>
+                Semua yang kamu butuhkan, <em className="italic text-gold">dalam satu tempat.</em>
               </h2>
             </div>
             <p className="max-w-sm text-ink-soft">
-              Dirancang agar belajar terasa ringan, tenang, dan bisa dijalani setiap hari.
+              Dari mengenal huruf hijaiyah hingga memahami makna ayat, semua materi tersusun rapi dan siap dipelajari
+              kapan saja.
             </p>
           </div>
           <div className="mt-14 grid gap-5 md:grid-cols-3">
             {highlights.map(({ icon: Icon, title, description }, index) => (
               <article
                 key={title}
-                className="group relative overflow-hidden rounded-3xl border border-forest/10 bg-white/60 p-8 backdrop-blur transition duration-500 hover:-translate-y-1 hover:border-gold/40 hover:bg-white hover:shadow-2xl hover:shadow-forest/10"
+                className="group relative overflow-hidden rounded-3xl border border-forest/10 bg-surface/60 p-8 backdrop-blur transition duration-500 hover:-translate-y-1 hover:border-gold/40 hover:bg-surface hover:shadow-2xl hover:shadow-brand/10"
               >
                 <span className="absolute right-6 top-5 font-display text-6xl font-light text-gold/15 transition group-hover:text-gold/30">
                   0{index + 1}
                 </span>
-                <span className="flex size-12 items-center justify-center rounded-2xl bg-forest text-gold-soft">
+                <span className="flex size-12 items-center justify-center rounded-2xl bg-brand text-gold-soft">
                   <Icon aria-hidden="true" size={22} strokeWidth={1.6} />
                 </span>
                 <h3 className="mt-8 font-display text-xl font-medium text-forest-deep">{title}</h3>
@@ -225,17 +226,17 @@ export default async function Home() {
 
       {/* CTA */}
       <section id="mulai" className="relative mx-auto max-w-6xl px-6 pb-20">
-        <div className="pattern-girih relative overflow-hidden rounded-[2.5rem] bg-forest-deep px-8 py-16 text-center md:py-20">
-          <div className="absolute inset-0 bg-radial from-forest/60 to-forest-deep" />
+        <div className="pattern-girih relative overflow-hidden rounded-[2.5rem] bg-brand-deep px-8 py-16 text-center md:py-20">
+          <div className="absolute inset-0 bg-radial from-brand/60 to-brand-deep" />
           <div className="relative">
             <p className="font-arabic text-3xl text-gold-soft" lang="ar" dir="rtl">
               بِسْمِ اللَّهِ
             </p>
-            <h2 className="mx-auto mt-5 max-w-2xl font-display text-4xl font-light leading-tight text-paper md:text-5xl">
+            <h2 className="mx-auto mt-5 max-w-2xl font-display text-4xl font-light leading-tight text-cream md:text-5xl">
               Mulailah hari ini, <em className="italic text-gold-soft">walau satu ayat.</em>
             </h2>
             <Link
-              className="group mt-10 inline-flex items-center gap-2 rounded-full bg-gold-soft px-7 py-4 text-sm font-semibold text-forest-deep transition hover:-translate-y-0.5 hover:bg-paper"
+              className="group mt-10 inline-flex items-center gap-2 rounded-full bg-gold-soft px-7 py-4 text-sm font-semibold text-brand-deep transition hover:-translate-y-0.5 hover:bg-cream"
               href="/belajar"
             >
               Mulai belajar

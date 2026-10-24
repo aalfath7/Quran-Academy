@@ -3,7 +3,7 @@ import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome
 import { Star } from "@/components/star";
 import { SurahList } from "@/components/surah-list";
 import { getDb } from "@/db";
-import { listSurahs } from "@/lib/quran";
+import { listJuzStarts, listSurahs } from "@/lib/quran";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +13,8 @@ export const metadata: Metadata = {
 };
 
 export default async function QuranPage() {
-  const surahs = await listSurahs(await getDb());
+  const db = await getDb();
+  const [surahs, juzStarts] = await Promise.all([listSurahs(db), listJuzStarts(db)]);
 
   return (
     <main className="grain relative min-h-screen overflow-hidden">
@@ -33,7 +34,7 @@ export default async function QuranPage() {
         </p>
 
         {surahs.length > 0 ? (
-          <SurahList surahs={surahs} />
+          <SurahList surahs={surahs} juzStarts={juzStarts} />
         ) : (
           <div className="mt-12 flex flex-col items-center rounded-[2.5rem] border border-dashed border-gold/40 bg-paper-deep/40 px-8 py-20 text-center">
             <Star className="size-14 text-gold/60" />

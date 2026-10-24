@@ -1,12 +1,17 @@
-// Materi dasar tajwid (level satu).
+// Materi dasar tajwid (level satu), disarikan dari kitab "Tajwid Ringkas Disertai Warna, Gambar, dan Bagan"
+// Level Satu karya Husein Karim Muhammad (edisi bahasa Indonesia, terjemahan Ustadzah Ana Fi Naimatin).
 // Paragraf dipisah baris kosong; halaman materi merender baris baru apa adanya.
+// Baris rujukan ditambahkan di akhir setiap materi, seperti pada seri Al-Jazariyah.
 
-export const lessons = [
+const source =
+  'Rujukan: Kitab "Tajwid Ringkas Disertai Warna, Gambar, dan Bagan" Level Satu, Husein Karim Muhammad (edisi bahasa Indonesia, terjemahan Ustadzah Ana Fi Naimatin).';
+
+const materi = [
   {
     slug: "keutamaan-membaca-al-quran",
     title: "Keutamaan Membaca Al-Qur'an",
-    category: "tilawah",
-    position: 10,
+    category: "tajwid",
+    position: 5,
     summary: "Tilawah Al-Qur'an termasuk ibadah yang paling utama. Berikut dalil-dalil dari Al-Qur'an dan hadits yang menunjukkan besarnya pahala membaca dan mempelajarinya.",
     arabicText: "فَضْلُ تِلَاوَةِ الْقُرْآنِ الْكَرِيمِ\nوَاتْلُ مَا أُوحِيَ إِلَيْكَ مِنْ كِتَابِ رَبِّكَ",
     content: `Membaca Al-Qur'an bukan sekadar aktivitas membaca. Ia adalah ibadah yang mendekatkan seorang hamba kepada Allah. Karena itu, Allah memerintahkannya di banyak tempat dalam Al-Qur'an, misalnya:
@@ -714,3 +719,7 @@ Contoh: مَا تَرَىٰ فِي خَلْقِ الرَّحْمَٰنِ مِن�
 Contoh: ذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِلْمُتَّقِينَ (Al-Baqarah: 2)`
   }
 ];
+
+export const lessons = materi.map((lesson) => ({ ...lesson, content: `${lesson.content}
+
+${source}` }));

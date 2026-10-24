@@ -69,14 +69,14 @@ export default async function AyahPage({ params }: Props) {
           </h1>
         </header>
 
-        <div className="pattern-girih relative mt-10 overflow-hidden rounded-[2rem] bg-forest-deep px-8 py-12 text-center">
-          <div className="absolute inset-0 bg-radial from-forest/50 to-forest-deep" />
+        <div className="pattern-girih relative mt-10 overflow-hidden rounded-[2rem] bg-brand-deep px-8 py-12 text-center">
+          <div className="absolute inset-0 bg-radial from-brand/50 to-brand-deep" />
           <div className="relative">
             <Star className="mx-auto size-8 text-gold-soft/70" />
             <p className="mt-6 font-arabic text-3xl leading-[2.2] text-gold-soft md:text-4xl" lang="ar" dir="rtl">
               {ayah.arabic}
             </p>
-            <p className="mt-6 italic leading-7 text-paper/70">{ayah.latin}</p>
+            <p className="mt-6 italic leading-7 text-cream/70">{ayah.latin}</p>
           </div>
         </div>
 
@@ -110,7 +110,7 @@ export default async function AyahPage({ params }: Props) {
           {previous ? (
             <Link
               href={`/quran/${previous.surahNumber}/${previous.number}`}
-              className="rounded-2xl border border-forest/10 bg-white/60 p-5 transition hover:border-gold/40 hover:bg-white"
+              className="rounded-2xl border border-forest/10 bg-surface/60 p-5 transition hover:border-gold/40 hover:bg-surface"
             >
               <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gold">
                 <ArrowLeft aria-hidden="true" size={14} /> Sebelumnya
@@ -125,7 +125,7 @@ export default async function AyahPage({ params }: Props) {
           {next && (
             <Link
               href={`/quran/${next.surahNumber}/${next.number}`}
-              className="rounded-2xl border border-forest/10 bg-white/60 p-5 text-right transition hover:border-gold/40 hover:bg-white"
+              className="rounded-2xl border border-forest/10 bg-surface/60 p-5 text-right transition hover:border-gold/40 hover:bg-surface"
             >
               <span className="flex items-center justify-end gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gold">
                 Berikutnya <ArrowRight aria-hidden="true" size={14} />

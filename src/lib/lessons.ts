@@ -1,10 +1,16 @@
-import { and, asc, desc, eq, ne } from "drizzle-orm";
+import { and, asc, desc, eq, inArray, ne, sql } from "drizzle-orm";
 import { z } from "zod";
 import type { createDb } from "@/db/connection";
 import { lessons } from "@/db/schema";
 import { lessonCategories, type LessonCategory } from "./categories";
 
 type Db = ReturnType<typeof createDb>;
+
+/** Sorts categories in the order of lessonCategories rather than alphabetically. */
+const categoryOrder = sql`case ${lessons.category} ${sql.join(
+  lessonCategories.map((category, index) => sql`when ${category} then ${index}`),
+  sql` `
+)} end`;
 
 export function slugify(value: string) {
   return value
@@ -37,12 +43,16 @@ export const lessonInputSchema = z
 
 export type LessonInput = z.output<typeof lessonInputSchema>;
 
-export function listPublishedLessons(db: Db, category?: LessonCategory) {
+/** Published lessons of one category, of several, or of all when none is given. */
+export function listPublishedLessons(db: Db, category?: LessonCategory | readonly LessonCategory[]) {
+  const inCategory =
+    category === undefined ? undefined : typeof category === "string" ? eq(lessons.category, category) : inArray(lessons.category, [...category]);
+
   return db
     .select()
     .from(lessons)
-    .where(category ? and(eq(lessons.published, true), eq(lessons.category, category)) : eq(lessons.published, true))
-    .orderBy(asc(lessons.category), asc(lessons.position), asc(lessons.createdAt));
+    .where(and(eq(lessons.published, true), inCategory))
+    .orderBy(categoryOrder, asc(lessons.position), asc(lessons.createdAt));
 }
 
 export function listLatestLessons(db: Db, limit: number) {
@@ -60,7 +70,7 @@ export async function getPublishedLesson(db: Db, slug: string) {
 }
 
 export function listAllLessons(db: Db) {
-  return db.select().from(lessons).orderBy(asc(lessons.category), asc(lessons.position), asc(lessons.createdAt));
+  return db.select().from(lessons).orderBy(categoryOrder, asc(lessons.position), asc(lessons.createdAt));
 }
 
 export async function getLesson(db: Db, id: string) {
@@ -95,4 +105,64 @@ export async function updateLesson(db: Db, id: string, input: LessonInput) {
 
 export async function deleteLesson(db: Db, id: string) {
   await db.delete(lessons).where(eq(lessons.id, id));
+}
+
+/** Paragraphs of lesson content; one written only in Arabic script (a bait of a matan, an ayah) is flagged so the page can set it apart. */
+export function contentBlocks(content: string) {
+  return content
+    .split(/\n\s*\n/)
+    .map((text) => text.trim())
+    .filter(Boolean)
+    .map((text) => ({ text, arabic: !/[A-Za-z]/.test(text) && /[؀-ۿ]/.test(text) }));
+}
+
+/** Rows of a reading drill; within a row, two or more spaces separate groups that are read in one breath. */
+export function drillRows(text: string) {
+  return text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => line.split(/\s{2,}/));
+}
+
+/**
+ * Practice content: text before the first drill is the guide, except the paragraph right before it,
+ * which labels that drill like every later text paragraph labels the drill after it.
+ */
+export function practiceSections(content: string) {
+  const blocks = contentBlocks(content);
+  const firstDrill = blocks.findIndex(({ arabic }) => arabic);
+  const guideEnd = firstDrill > 0 && !blocks[firstDrill - 1].arabic ? firstDrill - 1 : Math.max(firstDrill, 0);
+  const guide = (firstDrill === -1 ? blocks : blocks.slice(0, guideEnd)).map(({ text }) => text);
+
+  const sections: { label?: string; rows: string[][] }[] = [];
+  let label: string | undefined;
+  for (const block of firstDrill === -1 ? [] : blocks.slice(guideEnd)) {
+    if (block.arabic) {
+      sections.push({ label, rows: drillRows(block.text) });
+      label = undefined;
+    } else {
+      if (label) sections.push({ label, rows: [] });
+      label = block.text;
+    }
+  }
+  if (label) sections.push({ label, rows: [] });
+
+  return { guide, sections };
+}
+
+/** A practice label written as a sound key ("ba = بَ · bi = بِ · bu = بُ"), or null for an ordinary label. */
+export function soundKey(label: string) {
+  const entries = label.split(" · ").map((entry) => entry.split(" = ").map((part) => part.trim()));
+  const isKey = entries.every(
+    ([reading, ...forms]) =>
+      forms.length > 0 && !/[؀-ۿ]/.test(reading) && forms.every((form) => /[؀-ۿ]/.test(form) && !/[A-Za-z]/.test(form))
+  );
+
+  return isKey ? entries.map(([reading, ...forms]) => ({ reading, forms })) : null;
+}
+
+/** How many drill sections a practice has, i.e. how many can be marked fluent. */
+export function practiceDrillCount(content: string) {
+  return practiceSections(content).sections.filter(({ rows }) => rows.length > 0).length;
 }

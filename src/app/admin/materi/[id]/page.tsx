@@ -1,5 +1,6 @@
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import Link from "next/link";
+import { lessonHref } from "@/lib/categories";
 import { notFound } from "next/navigation";
 import { getDb } from "@/db";
 import { requireAdmin } from "@/lib/auth";
@@ -20,7 +21,7 @@ export default async function EditLessonPage({ params }: { params: Promise<{ id:
         <h1 className="font-display text-4xl font-light tracking-tight text-forest-deep">Edit materi</h1>
         {lesson.published && (
           <Link
-            href={`/belajar/${lesson.slug}`}
+            href={lessonHref(lesson)}
             target="_blank"
             className="inline-flex items-center gap-1.5 text-sm font-medium text-forest underline decoration-gold/50 underline-offset-4"
           >

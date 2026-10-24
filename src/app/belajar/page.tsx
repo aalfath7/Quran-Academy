@@ -4,23 +4,25 @@ import { LessonCard } from "@/components/lesson-card";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { Star } from "@/components/star";
 import { getDb } from "@/db";
-import { categoryInfo, isLessonCategory, lessonCategories } from "@/lib/categories";
+import { redirect } from "next/navigation";
+import { categoryInfo, isMateriCategory, materiCategories } from "@/lib/categories";
 import { listPublishedLessons } from "@/lib/lessons";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Materi Belajar · Quran Academy"
+  title: "Tajwid · Quran Academy"
 };
 
 export default async function LearnPage({ searchParams }: { searchParams: Promise<{ kategori?: string }> }) {
   const { kategori } = await searchParams;
-  const active = isLessonCategory(kategori) ? kategori : undefined;
-  const lessons = await listPublishedLessons(await getDb(), active);
+  if (kategori === "praktik") redirect("/praktik");
+  const active = isMateriCategory(kategori) ? kategori : undefined;
+  const lessons = await listPublishedLessons(await getDb(), active ?? materiCategories);
 
   const filters = [
     { href: "/belajar", label: "Semua", isActive: !active },
-    ...lessonCategories.map((category) => ({
+    ...materiCategories.map((category) => ({
       href: `/belajar?kategori=${category}`,
       label: categoryInfo[category].label,
       isActive: active === category
@@ -51,7 +53,7 @@ export default async function LearnPage({ searchParams }: { searchParams: Promis
         <p className="mt-5 max-w-xl text-lg leading-8 text-ink-soft">
           {active
             ? categoryInfo[active].description
-            : "Materi tilawah, tajwid, dan tahfidz yang disusun bertahap. Ambil satu, pelajari dengan tenang."}
+            : "Kaidah tajwid dan matan Al-Jazariyah yang disusun bertahap. Ambil satu, pelajari dengan tenang."}
         </p>
 
         <nav className="mt-10 flex flex-wrap gap-2" aria-label="Filter kategori">
@@ -62,8 +64,8 @@ export default async function LearnPage({ searchParams }: { searchParams: Promis
               aria-current={isActive ? "page" : undefined}
               className={`rounded-full border px-5 py-2 text-sm font-medium transition ${
                 isActive
-                  ? "border-forest bg-forest text-paper"
-                  : "border-forest/15 bg-white/50 text-forest-deep hover:border-forest/40"
+                  ? "border-brand bg-brand text-cream"
+                  : "border-forest/15 bg-surface/50 text-forest-deep hover:border-forest/40"
               }`}
             >
               {label}

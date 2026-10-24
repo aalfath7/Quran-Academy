@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Amiri, Fraunces, Plus_Jakarta_Sans } from "next/font/google";
+import { themeInitScript } from "@/components/theme-toggle";
 import "./globals.css";
 
 const sans = Plus_Jakarta_Sans({
@@ -30,7 +31,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className={`${sans.variable} ${display.variable} ${arabic.variable}`}>
+    <html lang="id" className={`${sans.variable} ${display.variable} ${arabic.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body>{children}</body>
     </html>
   );

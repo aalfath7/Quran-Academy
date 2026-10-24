@@ -1,4 +1,4 @@
-// Memasukkan materi dasar tajwid (level satu) ke tabel lessons.
+// Memasukkan materi praktik dasar bacaan, tajwid dasar (level satu), dan syarah Al-Jazariyah ke tabel lessons.
 //
 //   npm run lessons:seed            (local D1)
 //   npm run lessons:seed -- --remote (remote D1)
@@ -9,7 +9,11 @@ import { spawnSync } from "node:child_process";
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { lessons } from "./data/tajwid-ringkas.mjs";
+import { lessons as jazariyah } from "./data/jazariyah.mjs";
+import { lessons as praktikDasar } from "./data/praktik-dasar.mjs";
+import { lessons as tajwidRingkas } from "./data/tajwid-ringkas.mjs";
+
+const lessons = [...praktikDasar, ...tajwidRingkas, ...jazariyah];
 
 const remote = process.argv.includes("--remote");
 
@@ -56,7 +60,7 @@ try {
     shell: true
   });
   if (result.status !== 0) process.exit(result.status ?? 1);
-  console.log(`\n${lessons.length} materi tajwid tersimpan (${remote ? "remote" : "lokal"}).`);
+  console.log(`\n${lessons.length} materi tersimpan (${remote ? "remote" : "lokal"}).`);
 } finally {
   rmSync(dir, { recursive: true, force: true });
 }

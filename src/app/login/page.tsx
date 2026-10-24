@@ -15,18 +15,18 @@ export default async function LoginPage() {
 
   return (
     <main className="grain relative grid min-h-screen md:grid-cols-[0.9fr_1.1fr]">
-      <aside className="pattern-girih relative hidden overflow-hidden bg-forest-deep md:block">
-        <div className="absolute inset-0 bg-radial from-forest/50 to-forest-deep" />
+      <aside className="pattern-girih relative hidden overflow-hidden bg-brand-deep md:block">
+        <div className="absolute inset-0 bg-radial from-brand/50 to-brand-deep" />
         <div className="relative flex h-full flex-col justify-between p-12">
           <Link className="flex items-center gap-2.5" href="/">
             <Star className="size-8 text-gold-soft" />
-            <span className="font-display text-xl font-medium text-paper">Quran Academy</span>
+            <span className="font-display text-xl font-medium text-cream">Quran Academy</span>
           </Link>
           <div>
             <p className="font-arabic text-4xl leading-[2] text-gold-soft" lang="ar" dir="rtl">
               رَبِّ زِدْنِي عِلْمًا
             </p>
-            <p className="mt-4 font-display text-lg italic text-paper/80">&ldquo;Ya Tuhanku, tambahkanlah ilmu kepadaku.&rdquo;</p>
+            <p className="mt-4 font-display text-lg italic text-cream/80">&ldquo;Ya Tuhanku, tambahkanlah ilmu kepadaku.&rdquo;</p>
             <p className="mt-3 text-xs font-semibold uppercase tracking-[0.22em] text-gold-soft/70">QS. Taha · 20:114</p>
           </div>
         </div>

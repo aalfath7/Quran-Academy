@@ -76,7 +76,7 @@ export const lessons = sqliteTable(
       .default(sql`(unixepoch() * 1000)`)
   },
   (table) => [
-    check("lessons_category_check", sql`${table.category} in ('tilawah', 'tajwid', 'tahfidz')`),
+    check("lessons_category_check", sql`${table.category} in ('praktik', 'tajwid', 'jazariyah')`),
     index("lessons_category_position_idx").on(table.category, table.position)
   ]
 );

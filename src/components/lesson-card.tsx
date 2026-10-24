@@ -1,15 +1,15 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import type { Lesson } from "@/db/schema";
-import { categoryInfo } from "@/lib/categories";
+import { categoryInfo, lessonHref } from "@/lib/categories";
 
 export function LessonCard({ lesson }: { lesson: Lesson }) {
   const category = categoryInfo[lesson.category];
 
   return (
     <Link
-      href={`/belajar/${lesson.slug}`}
-      className="group relative flex flex-col overflow-hidden rounded-3xl border border-forest/10 bg-white/60 p-7 backdrop-blur transition duration-500 hover:-translate-y-1 hover:border-gold/40 hover:bg-white hover:shadow-2xl hover:shadow-forest/10"
+      href={lessonHref(lesson)}
+      className="group relative flex flex-col overflow-hidden rounded-3xl border border-forest/10 bg-surface/60 p-7 backdrop-blur transition duration-500 hover:-translate-y-1 hover:border-gold/40 hover:bg-surface hover:shadow-2xl hover:shadow-brand/10"
     >
       <div className="flex items-center justify-between">
         <span className="rounded-full bg-forest/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-forest">

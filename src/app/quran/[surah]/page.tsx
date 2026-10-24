@@ -55,15 +55,15 @@ export default async function SurahPage({ params }: Props) {
           Daftar surah
         </Link>
 
-        <header className="pattern-girih relative mt-8 overflow-hidden rounded-[2rem] bg-forest-deep px-8 py-12 text-center">
-          <div className="absolute inset-0 bg-radial from-forest/50 to-forest-deep" />
+        <header className="pattern-girih relative mt-8 overflow-hidden rounded-[2rem] bg-brand-deep px-8 py-12 text-center">
+          <div className="absolute inset-0 bg-radial from-brand/50 to-brand-deep" />
           <div className="relative">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-soft/80">Surah ke-{surah.number}</p>
             <p className="mt-5 font-arabic text-5xl leading-[1.6] text-gold-soft" lang="ar" dir="rtl">
               {surah.nameArabic}
             </p>
-            <h1 className="mt-2 font-display text-3xl font-light text-paper md:text-4xl">{surah.nameLatin}</h1>
-            <p className="mt-2 font-display italic text-paper/75">&ldquo;{surah.translation}&rdquo;</p>
+            <h1 className="mt-2 font-display text-3xl font-light text-cream md:text-4xl">{surah.nameLatin}</h1>
+            <p className="mt-2 font-display italic text-cream/75">&ldquo;{surah.translation}&rdquo;</p>
             <div className="mt-6 flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-gold-soft/80">
               <span>{surah.location}</span>
               <span className="size-1 rotate-45 bg-gold-soft/70" />
@@ -123,7 +123,7 @@ export default async function SurahPage({ params }: Props) {
                       <ArrowRight aria-hidden="true" size={14} className="transition group-open:rotate-90" />
                       Tafsir ringkas
                     </summary>
-                    <div className="mt-3 space-y-3 rounded-2xl bg-white/60 p-5 leading-7 text-ink-soft">
+                    <div className="mt-3 space-y-3 rounded-2xl bg-surface/60 p-5 leading-7 text-ink-soft">
                       {paragraphs(ayah.tafsirWajiz).map((paragraph, i) => (
                         <p key={i}>{paragraph}</p>
                       ))}
@@ -155,7 +155,7 @@ export default async function SurahPage({ params }: Props) {
           {previous ? (
             <Link
               href={`/quran/${previous.number}`}
-              className="rounded-2xl border border-forest/10 bg-white/60 p-5 transition hover:border-gold/40 hover:bg-white"
+              className="rounded-2xl border border-forest/10 bg-surface/60 p-5 transition hover:border-gold/40 hover:bg-surface"
             >
               <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gold">
                 <ArrowLeft aria-hidden="true" size={14} /> Sebelumnya
@@ -168,7 +168,7 @@ export default async function SurahPage({ params }: Props) {
           {next && (
             <Link
               href={`/quran/${next.number}`}
-              className="rounded-2xl border border-forest/10 bg-white/60 p-5 text-right transition hover:border-gold/40 hover:bg-white"
+              className="rounded-2xl border border-forest/10 bg-surface/60 p-5 text-right transition hover:border-gold/40 hover:bg-surface"
             >
               <span className="flex items-center justify-end gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gold">
                 Berikutnya <ArrowRight aria-hidden="true" size={14} />

@@ -2,6 +2,7 @@ import { ExternalLink, LogOut } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Star } from "@/components/star";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { requireAdmin } from "@/lib/auth";
 import { logout } from "./actions";
 
@@ -19,14 +20,15 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <Link className="flex items-center gap-2.5" href="/admin">
             <Star className="size-7 text-gold" />
             <span className="font-display text-lg font-medium text-forest-deep">Quran Academy</span>
-            <span className="rounded-full bg-forest px-2.5 py-0.5 text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-gold-soft">
+            <span className="rounded-full bg-brand px-2.5 py-0.5 text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-gold-soft">
               Admin
             </span>
           </Link>
           <div className="flex items-center gap-2 text-sm">
             <span className="hidden text-ink-soft sm:inline">{user.email}</span>
+            <ThemeToggle />
             <Link
-              className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-ink-soft transition hover:bg-white/70 hover:text-forest"
+              className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-ink-soft transition hover:bg-surface/70 hover:text-forest"
               href="/belajar"
               target="_blank"
             >
@@ -36,7 +38,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <form action={logout}>
               <button
                 type="submit"
-                className="inline-flex items-center gap-1.5 rounded-full border border-forest/15 px-4 py-2 font-medium text-forest-deep transition hover:border-forest/40 hover:bg-white/70"
+                className="inline-flex items-center gap-1.5 rounded-full border border-forest/15 px-4 py-2 font-medium text-forest-deep transition hover:border-forest/40 hover:bg-surface/70"
               >
                 <LogOut aria-hidden="true" size={15} />
                 Keluar

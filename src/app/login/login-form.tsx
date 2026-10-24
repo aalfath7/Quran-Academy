@@ -5,7 +5,7 @@ import { useActionState } from "react";
 import { login, type LoginState } from "./actions";
 
 const inputClass =
-  "mt-2 w-full rounded-2xl border border-forest/15 bg-white/70 px-4 py-3.5 text-ink outline-none transition placeholder:text-ink-soft/40 focus:border-gold focus:bg-white focus:ring-4 focus:ring-gold-soft/30";
+  "mt-2 w-full rounded-2xl border border-forest/15 bg-surface/70 px-4 py-3.5 text-ink outline-none transition placeholder:text-ink-soft/40 focus:border-gold focus:bg-surface focus:ring-4 focus:ring-gold-soft/30";
 
 export function LoginForm() {
   const [state, action, pending] = useActionState<LoginState, FormData>(login, {});
@@ -38,7 +38,7 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="flex w-full items-center justify-center gap-2 rounded-full bg-forest px-7 py-4 text-sm font-semibold text-paper shadow-xl shadow-forest/20 transition hover:bg-forest-deep disabled:opacity-70"
+        className="flex w-full items-center justify-center gap-2 rounded-full bg-brand px-7 py-4 text-sm font-semibold text-cream shadow-xl shadow-brand/20 transition hover:bg-brand-deep disabled:opacity-70"
       >
         {pending && <LoaderCircle aria-hidden="true" size={16} className="animate-spin" />}
         {pending ? "Memeriksa…" : "Masuk"}
