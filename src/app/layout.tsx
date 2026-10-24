@@ -21,8 +21,18 @@ const arabic = Amiri({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://quran-academy.alfath7.workers.dev"),
   title: "Quran Academy",
-  description: "Belajar Al-Qur'an dengan terarah dan konsisten."
+  description: "Belajar Al-Qur'an dengan terarah dan konsisten.",
+  openGraph: {
+    title: "Quran Academy",
+    description: "Belajar Al-Qur'an dengan terarah dan konsisten.",
+    url: "/",
+    siteName: "Quran Academy",
+    images: [{ url: "/og-image.png", width: 1200, height: 627 }],
+    locale: "id_ID",
+    type: "website"
+  }
 };
 
 export default function RootLayout({
