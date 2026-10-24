@@ -40,12 +40,7 @@ export function SiteFooter() {
         <Star className="size-4 text-gold" />
         Quran Academy
       </span>
-      <span className="flex items-center gap-4">
-        Belajar dengan niat baik dan konsisten.
-        <Link className="underline decoration-gold/40 underline-offset-4 transition hover:text-forest" href="/admin">
-          Admin
-        </Link>
-      </span>
+      <span>Belajar dengan niat baik dan konsisten.</span>
     </footer>
   );
 }
