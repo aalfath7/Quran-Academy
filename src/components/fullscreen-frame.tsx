@@ -1,19 +1,21 @@
 "use client";
 
+import { Maximize2, Minimize2 } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 
 type Fullscreen = { active: boolean; toggle: () => void; scrollToTop: () => void };
 
 const FullscreenContext = createContext<Fullscreen>({ active: false, toggle: () => {}, scrollToTop: () => {} });
 
-export const usePracticeFullscreen = () => useContext(FullscreenContext);
+export const useFullscreen = () => useContext(FullscreenContext);
 
 /**
- * Wraps every /praktik page in one element that can go fullscreen. It lives in the layout, so moving to
- * another practice keeps fullscreen on. Browsers without element fullscreen (iPhone Safari) get a fixed
+ * Wraps a section's pages (practice, tests) in one element that can go fullscreen. It lives in the
+ * section's layout, so moving to another page of the section keeps fullscreen on. Browsers without element fullscreen (iPhone Safari) get a fixed
  * overlay instead. Inside, `fullview:` classes hide the site chrome.
  */
-export function PracticeFrame({ children }: { children: React.ReactNode }) {
+export function FullscreenFrame({ children }: { children: React.ReactNode }) {
   const frame = useRef<HTMLDivElement>(null);
   const [native, setNative] = useState(false);
   const [overlay, setOverlay] = useState(false);
@@ -62,6 +64,16 @@ export function PracticeFrame({ children }: { children: React.ReactNode }) {
   }, [overlay]);
 
   const scrollToTop = useCallback(() => frame.current?.scrollTo({ top: 0 }), []);
+
+  // Next.js scrolls the window on navigation, but in fullscreen the frame is what scrolls.
+  const pathname = usePathname();
+  const activeRef = useRef(active);
+  useEffect(() => {
+    activeRef.current = active;
+  }, [active]);
+  useEffect(() => {
+    if (activeRef.current) scrollToTop();
+  }, [pathname, scrollToTop]);
   const value = useMemo(() => ({ active, toggle, scrollToTop }), [active, toggle, scrollToTop]);
 
   return (
@@ -74,5 +86,21 @@ export function PracticeFrame({ children }: { children: React.ReactNode }) {
         {children}
       </div>
     </FullscreenContext.Provider>
+  );
+}
+
+/** "Layar penuh" / "Keluar" button for the surrounding FullscreenFrame. */
+export function FullscreenToggle({ className = "" }: { className?: string }) {
+  const { active, toggle } = useFullscreen();
+
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      className={`inline-flex h-10 shrink-0 items-center gap-2 rounded-full border border-forest/15 px-4 text-sm font-medium text-forest-deep transition hover:border-forest/40 ${className}`}
+    >
+      {active ? <Minimize2 aria-hidden="true" size={15} /> : <Maximize2 aria-hidden="true" size={15} />}
+      {active ? "Keluar" : "Layar penuh"}
+    </button>
   );
 }

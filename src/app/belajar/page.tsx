@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ContinueLesson, LessonProgress } from "@/components/learning-progress-ui";
 import { LessonCard } from "@/components/lesson-card";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { Star } from "@/components/star";
@@ -55,6 +56,8 @@ export default async function LearnPage({ searchParams }: { searchParams: Promis
             ? categoryInfo[active].description
             : "Kaidah tajwid dan matan Al-Jazariyah yang disusun bertahap. Ambil satu, pelajari dengan tenang."}
         </p>
+        <LessonProgress slugs={lessons.map(({ slug }) => slug)} />
+        <ContinueLesson lessons={lessons.map(({ slug, title }) => ({ slug, title }))} />
 
         <nav className="mt-10 flex flex-wrap gap-2" aria-label="Filter kategori">
           {filters.map(({ href, label, isActive }) => (

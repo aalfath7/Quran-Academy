@@ -7,6 +7,7 @@ import { PracticeSheet } from "@/components/practice/practice-sheet";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { getDb } from "@/db";
 import { lessonHref } from "@/lib/categories";
+import { PRACTICE_TOTAL } from "@/lib/practice-curriculum";
 import { getPublishedLesson, listPublishedLessons, practiceDrillCount, practiceSections, soundKey } from "@/lib/lessons";
 
 export const dynamic = "force-dynamic";
@@ -52,7 +53,7 @@ export default async function PracticePage({ params }: Props) {
               Semua praktik
             </Link>
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-              Praktik {index + 1} / {practices.length}
+              Praktik {index + 1} / {PRACTICE_TOTAL}
             </span>
           </div>
           <PracticePills practices={practices.map(({ slug, title }) => ({ slug, title }))} current={practice.slug} />

@@ -11,13 +11,15 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
+import { PRACTICE_TOTAL, practicePart } from "@/lib/practice-curriculum";
 import {
   practiceStatus,
   resetPractice,
   toggleSection,
   visitPractice,
 } from "@/lib/practice-progress";
-import { usePracticeFullscreen } from "./practice-frame";
+import { useLastLearned } from "../learning-progress-ui";
+import { useFullscreen } from "../fullscreen-frame";
 import { OverallProgress } from "./practice-progress-ui";
 import { usePracticeProgress } from "./use-practice-progress";
 
@@ -45,6 +47,25 @@ function pairs(groups: string[]) {
   return result;
 }
 
+/** A label's note, where "[text](/path)" becomes a link within the site (e.g. a surah page). */
+function Note({ text }: { text: string }) {
+  const parts = text.split(/\[([^\]]+)\]\((\/[^)\s]*)\)/);
+
+  return parts.map((part, i) =>
+    i % 3 === 1 ? (
+      <Link
+        key={i}
+        href={parts[i + 1]}
+        className="font-medium text-forest underline decoration-gold/50 decoration-2 underline-offset-4 transition hover:decoration-gold"
+      >
+        {part}
+      </Link>
+    ) : i % 3 === 2 ? null : (
+      part
+    ),
+  );
+}
+
 type Props = {
   slug: string;
   number: number;
@@ -67,8 +88,10 @@ export function PracticeSheet({
   next,
   totals,
 }: Props) {
-  const fullscreen = usePracticeFullscreen();
+  const fullscreen = useFullscreen();
+  const part = practicePart(number);
   const [progress, update] = usePracticeProgress();
+  const [, setLastLearned] = useLastLearned();
 
   // Only drill sections can be marked; number them in order so marks survive label edits.
   const drillIndex = new Map<number, number>();
@@ -83,22 +106,15 @@ export function PracticeSheet({
   // Saved automatically: opening a practice makes it the one to continue.
   useEffect(() => {
     update((saved) => visitPractice(saved, slug, total));
-  }, [slug, total, update]);
-
-  // Next.js scrolls the window on navigation, but in fullscreen the frame is what scrolls.
-  const { active, scrollToTop } = fullscreen;
-  useEffect(() => {
-    if (active) scrollToTop();
-    // Only when the practice changes, not when fullscreen is toggled.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slug]);
+    setLastLearned(() => ({ href: `/praktik/${slug}`, title: `Praktik ${number}: ${title}` }));
+  }, [slug, total, update, number, title, setLastLearned]);
 
   return (
     <article className="mt-8 rounded-[2rem] border border-gold/30 bg-surface/80 px-4 shadow-sm backdrop-blur sm:px-8 md:px-12 fullview:mx-auto fullview:mt-0 fullview:max-w-[110rem] fullview:border-0 fullview:bg-transparent fullview:shadow-none">
       <header className="sticky top-0 z-10 -mx-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-gold/30 bg-surface/95 px-4 py-5 backdrop-blur sm:-mx-8 sm:px-8 md:-mx-12 md:px-12 rounded-t-[2rem] fullview:rounded-none fullview:bg-paper fullview:backdrop-blur-none">
         <div className="min-w-0">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-            Praktik {number}
+            Praktik {number} / {PRACTICE_TOTAL} · Bagian {part.number}: {part.title}
           </p>
           <h1 className="mt-1 font-display text-2xl font-light leading-tight tracking-tight text-forest-deep md:text-3xl">
             {title}
@@ -195,7 +211,7 @@ export function PracticeSheet({
               {key ? (
                 // Read right to left like the drills: the fathah entry sits over the right edge, dhammah over the left.
                 <div
-                  className="mb-6 flex items-baseline justify-center gap-x-6 gap-y-1 border-b sm:justify-between border-gold/25 px-2 pb-4 md:mb-8"
+                  className="mb-6 flex flex-wrap items-baseline justify-center gap-x-6 gap-y-1 border-b sm:justify-between border-gold/25 px-2 pb-4 md:mb-8"
                   dir="rtl"
                 >
                   {key.map(({ reading, forms }) => (
@@ -223,9 +239,17 @@ export function PracticeSheet({
                 </div>
               ) : (
                 label && (
-                  <h2 className="mb-4 text-center text-sm font-semibold text-forest">
-                    {label}
-                  </h2>
+                  // The first line names the exercise; any further lines are a note under it.
+                  <div className="mb-4 text-center">
+                    <h2 className="text-sm font-semibold text-forest">
+                      {label.split("\n")[0]}
+                    </h2>
+                    {label.includes("\n") && (
+                      <p className="mx-auto mt-1 max-w-xl whitespace-pre-line text-sm leading-6 text-ink-soft">
+                        <Note text={label.split("\n").slice(1).join("\n")} />
+                      </p>
+                    )}
+                  </div>
                 )
               )}
 

@@ -1,5 +1,5 @@
-import { PracticeFrame } from "@/components/practice/practice-frame";
+import { FullscreenFrame } from "@/components/fullscreen-frame";
 
 export default function PracticeLayout({ children }: { children: React.ReactNode }) {
-  return <PracticeFrame>{children}</PracticeFrame>;
+  return <FullscreenFrame>{children}</FullscreenFrame>;
 }

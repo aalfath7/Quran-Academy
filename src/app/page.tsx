@@ -2,6 +2,7 @@ import { ArrowRight, Clock, GraduationCap, Library } from "lucide-react";
 import Link from "next/link";
 import { LessonCard } from "@/components/lesson-card";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
+import { StartLearningMenu } from "@/components/start-learning-menu";
 import { Star } from "@/components/star";
 import { SurahCard } from "@/components/surah-card";
 import { getDb } from "@/db";
@@ -57,13 +58,7 @@ export default async function Home() {
             dan menjaga hafalan dengan lebih terarah.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <Link
-              className="group inline-flex items-center gap-2 rounded-full bg-brand px-7 py-4 text-sm font-semibold text-cream shadow-xl shadow-brand/20 transition hover:-translate-y-0.5 hover:bg-brand-deep"
-              href="/belajar"
-            >
-              Mulai belajar
-              <ArrowRight aria-hidden="true" size={16} className="transition group-hover:translate-x-1" />
-            </Link>
+            <StartLearningMenu buttonClassName="rounded-full bg-brand px-7 py-4 text-sm font-semibold text-cream shadow-xl shadow-brand/20 transition hover:-translate-y-0.5 hover:bg-brand-deep" />
             <Link
               className="inline-flex items-center rounded-full border border-forest/20 bg-surface/50 px-7 py-4 text-sm font-semibold text-forest-deep transition hover:-translate-y-0.5 hover:border-forest/40 hover:bg-surface"
               href="/quran"
@@ -235,13 +230,12 @@ export default async function Home() {
             <h2 className="mx-auto mt-5 max-w-2xl font-display text-4xl font-light leading-tight text-cream md:text-5xl">
               Mulailah hari ini, <em className="italic text-gold-soft">walau satu ayat.</em>
             </h2>
-            <Link
-              className="group mt-10 inline-flex items-center gap-2 rounded-full bg-gold-soft px-7 py-4 text-sm font-semibold text-brand-deep transition hover:-translate-y-0.5 hover:bg-cream"
-              href="/belajar"
-            >
-              Mulai belajar
-              <ArrowRight aria-hidden="true" size={16} className="transition group-hover:translate-x-1" />
-            </Link>
+            <StartLearningMenu
+              align="center"
+              side="top"
+              className="mt-10 inline-block"
+              buttonClassName="rounded-full bg-gold-soft px-7 py-4 text-sm font-semibold text-brand-deep transition hover:-translate-y-0.5 hover:bg-cream"
+            />
           </div>
         </div>
       </section>

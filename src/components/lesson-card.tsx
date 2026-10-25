@@ -2,6 +2,8 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import type { Lesson } from "@/db/schema";
 import { categoryInfo, lessonHref } from "@/lib/categories";
+import { LessonCardStatus } from "./learning-progress-ui";
+import { PracticeCardStatus } from "./practice/practice-progress-ui";
 
 export function LessonCard({ lesson }: { lesson: Lesson }) {
   const category = categoryInfo[lesson.category];
@@ -21,6 +23,7 @@ export function LessonCard({ lesson }: { lesson: Lesson }) {
       </div>
       <h3 className="mt-6 font-display text-xl font-medium leading-snug text-forest-deep">{lesson.title}</h3>
       <p className="mt-3 line-clamp-3 flex-1 leading-7 text-ink-soft">{lesson.summary}</p>
+      {lesson.category === "praktik" ? <PracticeCardStatus slug={lesson.slug} /> : <LessonCardStatus slug={lesson.slug} />}
       <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-forest">
         Pelajari
         <ArrowUpRight aria-hidden="true" size={16} className="transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

@@ -2,6 +2,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { LessonDoneToggle, RecordLessonVisit } from "@/components/learning-progress-ui";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { Star } from "@/components/star";
 import { getDb } from "@/db";
@@ -38,6 +39,7 @@ export default async function LessonPage({ params }: Props) {
       <BackgroundGlow />
       <SiteHeader />
 
+      <RecordLessonVisit slug={lesson.slug} title={lesson.title} />
       <article className="relative mx-auto max-w-3xl px-6 pb-24 pt-8 md:pt-14">
         <Link
           href={`/belajar?kategori=${lesson.category}`}
@@ -133,7 +135,9 @@ export default async function LessonPage({ params }: Props) {
           <span className="h-px w-16 bg-gold/30" />
         </div>
 
-        <nav className="grid gap-4 sm:grid-cols-2" aria-label="Materi lain">
+        <LessonDoneToggle slug={lesson.slug} />
+
+        <nav className="mt-8 grid gap-4 sm:grid-cols-2" aria-label="Materi lain">
           {previous ? (
             <Link
               href={`/belajar/${previous.slug}`}
