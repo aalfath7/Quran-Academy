@@ -29,7 +29,6 @@ export function SiteHeader() {
       <div className="flex items-center gap-2">
         <ThemeToggle />
         <StartLearningMenu
-          align="right"
           className="hidden sm:block"
           buttonClassName="rounded-full border border-forest/20 bg-paper/60 px-5 py-2.5 text-sm font-medium text-forest-deep backdrop-blur transition hover:border-forest/40 hover:bg-surface/70"
         />

@@ -231,8 +231,6 @@ export default async function Home() {
               Mulailah hari ini, <em className="italic text-gold-soft">walau satu ayat.</em>
             </h2>
             <StartLearningMenu
-              align="center"
-              side="top"
               className="mt-10 inline-block"
               buttonClassName="rounded-full bg-gold-soft px-7 py-4 text-sm font-semibold text-brand-deep transition hover:-translate-y-0.5 hover:bg-cream"
             />
