@@ -2,7 +2,7 @@ import { and, asc, desc, eq, inArray, ne, sql } from "drizzle-orm";
 import { z } from "zod";
 import type { createDb } from "@/db/connection";
 import { lessons } from "@/db/schema";
-import { lessonCategories, type LessonCategory } from "./categories";
+import { activeCategories, lessonCategories, type LessonCategory } from "./categories";
 
 type Db = ReturnType<typeof createDb>;
 
@@ -56,14 +56,19 @@ export function listPublishedLessons(db: Db, category?: LessonCategory | readonl
 }
 
 export function listLatestLessons(db: Db, limit: number) {
-  return db.select().from(lessons).where(eq(lessons.published, true)).orderBy(desc(lessons.createdAt)).limit(limit);
+  return db
+    .select()
+    .from(lessons)
+    .where(and(eq(lessons.published, true), inArray(lessons.category, [...activeCategories])))
+    .orderBy(desc(lessons.createdAt))
+    .limit(limit);
 }
 
 export async function getPublishedLesson(db: Db, slug: string) {
   const [lesson] = await db
     .select()
     .from(lessons)
-    .where(and(eq(lessons.slug, slug), eq(lessons.published, true)))
+    .where(and(eq(lessons.slug, slug), eq(lessons.published, true), inArray(lessons.category, [...activeCategories])))
     .limit(1);
 
   return lesson ?? null;

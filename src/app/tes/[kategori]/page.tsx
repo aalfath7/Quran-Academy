@@ -19,7 +19,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { kategori } = await params;
 
-  return isMateriCategory(kategori) ? { title: `Uji Kemampuan ${categoryInfo[kategori].label} · Quran Academy` } : {};
+  return isMateriCategory(kategori) ? { title: `Uji Kemampuan ${categoryInfo[kategori].label} · Fathway Quran` } : {};
 }
 
 export default async function QuizPage({ params }: Props) {

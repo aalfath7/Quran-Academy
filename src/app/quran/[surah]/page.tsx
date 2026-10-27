@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return surah
     ? {
-        title: `Surah ${surah.nameLatin} · Quran Academy`,
+        title: `Surah ${surah.nameLatin} · Fathway Quran`,
         description: `Surah ${surah.nameLatin} (${surah.translation}), ${surah.ayahCount} ayat, dengan latin, terjemahan, dan tafsir.`
       }
     : {};

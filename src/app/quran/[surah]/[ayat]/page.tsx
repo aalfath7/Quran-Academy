@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { surah, ayah } = loaded;
 
   return {
-    title: `Tafsir ${surah.nameLatin} ${surah.number}:${ayah.number} · Quran Academy`,
+    title: `Tafsir ${surah.nameLatin} ${surah.number}:${ayah.number} · Fathway Quran`,
     description: ayah.translation
   };
 }

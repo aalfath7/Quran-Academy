@@ -1,9 +1,18 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getDb } from "@/db";
 import { requireAdmin, signOut } from "@/lib/auth";
 import { createLesson, deleteLesson, getLesson, isSlugTaken, lessonInputSchema, updateLesson } from "@/lib/lessons";
+import {
+  deleteRegistration,
+  getRegistration,
+  isAlreadyRegistered,
+  registrationEditSchema,
+  setRegistrationPaid,
+  updateRegistration
+} from "@/lib/registrations";
 
 const formFields = ["title", "slug", "category", "summary", "arabicText", "content", "position", "published"] as const;
 
@@ -63,4 +72,62 @@ export async function removeLesson(formData: FormData) {
 export async function logout() {
   await signOut();
   redirect("/login");
+}
+
+export async function updateRegistrationPaid(formData: FormData) {
+  await requireAdmin();
+
+  const id = String(formData.get("id") ?? "");
+  if (id) await setRegistrationPaid(await getDb(), id, formData.get("paid") === "true");
+
+  revalidatePath("/admin/pendaftar");
+}
+
+const registrationFields = ["classId", "name", "whatsapp", "age", "city", "readingLevel", "notes", "wave", "paid"] as const;
+
+export type RegistrationEditState = {
+  errors?: Partial<Record<string, string>>;
+  message?: string;
+  // Submitted values, so the form can restore them after React resets it.
+  values?: Partial<Record<(typeof registrationFields)[number], string>>;
+};
+
+export async function saveRegistration(_prev: RegistrationEditState, formData: FormData): Promise<RegistrationEditState> {
+  await requireAdmin();
+
+  const id = String(formData.get("id") ?? "");
+  const values = Object.fromEntries(registrationFields.map((field) => [field, String(formData.get(field) ?? "")]));
+  const parsed = registrationEditSchema.safeParse({ ...values, paid: formData.get("paid") === "on" });
+
+  if (!parsed.success) {
+    const errors: Record<string, string> = {};
+    for (const issue of parsed.error.issues) {
+      const key = String(issue.path[0] ?? "form");
+      errors[key] ??= issue.message;
+    }
+    return { errors, values, message: "Periksa kembali isian yang ditandai." };
+  }
+
+  const db = await getDb();
+  const registration = await getRegistration(db, id);
+  if (!registration) return { values, message: "Pendaftar tidak ditemukan." };
+  if (await isAlreadyRegistered(db, parsed.data.whatsapp, parsed.data.wave, id)) {
+    return {
+      errors: { whatsapp: "Nomor ini sudah dipakai pendaftar lain di gelombang yang sama." },
+      values,
+      message: "Periksa kembali isian yang ditandai."
+    };
+  }
+
+  await updateRegistration(db, id, parsed.data, registration.paidAt);
+  redirect("/admin/pendaftar?status=tersimpan");
+}
+
+export async function removeRegistration(formData: FormData) {
+  await requireAdmin();
+
+  const id = String(formData.get("id") ?? "");
+  if (id) await deleteRegistration(await getDb(), id);
+
+  redirect("/admin/pendaftar?status=terhapus");
 }

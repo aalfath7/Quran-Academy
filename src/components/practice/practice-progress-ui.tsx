@@ -6,14 +6,17 @@ import { overallProgress, practiceStatus } from "@/lib/practice-progress";
 import { usePracticeProgress } from "./use-practice-progress";
 
 type PracticeLink = { slug: string; title: string };
+type NumberedPracticeLink = PracticeLink & { number: number };
+/** The curriculum part being studied: its number and the slugs of its published practices. */
+export type CurrentPart = { number: number; slugs: string[] };
 
-/** Numbered links to every practice, marked by the progress saved in this browser. */
-export function PracticePills({ practices, current }: { practices: PracticeLink[]; current: string }) {
+/** Numbered links to the given practices (usually one part), marked by the progress saved in this browser. */
+export function PracticePills({ practices, current }: { practices: NumberedPracticeLink[]; current: string }) {
   const [progress] = usePracticeProgress();
 
   return (
     <ol className="mt-4 flex flex-wrap gap-2">
-      {practices.map(({ slug, title }, i) => {
+      {practices.map(({ slug, title, number }) => {
         const isCurrent = slug === current;
         const status = practiceStatus(progress.practices[slug]);
         return (
@@ -32,7 +35,7 @@ export function PracticePills({ practices, current }: { practices: PracticeLink[
                       : "border-forest/15 text-forest-deep hover:border-gold/60 hover:bg-surface"
               }`}
             >
-              {i + 1}
+              {number}
               {status === "done" && (
                 <span className="absolute -right-1 -top-1 flex size-4 items-center justify-center rounded-full bg-gold text-cream">
                   <Check aria-hidden="true" size={10} strokeWidth={3} />
@@ -81,11 +84,53 @@ export function ContinuePractice({ practices }: { practices: PracticeLink[] }) {
   );
 }
 
-/** Progress across every practice; `totals` maps each practice to its number of drill sections. */
-export function OverallProgress({ totals, compact = false }: { totals: Record<string, number>; compact?: boolean }) {
+/**
+ * Progress across every practice; `totals` maps each practice to its number of drill sections.
+ * With `part`, the compact bar tracks that part and the whole series is shown as a figure beside it.
+ */
+export function OverallProgress({
+  totals,
+  compact = false,
+  part
+}: {
+  totals: Record<string, number>;
+  compact?: boolean;
+  part?: CurrentPart;
+}) {
   const [progress] = usePracticeProgress();
   const { doneSections, totalSections, donePractices, totalPractices, percent } = overallProgress(progress, totals);
   if (totalSections === 0) return null;
+
+  if (compact && part) {
+    const partTotals = Object.fromEntries(part.slugs.map((slug) => [slug, totals[slug] ?? 0]));
+    const inPart = overallProgress(progress, partTotals);
+
+    return (
+      <div className="flex items-center gap-3 text-xs text-ink-soft">
+        <span className="shrink-0 font-semibold text-forest-deep">
+          Bagian {part.number} · {inPart.percent}%
+        </span>
+        <span className="min-w-16 flex-1">
+          <span
+            role="progressbar"
+            aria-label={`Progres bagian ${part.number}`}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={inPart.percent}
+            className="block h-1.5 overflow-hidden rounded-full bg-forest/10"
+          >
+            <span className="block h-full rounded-full bg-gold transition-all duration-500" style={{ width: `${inPart.percent}%` }} />
+          </span>
+        </span>
+        <span className="hidden shrink-0 sm:inline">
+          {inPart.donePractices}/{inPart.totalPractices} praktik
+        </span>
+        <span className="shrink-0 border-l border-forest/15 pl-3" title={`${donePractices}/${totalPractices} praktik selesai`}>
+          Keseluruhan {percent}%
+        </span>
+      </div>
+    );
+  }
 
   const bar = (
     <span

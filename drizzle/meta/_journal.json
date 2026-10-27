@@ -36,6 +36,13 @@
       "when": 1792809763817,
       "tag": "0004_praktik_category",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1793068881681,
+      "tag": "0005_registrations",
+      "breakpoints": true
     }
   ]
 }

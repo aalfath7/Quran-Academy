@@ -1,14 +1,19 @@
 import { ExternalLink, LogOut } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Star } from "@/components/star";
+import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { requireAdmin } from "@/lib/auth";
 import { logout } from "./actions";
 
 export const metadata: Metadata = {
-  title: "Admin · Quran Academy"
+  title: "Admin · Fathway Quran"
 };
+
+const adminLinks = [
+  { href: "/admin", label: "Materi" },
+  { href: "/admin/pendaftar", label: "Pendaftar" }
+];
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const user = await requireAdmin();
@@ -18,8 +23,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <header className="border-b border-gold/20 bg-paper-deep/50">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
           <Link className="flex items-center gap-2.5" href="/admin">
-            <Star className="size-7 text-gold" />
-            <span className="font-display text-lg font-medium text-forest-deep">Quran Academy</span>
+            <Logo className="size-7 text-forest" />
+            <span className="font-display text-lg font-medium text-forest-deep">Fathway Quran</span>
             <span className="rounded-full bg-brand px-2.5 py-0.5 text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-gold-soft">
               Admin
             </span>
@@ -47,7 +52,20 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-6xl px-6 py-10 md:py-14">{children}</main>
+      <main className="mx-auto max-w-6xl px-6 py-10 md:py-14">
+        <nav aria-label="Menu admin" className="mb-10 flex gap-2 text-sm font-medium">
+          {adminLinks.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className="rounded-full border border-forest/15 px-4 py-2 text-forest-deep transition hover:border-forest/40 hover:bg-surface/70"
+            >
+              {label}
+            </Link>
+          ))}
+        </nav>
+        {children}
+      </main>
     </div>
   );
 }

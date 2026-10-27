@@ -48,7 +48,6 @@ describe("quiz scores", () => {
     const first = recordScore({}, "tajwid", 7);
     const second = recordScore(first, "tajwid", 5);
     expect(second.tajwid).toEqual({ best: 7, last: 5, attempts: 2 });
-    expect(second.jazariyah).toBeUndefined();
   });
 
   it("tolerates corrupt saved values", () => {

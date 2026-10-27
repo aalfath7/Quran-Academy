@@ -8,7 +8,7 @@ import { listJuzStarts, listSurahs } from "@/lib/quran";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Al-Qur'an · Quran Academy",
+  title: "Al-Qur'an · Fathway Quran",
   description: "Baca 114 surah Al-Qur'an lengkap dengan latin, terjemahan, dan tafsir."
 };
 

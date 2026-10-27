@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Star } from "@/components/star";
+import { Logo } from "@/components/logo";
 import { getCurrentUser } from "@/lib/auth";
 import { LoginForm } from "./login-form";
 
 export const metadata: Metadata = {
-  title: "Masuk · Quran Academy"
+  title: "Masuk · Fathway Quran"
 };
 
 export default async function LoginPage() {
@@ -19,8 +19,8 @@ export default async function LoginPage() {
         <div className="absolute inset-0 bg-radial from-brand/50 to-brand-deep" />
         <div className="relative flex h-full flex-col justify-between p-12">
           <Link className="flex items-center gap-2.5" href="/">
-            <Star className="size-8 text-gold-soft" />
-            <span className="font-display text-xl font-medium text-cream">Quran Academy</span>
+            <Logo className="size-8 text-cream" dotClassName="fill-gold-soft" />
+            <span className="font-display text-xl font-medium text-cream">Fathway Quran</span>
           </Link>
           <div>
             <p className="font-arabic text-4xl leading-[2] text-gold-soft" lang="ar" dir="rtl">
@@ -35,8 +35,8 @@ export default async function LoginPage() {
       <section className="flex items-center justify-center px-6 py-16">
         <div className="w-full max-w-sm">
           <Link className="mb-12 flex items-center gap-2.5 md:hidden" href="/">
-            <Star className="size-8 text-gold" />
-            <span className="font-display text-xl font-medium text-forest-deep">Quran Academy</span>
+            <Logo className="size-8 text-forest" />
+            <span className="font-display text-xl font-medium text-forest-deep">Fathway Quran</span>
           </Link>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold">Panel admin</p>
           <h1 className="mt-3 font-display text-4xl font-light tracking-tight text-forest-deep">Assalamu&apos;alaikum.</h1>

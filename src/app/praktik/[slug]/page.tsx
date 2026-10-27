@@ -2,12 +2,13 @@ import { ArrowLeft, ArrowRight, LayoutGrid } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { PracticeNavDrawer } from "@/components/practice/practice-nav-drawer";
 import { OverallProgress, PracticePills } from "@/components/practice/practice-progress-ui";
 import { PracticeSheet } from "@/components/practice/practice-sheet";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { getDb } from "@/db";
 import { lessonHref } from "@/lib/categories";
-import { PRACTICE_TOTAL } from "@/lib/practice-curriculum";
+import { groupByPart, PRACTICE_TOTAL } from "@/lib/practice-curriculum";
 import { getPublishedLesson, listPublishedLessons, practiceDrillCount, practiceSections, soundKey } from "@/lib/lessons";
 
 export const dynamic = "force-dynamic";
@@ -17,7 +18,7 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const practice = await getPublishedLesson(await getDb(), (await params).slug);
 
-  return practice ? { title: `${practice.title} · Praktik · Quran Academy`, description: practice.summary } : {};
+  return practice ? { title: `${practice.title} · Praktik · Fathway Quran`, description: practice.summary } : {};
 }
 
 export default async function PracticePage({ params }: Props) {
@@ -34,6 +35,10 @@ export default async function PracticePage({ params }: Props) {
   const next = neighbour(index + 1);
   const { guide, sections } = practiceSections(practice.content);
   const totals = Object.fromEntries(practices.map(({ slug, content }) => [slug, practiceDrillCount(content)]));
+  // Only the current part is listed while studying; the other parts are one tap away.
+  const parts = groupByPart(practices).filter(({ items }) => items.length > 0);
+  const currentPart = parts.find(({ items }) => items.some(({ practice: { id } }) => id === practice.id)) ?? parts[0];
+  const part = { number: currentPart.number, slugs: currentPart.items.map(({ practice: { slug } }) => slug) };
 
   return (
     <main className="grain relative min-h-screen overflow-hidden fullview:min-h-full fullview:overflow-visible">
@@ -43,7 +48,7 @@ export default async function PracticePage({ params }: Props) {
 
       <div className="relative mx-auto max-w-5xl px-4 pb-24 pt-4 sm:px-6 md:pt-8 fullview:max-w-none fullview:pb-12 fullview:pt-0">
         {/* Jump to any practice, not only the neighbours */}
-        <nav aria-label="Pilih praktik" className="rounded-3xl border border-forest/10 bg-surface/60 p-4 backdrop-blur md:p-5 fullview:hidden">
+        <nav aria-label="Pilih praktik" className="rounded-3xl border border-forest/10 bg-surface/60 p-4 md:p-5 md:backdrop-blur fullview:hidden">
           <div className="flex items-center justify-between gap-4">
             <Link
               href="/praktik"
@@ -56,10 +61,42 @@ export default async function PracticePage({ params }: Props) {
               Praktik {index + 1} / {PRACTICE_TOTAL}
             </span>
           </div>
-          <PracticePills practices={practices.map(({ slug, title }) => ({ slug, title }))} current={practice.slug} />
-          <div className="mt-4 border-t border-forest/10 pt-4">
-            <OverallProgress totals={totals} compact />
-          </div>
+          {/* Blur stays off below md: backdrop-filter would trap the fixed drawer inside this panel. */}
+          <PracticeNavDrawer totals={totals} part={part}>
+            {parts.length > 1 && (
+              <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Pilih bagian">
+                {parts.map(({ number, title, items }) => (
+                  <li key={number}>
+                    <Link
+                      href={`/praktik/${items[0].practice.slug}`}
+                      title={title}
+                      aria-current={number === currentPart.number ? "true" : undefined}
+                      className={`inline-block rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+                        number === currentPart.number
+                          ? "bg-brand text-cream"
+                          : "bg-forest/5 text-forest-deep hover:bg-forest/10"
+                      }`}
+                    >
+                      Bagian {number}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <p className="mt-4 text-sm font-medium text-forest-deep">
+              {currentPart.title}{" "}
+              <span className="text-ink-soft">
+                · Praktik {currentPart.from}–{currentPart.to}
+              </span>
+            </p>
+            <PracticePills
+              practices={currentPart.items.map(({ practice: { slug, title }, number }) => ({ slug, title, number }))}
+              current={practice.slug}
+            />
+            <div className="mt-4 border-t border-forest/10 pt-4">
+              <OverallProgress totals={totals} compact part={part} />
+            </div>
+          </PracticeNavDrawer>
         </nav>
 
         <PracticeSheet
@@ -71,6 +108,7 @@ export default async function PracticePage({ params }: Props) {
           previous={previous}
           next={next}
           totals={totals}
+          part={part}
         />
 
         <nav className="mt-14 grid gap-4 sm:grid-cols-2 fullview:mx-auto fullview:max-w-[110rem]" aria-label="Praktik sebelumnya dan berikutnya">

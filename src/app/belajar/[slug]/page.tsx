@@ -16,7 +16,7 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const lesson = await getPublishedLesson(await getDb(), (await params).slug);
 
-  return lesson ? { title: `${lesson.title} · Quran Academy`, description: lesson.summary } : {};
+  return lesson ? { title: `${lesson.title} · Fathway Quran`, description: lesson.summary } : {};
 }
 
 export default async function LessonPage({ params }: Props) {

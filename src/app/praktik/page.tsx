@@ -11,7 +11,7 @@ import { groupByPart, PRACTICE_TOTAL, practiceParts } from "@/lib/practice-curri
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Praktik · Quran Academy",
+  title: "Praktik · Fathway Quran",
   description: categoryInfo.praktik.description
 };
 

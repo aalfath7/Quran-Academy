@@ -8,8 +8,8 @@ import { QUIZ_LENGTH } from "@/lib/quiz";
 import { quizBanks } from "@/lib/quiz-data";
 
 export const metadata: Metadata = {
-  title: "Tes Pemahaman · Quran Academy",
-  description: "Uji pemahaman materi tajwid dan matan Al-Jazariyah dengan soal pilihan ganda acak."
+  title: "Tes Pemahaman · Fathway Quran",
+  description: "Uji pemahaman materi tajwid dengan soal pilihan ganda acak."
 };
 
 export default function QuizListPage() {

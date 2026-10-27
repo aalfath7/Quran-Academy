@@ -6,7 +6,7 @@ import { StartLearningMenu } from "@/components/start-learning-menu";
 import { Star } from "@/components/star";
 import { SurahCard } from "@/components/surah-card";
 import { getDb } from "@/db";
-import { categoryHref, categoryInfo, lessonCategories } from "@/lib/categories";
+import { activeCategories, categoryHref, categoryInfo } from "@/lib/categories";
 import { listLatestLessons } from "@/lib/lessons";
 import { featuredSurahNumbers, listSurahsByNumber } from "@/lib/quran";
 
@@ -103,8 +103,8 @@ export default async function Home() {
 
       {/* Pillars */}
       <section id="pilar" className="relative border-y border-gold/20 bg-paper-deep/60">
-        <div className="mx-auto grid max-w-6xl divide-y divide-gold/20 px-6 md:grid-cols-3 md:divide-x md:divide-y-0">
-          {lessonCategories.map((category) => {
+        <div className="mx-auto grid max-w-6xl divide-y divide-gold/20 px-6 md:grid-cols-2 md:divide-x md:divide-y-0">
+          {activeCategories.map((category) => {
             const { arabic, label, description } = categoryInfo[category];
 
             return (

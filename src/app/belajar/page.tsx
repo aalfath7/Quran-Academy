@@ -12,7 +12,7 @@ import { listPublishedLessons } from "@/lib/lessons";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Tajwid · Quran Academy"
+  title: "Tajwid · Fathway Quran"
 };
 
 export default async function LearnPage({ searchParams }: { searchParams: Promise<{ kategori?: string }> }) {
@@ -54,7 +54,7 @@ export default async function LearnPage({ searchParams }: { searchParams: Promis
         <p className="mt-5 max-w-xl text-lg leading-8 text-ink-soft">
           {active
             ? categoryInfo[active].description
-            : "Kaidah tajwid dan matan Al-Jazariyah yang disusun bertahap. Ambil satu, pelajari dengan tenang."}
+            : "Kaidah tajwid yang disusun bertahap. Ambil satu, pelajari dengan tenang."}
         </p>
         <LessonProgress slugs={lessons.map(({ slug }) => slug)} />
         <ContinueLesson lessons={lessons.map(({ slug, title }) => ({ slug, title }))} />

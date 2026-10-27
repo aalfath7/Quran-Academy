@@ -9,7 +9,7 @@ import { usePracticeProgress } from "./practice/use-practice-progress";
 
 const choices = [
   { href: "/praktik", label: "Praktik", description: categoryInfo.praktik.description, icon: PenLine },
-  { href: "/belajar", label: "Materi", description: "Tajwid dan matan Al-Jazariyah.", icon: BookOpen }
+  { href: "/belajar", label: "Materi", description: "Kaidah tajwid langkah demi langkah.", icon: BookOpen }
 ];
 
 /**

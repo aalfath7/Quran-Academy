@@ -8,6 +8,7 @@ import {
   uniqueIndex
 } from "drizzle-orm/sqlite-core";
 import { lessonCategories } from "../lib/categories";
+import { classIds, readingLevels } from "../lib/class-offer";
 
 export const users = sqliteTable(
   "users",
@@ -119,6 +120,35 @@ export const ayahs = sqliteTable(
   (table) => [uniqueIndex("ayahs_surah_number_idx").on(table.surahNumber, table.number)]
 );
 
+// Sign-ups for the online classes from /daftar: one class per WhatsApp number in each wave.
+export const registrations = sqliteTable(
+  "registrations",
+  {
+    id: text("id").primaryKey(),
+    name: text("name").notNull(),
+    whatsapp: text("whatsapp").notNull(),
+    age: integer("age").notNull(),
+    city: text("city"),
+    classId: text("class_id", { enum: classIds }).notNull(),
+    readingLevel: text("reading_level", { enum: readingLevels }).notNull(),
+    notes: text("notes"),
+    wave: integer("wave").notNull(),
+    // Payment is arranged on WhatsApp; the admin marks it here once the transfer arrives.
+    paid: integer("paid", { mode: "boolean" }).notNull().default(false),
+    paidAt: integer("paid_at", { mode: "timestamp_ms" }),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .notNull()
+      .default(sql`(unixepoch() * 1000)`),
+    updatedAt: integer("updated_at", { mode: "timestamp_ms" })
+      .notNull()
+      .default(sql`(unixepoch() * 1000)`)
+  },
+  (table) => [
+    check("registrations_class_check", sql`${table.classId} in ('tahsin', 'tajwid', 'tahfidz')`),
+    uniqueIndex("registrations_wave_whatsapp_idx").on(table.wave, table.whatsapp)
+  ]
+);
+
 export const usersRelations = relations(users, ({ one }) => ({
   profile: one(userProfiles)
 }));
@@ -138,3 +168,4 @@ export type Lesson = typeof lessons.$inferSelect;
 export type NewLesson = typeof lessons.$inferInsert;
 export type Surah = typeof surahs.$inferSelect;
 export type Ayah = typeof ayahs.$inferSelect;
+export type Registration = typeof registrations.$inferSelect;

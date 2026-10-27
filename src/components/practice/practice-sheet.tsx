@@ -20,7 +20,7 @@ import {
 } from "@/lib/practice-progress";
 import { useLastLearned } from "../learning-progress-ui";
 import { useFullscreen } from "../fullscreen-frame";
-import { OverallProgress } from "./practice-progress-ui";
+import { type CurrentPart, OverallProgress } from "./practice-progress-ui";
 import { usePracticeProgress } from "./use-practice-progress";
 
 export type SheetSection = {
@@ -76,6 +76,7 @@ type Props = {
   next?: Neighbour;
   /** Drill count of every practice, for the overall progress shown in fullscreen. */
   totals: Record<string, number>;
+  part: CurrentPart;
 };
 
 export function PracticeSheet({
@@ -87,6 +88,7 @@ export function PracticeSheet({
   previous,
   next,
   totals,
+  part: currentPart,
 }: Props) {
   const fullscreen = useFullscreen();
   const part = practicePart(number);
@@ -134,8 +136,8 @@ export function PracticeSheet({
           )}
           {/* Outside fullscreen the menu panel above already shows this. */}
           {fullscreen.active && (
-            <div className="mt-2 w-64 max-w-full">
-              <OverallProgress totals={totals} compact />
+            <div className="mt-2 w-96 max-w-full">
+              <OverallProgress totals={totals} compact part={currentPart} />
             </div>
           )}
         </div>

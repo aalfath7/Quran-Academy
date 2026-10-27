@@ -22,13 +22,13 @@ const arabic = Amiri({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://quran-academy.alfath7.workers.dev"),
-  title: "Quran Academy",
+  title: "Fathway Quran",
   description: "Belajar Al-Qur'an dengan terarah dan konsisten.",
   openGraph: {
-    title: "Quran Academy",
+    title: "Fathway Quran",
     description: "Belajar Al-Qur'an dengan terarah dan konsisten.",
     url: "/",
-    siteName: "Quran Academy",
+    siteName: "Fathway Quran",
     images: [{ url: "/og-image.png", width: 1200, height: 627 }],
     locale: "id_ID",
     type: "website"
@@ -41,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className={`${sans.variable} ${display.variable} ${arabic.variable}`} suppressHydrationWarning>
+    <html lang="id" data-scroll-behavior="smooth" className={`${sans.variable} ${display.variable} ${arabic.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>

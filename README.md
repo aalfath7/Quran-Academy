@@ -1,6 +1,6 @@
-# Quran Academy
+# Fathway Quran
 
-Quran Academy is a Next.js application prepared for Cloudflare Workers and D1. The first database migration establishes user and profile tables; all application database access goes through Drizzle and the Workers `DB` binding.
+Fathway Quran is a Next.js application prepared for Cloudflare Workers and D1. The first database migration establishes user and profile tables; all application database access goes through Drizzle and the Workers `DB` binding.
 
 ## Requirements
 
