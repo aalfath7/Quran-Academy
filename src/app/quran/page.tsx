@@ -6,13 +6,16 @@ import { Star } from "@/components/star";
 import { SurahList } from "@/components/surah-list";
 import { getDb } from "@/db";
 import { listJuzStarts, listSurahs } from "@/lib/quran";
+import { pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Al-Qur'an · Fathway Quran",
-  description: "Baca 114 surah Al-Qur'an lengkap dengan latin, terjemahan, dan tafsir."
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Al-Qur'an Online 30 Juz: Latin, Terjemahan & Tafsir",
+  description:
+    "Baca 114 surah Al-Qur'an lengkap dengan teks Arab, latin, terjemahan, dan tafsir Kemenag RI. Tersedia juga mode mushaf per halaman dan daftar juz.",
+  path: "/quran"
+});
 
 export default async function QuranPage() {
   const db = await getDb();

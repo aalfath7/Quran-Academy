@@ -2,11 +2,13 @@ import { ArrowLeft, ArrowRight, BookOpen, BookOpenText } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/json-ld";
 import { QuranText } from "@/components/quran-text";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { Star } from "@/components/star";
 import { getDb } from "@/db";
 import { getSurah, listAyahs, paragraphs, parsePositiveInt, showsBismillah, SURAH_COUNT } from "@/lib/quran";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -23,10 +25,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const surah = await loadSurah(params);
 
   return surah
-    ? {
-        title: `Surah ${surah.nameLatin} · Fathway Quran`,
-        description: `Surah ${surah.nameLatin} (${surah.translation}), ${surah.ayahCount} ayat, dengan latin, terjemahan, dan tafsir.`
-      }
+    ? pageMetadata({
+        title: `Surah ${surah.nameLatin} (${surah.translation}): Arab, Latin & Terjemahan`,
+        description: `Baca Surah ${surah.nameLatin} artinya ${surah.translation}, surah ke-${surah.number}, ${surah.ayahCount} ayat, ${surah.location}. Lengkap dengan teks Arab, latin, terjemahan, dan tafsir Kemenag RI.`,
+        path: `/quran/${surah.number}`
+      })
     : {};
 }
 
@@ -44,6 +47,7 @@ export default async function SurahPage({ params }: Props) {
 
   return (
     <main className="grain relative min-h-screen overflow-hidden">
+      <JsonLd data={breadcrumbJsonLd([["Beranda", "/"], ["Al-Qur'an", "/quran"], [`Surah ${surah.nameLatin}`, `/quran/${surah.number}`]])} />
       <BackgroundGlow />
       <SiteHeader />
 

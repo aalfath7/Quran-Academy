@@ -1,5 +1,7 @@
 import { ArrowRight, Clock, GraduationCap, Library } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
+import { JsonLd } from "@/components/json-ld";
 import { LessonCard } from "@/components/lesson-card";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { StartLearningMenu } from "@/components/start-learning-menu";
@@ -9,8 +11,33 @@ import { getDb } from "@/db";
 import { activeCategories, categoryHref, categoryInfo } from "@/lib/categories";
 import { listLatestLessons } from "@/lib/lessons";
 import { featuredSurahNumbers, listSurahsByNumber } from "@/lib/quran";
+import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
+
+const siteJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "EducationalOrganization",
+      "@id": `${SITE_URL}/#organization`,
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: absoluteUrl("/apple-icon.png"),
+      description: SITE_DESCRIPTION
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: SITE_NAME,
+      url: SITE_URL,
+      inLanguage: "id-ID",
+      publisher: { "@id": `${SITE_URL}/#organization` }
+    }
+  ]
+};
 
 const highlights = [
   {
@@ -39,6 +66,7 @@ export default async function Home() {
 
   return (
     <main className="grain relative min-h-screen overflow-hidden">
+      <JsonLd data={siteJsonLd} />
       <BackgroundGlow />
       <SiteHeader />
 
@@ -72,12 +100,12 @@ export default async function Home() {
         <div className="rise relative mx-auto w-full max-w-sm [animation-delay:150ms]">
           <Star className="spin-slow absolute -right-10 -top-10 size-36 text-gold/40" />
           <div className="relative rounded-t-full bg-brand p-3 shadow-2xl shadow-brand-deep/30">
-            <div className="pattern-girih relative flex aspect-[3/4] flex-col items-center justify-center overflow-hidden rounded-t-full border border-gold-soft/40 px-8 pt-16 pb-10 text-center">
-              <div className="absolute inset-0 bg-gradient-to-b from-brand/40 via-brand/80 to-brand" />
+            <div className="pattern-girih relative flex aspect-3/4 flex-col items-center justify-center overflow-hidden rounded-t-full border border-gold-soft/40 px-8 pt-16 pb-10 text-center">
+              <div className="absolute inset-0 bg-linear-to-b from-brand/40 via-brand/80 to-brand" />
               <div className="relative">
                 <Star className="mx-auto size-10 text-gold-soft" />
                 <p
-                  className="mt-6 font-arabic text-3xl leading-[2] text-gold-soft"
+                  className="mt-6 font-arabic text-3xl leading-loose text-gold-soft"
                   lang="ar"
                   dir="rtl"
                 >

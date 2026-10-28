@@ -10,6 +10,7 @@ import { getDb } from "@/db";
 import { lessonHref } from "@/lib/categories";
 import { groupByPart, PRACTICE_TOTAL } from "@/lib/practice-curriculum";
 import { getPublishedLesson, listPublishedLessons, practiceDrillCount, practiceSections, soundKey } from "@/lib/lessons";
+import { pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -18,7 +19,7 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const practice = await getPublishedLesson(await getDb(), (await params).slug);
 
-  return practice ? { title: `${practice.title} · Praktik · Fathway Quran`, description: practice.summary } : {};
+  return practice ? pageMetadata({ title: `${practice.title} · Praktik Membaca`, description: practice.summary, path: `/praktik/${practice.slug}` }) : {};
 }
 
 export default async function PracticePage({ params }: Props) {

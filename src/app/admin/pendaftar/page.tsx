@@ -9,7 +9,7 @@ import { updateRegistrationPaid } from "../actions";
 import { DeleteRegistrationButton } from "./delete-registration-button";
 
 export const metadata: Metadata = {
-  title: "Pendaftar · Admin · Fathway Quran"
+  title: "Pendaftar · Admin"
 };
 
 const statusMessages: Record<string, string> = {

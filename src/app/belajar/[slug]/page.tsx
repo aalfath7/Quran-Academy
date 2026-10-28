@@ -2,6 +2,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { JsonLd } from "@/components/json-ld";
 import { LessonDoneToggle, RecordLessonVisit } from "@/components/learning-progress-ui";
 import { TajwidLesson } from "@/components/lesson/tajwid-lesson";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
@@ -10,6 +11,7 @@ import { getDb } from "@/db";
 import { categoryInfo } from "@/lib/categories";
 import { lessonLayout, readingMinutes } from "@/lib/lesson-layout";
 import { contentBlocks, drillRows, getPublishedLesson, listPublishedLessons } from "@/lib/lessons";
+import { absoluteUrl, breadcrumbJsonLd, pageMetadata, SITE_NAME, SITE_URL } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -18,7 +20,7 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const lesson = await getPublishedLesson(await getDb(), (await params).slug);
 
-  return lesson ? { title: `${lesson.title} · Fathway Quran`, description: lesson.summary } : {};
+  return lesson ? pageMetadata({ title: `${lesson.title} · Belajar Tajwid`, description: lesson.summary, path: `/belajar/${lesson.slug}` }) : {};
 }
 
 export default async function LessonPage({ params }: Props) {
@@ -38,6 +40,24 @@ export default async function LessonPage({ params }: Props) {
 
   return (
     <main className="grain relative min-h-screen overflow-hidden">
+      <JsonLd data={[
+          {
+            "@context": "https://schema.org",
+            "@type": "LearningResource",
+            name: lesson.title,
+            description: lesson.summary,
+            url: absoluteUrl(`/belajar/${lesson.slug}`),
+            inLanguage: "id-ID",
+            learningResourceType: "Materi",
+            educationalLevel: "Pemula",
+            teaches: category.label,
+            isAccessibleForFree: true,
+            datePublished: lesson.createdAt.toISOString(),
+            dateModified: lesson.updatedAt.toISOString(),
+            provider: { "@type": "EducationalOrganization", name: SITE_NAME, url: SITE_URL }
+          },
+          breadcrumbJsonLd([["Beranda", "/"], [category.label, "/belajar"], [lesson.title, `/belajar/${lesson.slug}`]])
+        ]} />
       <BackgroundGlow />
       <SiteHeader />
 

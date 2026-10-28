@@ -11,6 +11,7 @@ import { Star } from "@/components/star";
 import { getDb } from "@/db";
 import { groupBySurah, PAGE_COUNT, toArabicDigits } from "@/lib/mushaf";
 import { listJuzPages, listPageAyahs, listSurahPages, parsePositiveInt, showsBismillah, type PageAyah } from "@/lib/quran";
+import { pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -33,10 +34,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const loaded = await loadPage(params);
   if (!loaded) return {};
 
-  return {
-    title: `Halaman ${loaded.page} · Mushaf · Fathway Quran`,
-    description: `Mushaf Al-Qur'an halaman ${loaded.page}: ${surahNames(loaded.ayahs).join(", ")}, juz ${loaded.ayahs[0].juz}.`
-  };
+  return pageMetadata({
+    title: `Mushaf Al-Qur'an Halaman ${loaded.page} · Juz ${loaded.ayahs[0].juz}`,
+    description: `Baca mushaf Al-Qur'an online halaman ${loaded.page} dari ${PAGE_COUNT}: ${surahNames(loaded.ayahs).join(", ")}, juz ${loaded.ayahs[0].juz}.`,
+    path: `/quran/halaman/${loaded.page}`
+  });
 }
 
 function AyahMarker({ ayah }: { ayah: PageAyah }) {
@@ -58,7 +60,7 @@ function SurahOpening({ ayah }: { ayah: PageAyah }) {
     <header className="my-2 text-center">
       <div className="pattern-girih relative overflow-hidden rounded-2xl border border-gold/50 bg-brand-deep px-4 py-3">
         <div className="absolute inset-0 bg-radial from-brand/40 to-brand-deep" />
-        <p className="relative font-arabic text-[length:calc(var(--mushaf-size,2rem)*0.8)] leading-[1.7] text-gold-soft" lang="ar" dir="rtl">
+        <p className="relative font-arabic text-[calc(var(--mushaf-size,2rem)*0.8)] leading-[1.7] text-gold-soft" lang="ar" dir="rtl">
           سُورَةُ {ayah.nameArabic}
         </p>
         <p className="relative text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-gold-soft/70">
@@ -66,7 +68,7 @@ function SurahOpening({ ayah }: { ayah: PageAyah }) {
         </p>
       </div>
       {showsBismillah(ayah.surahNumber) && (
-        <p className="mt-3 font-arabic text-[length:calc(var(--mushaf-size,2rem)*0.9)] leading-[2] text-forest-deep" lang="ar" dir="rtl">
+        <p className="mt-3 font-arabic text-[calc(var(--mushaf-size,2rem)*0.9)] leading-loose text-forest-deep" lang="ar" dir="rtl">
           بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
         </p>
       )}
@@ -109,6 +111,10 @@ export default async function MushafPage({ params }: Props) {
       </div>
 
       <div className="relative mx-auto max-w-3xl px-4 pb-24 pt-4 sm:px-6 md:pt-8 fullview:pb-12">
+        {/* The page frame already shows this visually; the heading gives readers of the outline and search engines a title. */}
+        <h1 className="sr-only">
+          Mushaf Al-Qur&apos;an halaman {page}: {surahNames(ayahs).join(", ")}, juz {juz.join("–")}
+        </h1>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <Link
             href={`/quran/${first.surahNumber}${first.number > 1 ? `#ayat-${first.number}` : ""}`}
@@ -130,7 +136,7 @@ export default async function MushafPage({ params }: Props) {
         <MushafReader page={page}>
           <article
             aria-label={`Halaman ${page}`}
-            className="mt-6 rounded-[2rem] border-2 border-gold/40 bg-surface/80 p-1.5 shadow-xl shadow-brand/5 backdrop-blur"
+            className="mt-6 rounded-4xl border-2 border-gold/40 bg-surface/80 p-1.5 shadow-xl shadow-brand/5 backdrop-blur"
           >
             <div className="rounded-[1.6rem] border border-gold/25 px-4 py-4 sm:px-8 sm:py-6">
               <div className="flex items-center justify-between gap-4 border-b border-gold/25 pb-2 text-xs font-semibold text-gold">
@@ -138,13 +144,13 @@ export default async function MushafPage({ params }: Props) {
                 <span className="truncate text-right">{surahNames(ayahs).join(" · ")}</span>
               </div>
 
-              <div className="mt-4 text-[length:calc(var(--mushaf-size,2rem)*0.8)] sm:text-[length:var(--mushaf-size,2rem)]">
+              <div className="mt-4 text-[calc(var(--mushaf-size,2rem)*0.8)] sm:text-(length:--mushaf-size,2rem)">
                 {groups.map(({ surahNumber, ayahs: run }) => (
                   <section key={surahNumber}>
                     {run[0].number === 1 && <SurahOpening ayah={run[0]} />}
                     {/* A rule under every line: the background repeats once per line, so it follows the reading size. */}
                     <p
-                      className="bg-[linear-gradient(to_bottom,transparent_calc(100%-1px),color-mix(in_srgb,var(--color-gold)_35%,transparent)_calc(100%-1px))] bg-[length:100%_2.25em] text-justify font-arabic leading-[2.25] text-forest-deep [text-align-last:center]"
+                      className="bg-[linear-gradient(to_bottom,transparent_calc(100%-1px),color-mix(in_srgb,var(--color-gold)_35%,transparent)_calc(100%-1px))] bg-size-[100%_2.25em] text-justify font-arabic leading-[2.25] text-forest-deep [text-align-last:center]"
                       lang="ar"
                       dir="rtl"
                     >

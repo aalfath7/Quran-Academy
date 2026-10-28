@@ -7,6 +7,7 @@ import { QuizRunner } from "@/components/quiz/quiz-ui";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { categoryInfo, isMateriCategory, materiCategories } from "@/lib/categories";
 import { quizBanks } from "@/lib/quiz-data";
+import { pageMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ kategori: string }> };
 
@@ -19,7 +20,13 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { kategori } = await params;
 
-  return isMateriCategory(kategori) ? { title: `Uji Kemampuan ${categoryInfo[kategori].label} · Fathway Quran` } : {};
+  return isMateriCategory(kategori)
+    ? pageMetadata({
+        title: `Uji Kemampuan ${categoryInfo[kategori].label}`,
+        description: `Soal pilihan ganda acak untuk menguji pemahaman materi ${categoryInfo[kategori].label.toLowerCase()}. ${categoryInfo[kategori].description}`,
+        path: `/tes/${kategori}`
+      })
+    : {};
 }
 
 export default async function QuizPage({ params }: Props) {

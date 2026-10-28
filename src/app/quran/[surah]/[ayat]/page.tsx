@@ -2,11 +2,13 @@ import { ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/json-ld";
 import { QuranText } from "@/components/quran-text";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { Star } from "@/components/star";
 import { getDb } from "@/db";
 import { getAyah, getNeighbourAyahs, getSurah, paragraphs, parsePositiveInt, SURAH_COUNT } from "@/lib/quran";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -29,10 +31,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!loaded) return {};
   const { surah, ayah } = loaded;
 
-  return {
-    title: `Tafsir ${surah.nameLatin} ${surah.number}:${ayah.number} · Fathway Quran`,
-    description: ayah.translation
-  };
+  return pageMetadata({
+    title: `Surah ${surah.nameLatin} Ayat ${ayah.number}: Arti & Tafsir`,
+    description: `QS. ${surah.nameLatin} ${surah.number}:${ayah.number} — ${ayah.translation}`,
+    path: `/quran/${surah.number}/${ayah.number}`
+  });
 }
 
 export default async function AyahPage({ params }: Props) {
@@ -45,6 +48,12 @@ export default async function AyahPage({ params }: Props) {
 
   return (
     <main className="grain relative min-h-screen overflow-hidden">
+      <JsonLd data={breadcrumbJsonLd([
+          ["Beranda", "/"],
+          ["Al-Qur'an", "/quran"],
+          [`Surah ${surah.nameLatin}`, `/quran/${surah.number}`],
+          [`Ayat ${ayah.number}`, `/quran/${surah.number}/${ayah.number}`]
+        ])} />
       <BackgroundGlow />
       <SiteHeader />
 

@@ -8,12 +8,17 @@ import { getDb } from "@/db";
 import { redirect } from "next/navigation";
 import { categoryInfo, isMateriCategory, materiCategories } from "@/lib/categories";
 import { listPublishedLessons } from "@/lib/lessons";
+import { pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Tajwid · Fathway Quran"
-};
+// Category filters (?kategori=) list the same lessons, so they all point search engines at /belajar.
+export const metadata: Metadata = pageMetadata({
+  title: "Belajar Tajwid Online: Hukum Bacaan Al-Qur'an",
+  description:
+    "Materi tajwid berjenjang untuk pemula: kaidah bacaan Al-Qur'an yang benar, dijelaskan ringkas lengkap dengan contoh ayat.",
+  path: "/belajar"
+});
 
 export default async function LearnPage({ searchParams }: { searchParams: Promise<{ kategori?: string }> }) {
   const { kategori } = await searchParams;

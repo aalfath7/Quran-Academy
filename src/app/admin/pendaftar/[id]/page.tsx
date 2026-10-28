@@ -9,7 +9,7 @@ import { DeleteRegistrationButton } from "../delete-registration-button";
 import { RegistrationEditForm } from "../registration-edit-form";
 
 export const metadata: Metadata = {
-  title: "Edit pendaftar · Admin · Fathway Quran"
+  title: "Edit pendaftar · Admin"
 };
 
 export default async function EditRegistrationPage({ params }: { params: Promise<{ id: string }> }) {

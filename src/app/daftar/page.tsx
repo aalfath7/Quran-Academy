@@ -1,17 +1,37 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { JsonLd } from "@/components/json-ld";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { CLASS_PRICE, classFacts, classIds, classInfo, CURRENT_WAVE, teacher } from "@/lib/class-offer";
 import { RegistrationForm } from "./registration-form";
+import { pageMetadata, SITE_NAME, SITE_URL } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Daftar Kelas Online · Fathway Quran",
-  description: "Kelas Tahsin, Tajwid, atau Tahfidz online via Google Meet. Kelas kecil, maksimal 5 murid, khusus ikhwan."
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Daftar Kelas Tahsin, Tajwid & Tahfidz Online",
+  description: `Kelas Tahsin, Tajwid, atau Tahfidz online via Google Meet. Kelas kecil, maksimal 5 murid, khusus ikhwan, ${CLASS_PRICE}/bulan.`,
+  path: "/daftar"
+});
+
+const coursesJsonLd = classIds.map((id) => ({
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: classInfo[id].label,
+  description: classInfo[id].description,
+  inLanguage: "id-ID",
+  provider: { "@type": "EducationalOrganization", name: SITE_NAME, url: SITE_URL },
+  offers: { "@type": "Offer", category: "Paid", price: CLASS_PRICE.replace(/\D/g, ""), priceCurrency: "IDR" },
+  hasCourseInstance: {
+    "@type": "CourseInstance",
+    courseMode: "Online",
+    courseSchedule: { "@type": "Schedule", repeatFrequency: "P1W", repeatCount: 4 },
+    instructor: { "@type": "Person", name: teacher.name }
+  }
+}));
 
 export default function RegisterPage() {
   return (
     <main className="grain relative min-h-screen overflow-hidden">
+      <JsonLd data={coursesJsonLd} />
       <BackgroundGlow />
       <SiteHeader />
 

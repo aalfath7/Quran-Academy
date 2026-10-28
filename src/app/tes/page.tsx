@@ -6,11 +6,13 @@ import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome
 import { categoryInfo, materiCategories } from "@/lib/categories";
 import { QUIZ_LENGTH } from "@/lib/quiz";
 import { quizBanks } from "@/lib/quiz-data";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Tes Pemahaman · Fathway Quran",
-  description: "Uji pemahaman materi tajwid dengan soal pilihan ganda acak."
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Tes Pemahaman Tajwid",
+  description: "Uji pemahaman materi tajwid dengan soal pilihan ganda acak.",
+  path: "/tes"
+});
 
 export default function QuizListPage() {
   return (

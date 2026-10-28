@@ -6,7 +6,8 @@ import { getCurrentUser } from "@/lib/auth";
 import { LoginForm } from "./login-form";
 
 export const metadata: Metadata = {
-  title: "Masuk · Fathway Quran"
+  title: "Masuk",
+  robots: { index: false, follow: false }
 };
 
 export default async function LoginPage() {

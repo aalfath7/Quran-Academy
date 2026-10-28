@@ -7,13 +7,15 @@ import { getDb } from "@/db";
 import { categoryInfo } from "@/lib/categories";
 import { listPublishedLessons, practiceDrillCount } from "@/lib/lessons";
 import { groupByPart, PRACTICE_TOTAL, practiceParts } from "@/lib/practice-curriculum";
+import { pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Praktik · Fathway Quran",
-  description: categoryInfo.praktik.description
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Latihan Membaca Huruf Hijaiyah dari Nol",
+  description: `${categoryInfo.praktik.description} Latihan membaca Al-Qur'an untuk pemula, bertahap dengan penanda kemajuan.`,
+  path: "/praktik"
+});
 
 export default async function PracticeListPage() {
   const practices = await listPublishedLessons(await getDb(), "praktik");

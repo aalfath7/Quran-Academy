@@ -7,7 +7,8 @@ import { requireAdmin } from "@/lib/auth";
 import { logout } from "./actions";
 
 export const metadata: Metadata = {
-  title: "Admin · Fathway Quran"
+  title: "Admin",
+  robots: { index: false, follow: false }
 };
 
 const adminLinks = [

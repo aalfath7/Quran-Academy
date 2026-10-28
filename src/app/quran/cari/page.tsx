@@ -10,6 +10,7 @@ import { SurahCard } from "@/components/surah-card";
 import { getDb } from "@/db";
 import { listSurahs, parsePositiveInt, SEARCH_PAGE_SIZE, searchAyahs } from "@/lib/quran";
 import { findSurah, highlight, MIN_TERM_LENGTH, parseAyahReference, searchTerms } from "@/lib/quran-search";
+import { pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -20,11 +21,12 @@ const first = (value: string | string[] | undefined) => (Array.isArray(value) ? 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const query = first((await searchParams).q).trim();
 
-  return {
-    title: query ? `“${query}” · Cari ayat · Fathway Quran` : "Cari ayat · Fathway Quran",
+  return pageMetadata({
+    title: query ? `“${query}” · Cari ayat` : "Cari ayat",
     description: "Cari ayat Al-Qur'an berdasarkan kata dalam terjemahan Kemenag RI atau rujukan surah dan ayat.",
-    robots: { index: false }
-  };
+    path: "/quran/cari",
+    noIndex: true
+  });
 }
 
 export default async function SearchPage({ searchParams }: Props) {
