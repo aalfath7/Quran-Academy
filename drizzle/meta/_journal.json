@@ -43,6 +43,13 @@
       "when": 1793068881681,
       "tag": "0005_registrations",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1793157728820,
+      "tag": "0006_ayahs_page_index",
+      "breakpoints": true
     }
   ]
 }

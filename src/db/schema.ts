@@ -117,7 +117,7 @@ export const ayahs = sqliteTable(
     tafsirWajiz: text("tafsir_wajiz"),
     tafsirTahlili: text("tafsir_tahlili")
   },
-  (table) => [uniqueIndex("ayahs_surah_number_idx").on(table.surahNumber, table.number)]
+  (table) => [uniqueIndex("ayahs_surah_number_idx").on(table.surahNumber, table.number), index("ayahs_page_idx").on(table.page)]
 );
 
 // Sign-ups for the online classes from /daftar: one class per WhatsApp number in each wave.

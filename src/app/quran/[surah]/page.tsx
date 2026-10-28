@@ -1,7 +1,8 @@
-import { ArrowLeft, ArrowRight, BookOpenText } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen, BookOpenText } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { QuranText } from "@/components/quran-text";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { Star } from "@/components/star";
 import { getDb } from "@/db";
@@ -47,13 +48,22 @@ export default async function SurahPage({ params }: Props) {
       <SiteHeader />
 
       <article className="relative mx-auto max-w-4xl px-6 pb-24 pt-8 md:pt-14">
-        <Link
-          href="/quran"
-          className="inline-flex items-center gap-2 text-sm font-medium text-ink-soft transition hover:text-forest"
-        >
-          <ArrowLeft aria-hidden="true" size={16} />
-          Daftar surah
-        </Link>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <Link
+            href="/quran"
+            className="inline-flex items-center gap-2 text-sm font-medium text-ink-soft transition hover:text-forest"
+          >
+            <ArrowLeft aria-hidden="true" size={16} />
+            Daftar surah
+          </Link>
+          <Link
+            href={`/quran/halaman/${surah.page}`}
+            className="inline-flex items-center gap-2 rounded-full border border-forest/15 px-4 py-2.5 text-sm font-medium text-forest-deep transition hover:border-forest/40"
+          >
+            <BookOpen aria-hidden="true" size={15} className="text-gold" />
+            Mode mushaf
+          </Link>
+        </div>
 
         <header className="pattern-girih relative mt-8 overflow-hidden rounded-[2rem] bg-brand-deep px-8 py-12 text-center">
           <div className="absolute inset-0 bg-radial from-brand/50 to-brand-deep" />
@@ -104,7 +114,7 @@ export default async function SurahPage({ params }: Props) {
                   lang="ar"
                   dir="rtl"
                 >
-                  {ayah.arabic}
+                  <QuranText text={ayah.arabic} />
                 </p>
               </div>
 
@@ -137,9 +147,13 @@ export default async function SurahPage({ params }: Props) {
                   <BookOpenText aria-hidden="true" size={14} />
                   Tafsir lengkap
                 </Link>
-                <span className="text-xs uppercase tracking-[0.16em] text-ink-soft/60">
+                <Link
+                  href={`/quran/halaman/${ayah.page}`}
+                  className="text-xs uppercase tracking-[0.16em] text-ink-soft/60 transition hover:text-gold"
+                  title="Buka halaman ini di mode mushaf"
+                >
                   Juz {ayah.juz} · Hal. {ayah.page}
-                </span>
+                </Link>
               </div>
             </li>
           ))}

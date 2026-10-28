@@ -3,10 +3,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { LessonDoneToggle, RecordLessonVisit } from "@/components/learning-progress-ui";
+import { TajwidLesson } from "@/components/lesson/tajwid-lesson";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { Star } from "@/components/star";
 import { getDb } from "@/db";
 import { categoryInfo } from "@/lib/categories";
+import { lessonLayout, readingMinutes } from "@/lib/lesson-layout";
 import { contentBlocks, drillRows, getPublishedLesson, listPublishedLessons } from "@/lib/lessons";
 
 export const dynamic = "force-dynamic";
@@ -79,55 +81,59 @@ export default async function LessonPage({ params }: Props) {
           </div>
         )}
 
-        <div className="mt-12 space-y-6 text-[1.075rem] leading-8 text-ink">
-          {blocks.map(({ text, arabic }, i) => {
-            if (!arabic) {
-              return (
-                <p key={i} className="whitespace-pre-line first-of-type:first-letter:float-left first-of-type:first-letter:mr-3 first-of-type:first-letter:font-display first-of-type:first-letter:text-6xl first-of-type:first-letter:leading-[0.9] first-of-type:first-letter:text-gold">
-                  {text}
-                </p>
-              );
-            }
+        {lesson.category === "tajwid" ? (
+          <TajwidLesson layout={lessonLayout(lesson.content)} minutes={readingMinutes(lesson.content)} />
+        ) : (
+          <div className="mt-12 space-y-6 text-[1.075rem] leading-8 text-ink">
+            {blocks.map(({ text, arabic }, i) => {
+              if (!arabic) {
+                return (
+                  <p key={i} className="whitespace-pre-line first-of-type:first-letter:float-left first-of-type:first-letter:mr-3 first-of-type:first-letter:font-display first-of-type:first-letter:text-6xl first-of-type:first-letter:leading-[0.9] first-of-type:first-letter:text-gold">
+                    {text}
+                  </p>
+                );
+              }
 
-            const lines = text.split("\n").map((line) => line.trim()).filter(Boolean);
+              const lines = text.split("\n").map((line) => line.trim()).filter(Boolean);
 
-            // A bait of a matan is two hemistichs on consecutive lines: side by side on wide screens, the first on the right.
-            if (isMatan) {
+              // A bait of a matan is two hemistichs on consecutive lines: side by side on wide screens, the first on the right.
+              if (isMatan) {
+                return (
+                  <blockquote
+                    key={i}
+                    className={`mt-10! grid gap-x-10 gap-y-1 rounded-2xl border border-gold/25 bg-paper-deep/50 px-6 py-6 text-center font-arabic text-2xl leading-[2.1] text-forest-deep md:text-[1.7rem] ${lines.length % 2 === 0 ? "md:grid-cols-2" : ""}`}
+                    lang="ar"
+                    dir="rtl"
+                  >
+                    {lines.map((line, j) => (
+                      <span key={j}>{line}</span>
+                    ))}
+                  </blockquote>
+                );
+              }
+
+              // Otherwise each line is a row of reading drill; two or more spaces separate groups that never break apart.
               return (
-                <blockquote
+                <div
                   key={i}
-                  className={`mt-10! grid gap-x-10 gap-y-1 rounded-2xl border border-gold/25 bg-paper-deep/50 px-6 py-6 text-center font-arabic text-2xl leading-[2.1] text-forest-deep md:text-[1.7rem] ${lines.length % 2 === 0 ? "md:grid-cols-2" : ""}`}
+                  className="mt-8! space-y-3 rounded-2xl border border-gold/25 bg-paper-deep/50 px-4 py-6 text-center font-arabic text-[1.9rem] leading-[1.9] text-forest-deep md:px-6 md:text-4xl"
                   lang="ar"
                   dir="rtl"
                 >
-                  {lines.map((line, j) => (
-                    <span key={j}>{line}</span>
+                  {drillRows(text).map((groups, j) => (
+                    <p key={j} className="flex flex-wrap justify-center gap-x-8 gap-y-2 md:gap-x-10">
+                      {groups.map((group, k) => (
+                        <span key={k} className="whitespace-nowrap [word-spacing:0.25em]">
+                          {group}
+                        </span>
+                      ))}
+                    </p>
                   ))}
-                </blockquote>
+                </div>
               );
-            }
-
-            // Otherwise each line is a row of reading drill; two or more spaces separate groups that never break apart.
-            return (
-              <div
-                key={i}
-                className="mt-8! space-y-3 rounded-2xl border border-gold/25 bg-paper-deep/50 px-4 py-6 text-center font-arabic text-[1.9rem] leading-[1.9] text-forest-deep md:px-6 md:text-4xl"
-                lang="ar"
-                dir="rtl"
-              >
-                {drillRows(text).map((groups, j) => (
-                  <p key={j} className="flex flex-wrap justify-center gap-x-8 gap-y-2 md:gap-x-10">
-                    {groups.map((group, k) => (
-                      <span key={k} className="whitespace-nowrap [word-spacing:0.25em]">
-                        {group}
-                      </span>
-                    ))}
-                  </p>
-                ))}
-              </div>
-            );
-          })}
-        </div>
+            })}
+          </div>
+        )}
 
         <div className="my-14 flex items-center justify-center gap-3 text-gold/60">
           <span className="h-px w-16 bg-gold/30" />

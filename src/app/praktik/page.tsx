@@ -52,13 +52,14 @@ export default async function PracticeListPage() {
                 <p className="mt-2 max-w-2xl text-ink-soft">{target}</p>
               </div>
 
+              {/* Equal rows, so a wrapped title or a progress line never makes one card taller than the rest. */}
               {items.length > 0 ? (
-                <ol className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <ol className="mt-6 grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {items.map(({ practice, number: practiceNumber }) => (
                     <li key={practice.id}>
                       <Link
                         href={`/praktik/${practice.slug}`}
-                        className="group flex items-center gap-5 rounded-3xl border border-forest/10 bg-surface/60 p-5 backdrop-blur transition duration-500 hover:-translate-y-0.5 hover:border-gold/40 hover:bg-surface hover:shadow-xl hover:shadow-brand/10"
+                        className="group flex h-full items-center gap-5 rounded-3xl border border-forest/10 bg-surface/60 p-5 backdrop-blur transition duration-500 hover:-translate-y-0.5 hover:border-gold/40 hover:bg-surface hover:shadow-xl hover:shadow-brand/10"
                       >
                         <span className="relative flex size-12 shrink-0 items-center justify-center text-gold">
                           <Star className="absolute inset-0 size-12 transition-transform duration-700 group-hover:rotate-45" />

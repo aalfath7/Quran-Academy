@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { AyahSearchForm } from "@/components/ayah-search-form";
+import { ContinueMushaf } from "@/components/mushaf/mushaf-reader";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { Star } from "@/components/star";
 import { SurahList } from "@/components/surah-list";
@@ -32,6 +34,13 @@ export default async function QuranPage() {
         <p className="mt-5 max-w-xl text-lg leading-8 text-ink-soft">
           114 surah dengan teks Arab, transliterasi latin, terjemahan, dan tafsir Kementerian Agama RI.
         </p>
+
+        {surahs.length > 0 && (
+          <div className="mt-8 flex flex-col gap-3 lg:flex-row lg:items-center">
+            <AyahSearchForm />
+            <ContinueMushaf />
+          </div>
+        )}
 
         {surahs.length > 0 ? (
           <SurahList surahs={surahs} juzStarts={juzStarts} />

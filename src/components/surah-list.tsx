@@ -6,16 +6,8 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { juzEntryInSurah, surahHref, type JuzStart } from "@/lib/juz";
 import type { SurahSummary } from "@/lib/quran";
+import { normalize } from "@/lib/quran-search";
 import { SurahCard } from "./surah-card";
-
-/** Lowercase, diacritic-free and without punctuation, so "al fatihah" matches "Al-Fātiḥah". */
-function normalize(value: string) {
-  return value
-    .normalize("NFKD")
-    .replace(/[̀-ͯ]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, "");
-}
 
 const fieldClass =
   "w-full rounded-full border border-forest/15 bg-surface/70 py-3.5 text-sm text-ink outline-none backdrop-blur transition focus:border-gold/60 focus:bg-surface";
@@ -134,6 +126,14 @@ export function SurahList({ surahs, juzStarts }: { surahs: SurahSummary[]; juzSt
         <p className="mt-10 rounded-3xl border border-dashed border-gold/40 bg-paper-deep/40 px-8 py-14 text-center text-ink-soft">
           Tidak ada surah yang cocok{query && <> dengan &ldquo;{query}&rdquo;</>}
           {juz && ` di Juz ${juz}`}.
+          {query.trim() && (
+            <Link
+              href={`/quran/cari?${new URLSearchParams({ q: query.trim() })}`}
+              className="mt-3 flex items-center justify-center gap-1 font-medium text-gold transition hover:text-forest"
+            >
+              Cari &ldquo;{query.trim()}&rdquo; di terjemahan ayat <ArrowRight aria-hidden="true" size={14} />
+            </Link>
+          )}
         </p>
       )}
     </>

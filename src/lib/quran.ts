@@ -1,4 +1,4 @@
-import { and, asc, eq, inArray, min } from "drizzle-orm";
+import { and, asc, count, eq, inArray, min, sql } from "drizzle-orm";
 import type { createDb } from "@/db/connection";
 import { ayahs, surahs } from "@/db/schema";
 
@@ -37,6 +37,42 @@ export function listJuzStarts(db: Db) {
     .where(inArray(ayahs.id, firstAyahs))
     .orderBy(asc(ayahs.juz));
 }
+
+/** The first page of every juz, ordered by juz. */
+export function listJuzPages(db: Db) {
+  return db
+    .select({ juz: ayahs.juz, page: min(ayahs.page).mapWith(Number) })
+    .from(ayahs)
+    .groupBy(ayahs.juz)
+    .orderBy(asc(ayahs.juz));
+}
+
+/** The mushaf page every surah opens on, in surah order. */
+export function listSurahPages(db: Db) {
+  return db.select({ number: surahs.number, nameLatin: surahs.nameLatin, page: surahs.page }).from(surahs).orderBy(asc(surahs.number));
+}
+
+/** Every ayah printed on one mushaf page, in order, with the surah it belongs to. */
+export function listPageAyahs(db: Db, page: number) {
+  return db
+    .select({
+      id: ayahs.id,
+      surahNumber: ayahs.surahNumber,
+      number: ayahs.number,
+      juz: ayahs.juz,
+      arabic: ayahs.arabic,
+      nameArabic: surahs.nameArabic,
+      nameLatin: surahs.nameLatin,
+      ayahCount: surahs.ayahCount,
+      location: surahs.location
+    })
+    .from(ayahs)
+    .innerJoin(surahs, eq(surahs.number, ayahs.surahNumber))
+    .where(eq(ayahs.page, page))
+    .orderBy(asc(ayahs.id));
+}
+
+export type PageAyah = Awaited<ReturnType<typeof listPageAyahs>>[number];
 
 /** Surahs commonly read on their own, in the order they are featured. */
 export const featuredSurahNumbers = [1, 18, 36, 55, 56, 67];
@@ -95,6 +131,40 @@ export async function getNeighbourAyahs(db: Db, id: number) {
     previous: rows.find((row) => row.id === id - 1) ?? null,
     next: rows.find((row) => row.id === id + 1) ?? null
   };
+}
+
+export const SEARCH_PAGE_SIZE = 20;
+
+/**
+ * Ayahs whose translation contains every term (case-insensitive), in mushaf order, one page at a time.
+ * LIKE wildcards in the terms are escaped so "50%" or "a_b" match literally.
+ */
+export async function searchAyahs(db: Db, terms: string[], page = 1) {
+  if (terms.length === 0) return { results: [], total: 0 };
+
+  const where = and(
+    ...terms.map((term) => sql`${ayahs.translation} like ${`%${term.replace(/[\\%_]/g, "\\$&")}%`} escape '\\'`)
+  );
+  const [results, [{ total }]] = await Promise.all([
+    db
+      .select({
+        id: ayahs.id,
+        surahNumber: ayahs.surahNumber,
+        number: ayahs.number,
+        nameLatin: surahs.nameLatin,
+        arabic: ayahs.arabic,
+        translation: ayahs.translation
+      })
+      .from(ayahs)
+      .innerJoin(surahs, eq(surahs.number, ayahs.surahNumber))
+      .where(where)
+      .orderBy(asc(ayahs.id))
+      .limit(SEARCH_PAGE_SIZE)
+      .offset((page - 1) * SEARCH_PAGE_SIZE),
+    db.select({ total: count() }).from(ayahs).where(where)
+  ]);
+
+  return { results, total };
 }
 
 /** Bismillah is printed before every surah except Al-Fatihah (where it is ayah 1) and At-Taubah. */

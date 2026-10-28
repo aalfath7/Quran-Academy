@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Amiri, Fraunces, Plus_Jakarta_Sans } from "next/font/google";
+import { Fraunces, Plus_Jakarta_Sans, Scheherazade_New } from "next/font/google";
 import { themeInitScript } from "@/components/theme-toggle";
 import "./globals.css";
 
@@ -14,10 +14,12 @@ const display = Fraunces({
   variable: "--font-fraunces"
 });
 
-const arabic = Amiri({
+// Scheherazade New stacks the Quranic marks of the Kemenag text (sukun with madd, small high madd, iqlab)
+// without them colliding, which Amiri does not.
+const arabic = Scheherazade_New({
   subsets: ["arabic"],
   weight: ["400", "700"],
-  variable: "--font-amiri"
+  variable: "--font-scheherazade"
 });
 
 export const metadata: Metadata = {

@@ -1,7 +1,8 @@
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { QuranText } from "@/components/quran-text";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { Star } from "@/components/star";
 import { getDb } from "@/db";
@@ -74,7 +75,7 @@ export default async function AyahPage({ params }: Props) {
           <div className="relative">
             <Star className="mx-auto size-8 text-gold-soft/70" />
             <p className="mt-6 font-arabic text-3xl leading-[2.2] text-gold-soft md:text-4xl" lang="ar" dir="rtl">
-              {ayah.arabic}
+              <QuranText text={ayah.arabic} />
             </p>
             <p className="mt-6 italic leading-7 text-cream/70">{ayah.latin}</p>
           </div>
@@ -98,7 +99,16 @@ export default async function AyahPage({ params }: Props) {
           </section>
         )}
 
-        <p className="mt-10 text-xs text-ink-soft/70">Sumber: Al-Qur&apos;an dan tafsir Kementerian Agama RI.</p>
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-3">
+          <p className="text-xs text-ink-soft/70">Sumber: Al-Qur&apos;an dan tafsir Kementerian Agama RI.</p>
+          <Link
+            href={`/quran/halaman/${ayah.page}`}
+            className="inline-flex items-center gap-2 text-sm font-medium text-forest transition hover:text-gold"
+          >
+            <BookOpen aria-hidden="true" size={15} />
+            Lihat di mushaf · hal. {ayah.page}
+          </Link>
+        </div>
 
         <div className="my-14 flex items-center justify-center gap-3 text-gold/60">
           <span className="h-px w-16 bg-gold/30" />
