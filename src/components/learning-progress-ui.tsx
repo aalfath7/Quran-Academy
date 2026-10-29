@@ -7,7 +7,6 @@ import {
   emptyLessonProgress,
   LAST_LEARNED_KEY,
   LESSON_PROGRESS_KEY,
-  lessonOverallProgress,
   parseLastLearned,
   parseLessonProgress,
   toggleLessonDone,
@@ -85,6 +84,43 @@ export function LessonCardStatus({ slug }: { slug: string }) {
   );
 }
 
+/** Numbered links to the given lessons (usually one tajwid stage), marked by the lessons finished in this browser. */
+export function LessonPills({ lessons, current }: { lessons: (LessonLink & { number: number })[]; current: string }) {
+  const [progress] = useLessonProgress();
+
+  return (
+    <ol className="mt-4 flex flex-wrap gap-2">
+      {lessons.map(({ slug, title, number }) => {
+        const isCurrent = slug === current;
+        const done = progress.done.includes(slug);
+        return (
+          <li key={slug}>
+            <Link
+              href={`/belajar/${slug}`}
+              title={done ? `${title} (sudah selesai)` : title}
+              aria-current={isCurrent ? "page" : undefined}
+              className={`relative flex size-10 items-center justify-center rounded-full border font-display text-sm font-semibold transition ${
+                isCurrent
+                  ? "border-brand bg-brand text-cream"
+                  : done
+                    ? "border-gold/60 bg-gold/15 text-forest-deep hover:bg-gold/25"
+                    : "border-forest/15 text-forest-deep hover:border-gold/60 hover:bg-surface"
+              }`}
+            >
+              {number}
+              {done && (
+                <span className="absolute -right-1 -top-1 flex size-4 items-center justify-center rounded-full bg-gold text-cream">
+                  <Check aria-hidden="true" size={10} strokeWidth={3} />
+                </span>
+              )}
+            </Link>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
 /** "Continue" link to the lesson among `lessons` opened last in this browser. */
 export function ContinueLesson({ lessons }: { lessons: LessonLink[] }) {
   const [progress] = useLessonProgress();
@@ -99,34 +135,5 @@ export function ContinueLesson({ lessons }: { lessons: LessonLink[] }) {
       Lanjutkan: {lesson.title}
       <ArrowRight aria-hidden="true" size={16} className="transition group-hover:translate-x-1" />
     </Link>
-  );
-}
-
-/** Progress across the published lessons in view. */
-export function LessonProgress({ slugs }: { slugs: string[] }) {
-  const [progress] = useLessonProgress();
-  const { doneLessons, totalLessons, percent } = lessonOverallProgress(progress, slugs);
-  if (totalLessons === 0) return null;
-
-  return (
-    <div className="mt-10 max-w-xl rounded-3xl border border-gold/30 bg-surface/60 p-5 backdrop-blur">
-      <div className="flex items-baseline justify-between gap-4">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Progres materi</p>
-        <p className="font-display text-3xl font-light text-forest-deep">{percent}%</p>
-      </div>
-      <span
-        role="progressbar"
-        aria-label="Progres materi"
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={percent}
-        className="mt-3 block h-2.5 overflow-hidden rounded-full bg-forest/10"
-      >
-        <span className="block h-full rounded-full bg-gold transition-all duration-500" style={{ width: `${percent}%` }} />
-      </span>
-      <p className="mt-3 text-sm text-ink-soft">
-        {doneLessons} dari {totalLessons} materi selesai
-      </p>
-    </div>
   );
 }

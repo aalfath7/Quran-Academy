@@ -5,7 +5,7 @@ import { QuranText } from "@/components/quran-text";
 import { arabicRuns, verseParts, type Item, type LessonLayout, type NoteTone, type Part, type Section } from "@/lib/lesson-layout";
 
 /** Text with every Arabic run set in the Arabic typeface; "|" in a quoted passage marks where to stop. */
-function Inline({ text }: { text: string }) {
+export function Inline({ text }: { text: string }) {
   return arabicRuns(text).map((part, i) =>
     part.arabic ? (
       <span key={i} lang="ar" dir="rtl" className="font-arabic text-[1.25em] leading-[1.6] text-forest-deep">
@@ -176,7 +176,7 @@ const noteStyles: Record<NoteTone, { icon: LucideIcon; className: string }> = {
   howto: { icon: Mic, className: "border-forest/20 bg-forest/5 [&_svg]:text-forest" }
 };
 
-function PartView({ part }: { part: Part }) {
+export function PartView({ part }: { part: Part }) {
   switch (part.kind) {
     case "paragraph":
       return (

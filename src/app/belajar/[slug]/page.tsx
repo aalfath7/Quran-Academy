@@ -1,9 +1,11 @@
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, LayoutGrid, Target } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { FullscreenToggle } from "@/components/fullscreen-frame";
 import { JsonLd } from "@/components/json-ld";
-import { LessonDoneToggle, RecordLessonVisit } from "@/components/learning-progress-ui";
+import { LessonDoneToggle, LessonPills, RecordLessonVisit } from "@/components/learning-progress-ui";
+import { MeetingLesson } from "@/components/lesson/meeting-lesson";
 import { TajwidLesson } from "@/components/lesson/tajwid-lesson";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { Star } from "@/components/star";
@@ -11,6 +13,9 @@ import { getDb } from "@/db";
 import { categoryInfo } from "@/lib/categories";
 import { lessonLayout, readingMinutes } from "@/lib/lesson-layout";
 import { contentBlocks, drillRows, getPublishedLesson, listPublishedLessons } from "@/lib/lessons";
+import { meetingDrills, meetingPages, meetingPlan } from "@/lib/meeting-plan";
+import { listAyahsByRef, listPagesAyahs } from "@/lib/quran";
+import { groupByStage, tajwidStage } from "@/lib/tajwid-curriculum";
 import { absoluteUrl, breadcrumbJsonLd, pageMetadata, SITE_NAME, SITE_URL } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
@@ -20,7 +25,7 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const lesson = await getPublishedLesson(await getDb(), (await params).slug);
 
-  return lesson ? pageMetadata({ title: `${lesson.title} · Belajar Tajwid`, description: lesson.summary, path: `/belajar/${lesson.slug}` }) : {};
+  return lesson ? pageMetadata({ title: `${lesson.title} · Tartil`, description: lesson.summary, path: `/belajar/${lesson.slug}` }) : {};
 }
 
 export default async function LessonPage({ params }: Props) {
@@ -38,8 +43,14 @@ export default async function LessonPage({ params }: Props) {
   const blocks = contentBlocks(lesson.content);
   const isMatan = lesson.category === "jazariyah";
 
-  return (
-    <main className="grain relative min-h-screen overflow-hidden">
+  // Tajwid lessons written as class meetings get their drilled ayahs and mushaf pages from the Qur'an data.
+  const plan = lesson.category === "tajwid" ? meetingPlan(lesson.content) : null;
+  const [drilledAyahs, pageAyahs] = plan
+    ? await Promise.all([listAyahsByRef(db, meetingDrills(plan)), listPagesAyahs(db, meetingPages(plan))])
+    : [[], []];
+  const stage = plan ? tajwidStage(index + 1) : null;
+
+  const jsonLd = (
       <JsonLd data={[
           {
             "@context": "https://schema.org",
@@ -58,6 +69,130 @@ export default async function LessonPage({ params }: Props) {
           },
           breadcrumbJsonLd([["Beranda", "/"], [category.label, "/belajar"], [lesson.title, `/belajar/${lesson.slug}`]])
         ]} />
+  );
+
+  const neighbours = (
+    <nav className="mx-auto mt-8 grid max-w-3xl gap-4 sm:grid-cols-2" aria-label="Materi lain">
+      {previous ? (
+        <Link
+          href={`/belajar/${previous.slug}`}
+          className="group rounded-2xl border border-forest/10 bg-surface/60 p-5 transition hover:border-gold/40 hover:bg-surface"
+        >
+          <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gold">
+            <ArrowLeft aria-hidden="true" size={14} /> Sebelumnya
+          </span>
+          <span className="mt-2 block font-display text-lg text-forest-deep">{previous.title}</span>
+        </Link>
+      ) : (
+        <span />
+      )}
+      {next && (
+        <Link
+          href={`/belajar/${next.slug}`}
+          className="group rounded-2xl border border-forest/10 bg-surface/60 p-5 text-right transition hover:border-gold/40 hover:bg-surface"
+        >
+          <span className="flex items-center justify-end gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gold">
+            Berikutnya <ArrowRight aria-hidden="true" size={14} />
+          </span>
+          <span className="mt-2 block font-display text-lg text-forest-deep">{next.title}</span>
+        </Link>
+      )}
+    </nav>
+  );
+
+  // A class meeting is studied like an Ibtida practice: pick a stage and meeting above, then read the materi beside the practice.
+  if (plan && stage) {
+    const stages = groupByStage(siblings).filter(({ items }) => items.length > 0);
+    const currentStage = stages.find(({ number }) => number === stage.number) ?? stages[0];
+
+    return (
+      <main className="grain relative min-h-screen overflow-hidden fullview:min-h-full fullview:overflow-visible">
+        {jsonLd}
+        <div className="fullview:hidden">
+          <BackgroundGlow />
+          <SiteHeader />
+        </div>
+        <RecordLessonVisit slug={lesson.slug} title={lesson.title} />
+
+        <div className="relative mx-auto max-w-5xl px-4 pb-24 pt-4 sm:px-6 md:pt-8 fullview:py-4">
+          <nav aria-label="Pilih materi" className="rounded-3xl border border-forest/10 bg-surface/60 p-4 md:p-5 md:backdrop-blur fullview:hidden">
+            <div className="flex items-center justify-between gap-4">
+              <Link href="/belajar" className="inline-flex items-center gap-2 text-sm font-medium text-ink-soft transition hover:text-forest">
+                <LayoutGrid aria-hidden="true" size={16} />
+                Semua materi
+              </Link>
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Tartil · Tahap {stage.number}</span>
+            </div>
+            {stages.length > 1 && (
+              <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Pilih tahap">
+                {stages.map(({ number, title, items }) => (
+                  <li key={number}>
+                    <Link
+                      href={`/belajar/${items[0].meeting.slug}`}
+                      title={title}
+                      aria-current={number === stage.number ? "true" : undefined}
+                      className={`inline-block rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+                        number === stage.number ? "bg-brand text-cream" : "bg-forest/5 text-forest-deep hover:bg-forest/10"
+                      }`}
+                    >
+                      Tahap {number}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <p className="mt-4 text-sm font-medium text-forest-deep">{currentStage.title}</p>
+            <LessonPills
+              lessons={currentStage.items.map(({ meeting: { slug, title }, number }) => ({ slug, title, number }))}
+              current={lesson.slug}
+            />
+          </nav>
+
+          <header className="mt-4 flex flex-col gap-4 rounded-3xl border border-forest/10 bg-surface/60 p-5 md:p-6 lg:flex-row lg:items-center lg:justify-between fullview:hidden">
+            <div className="min-w-0">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+                Tahap {stage.number} · {stage.title}
+              </p>
+              <h1 className="mt-1 font-display text-3xl font-light leading-tight tracking-tight text-forest-deep md:text-4xl">{lesson.title}</h1>
+              <p className="mt-3 flex gap-2 leading-7 text-ink">
+                <Target aria-hidden="true" size={18} className="mt-1 shrink-0 text-gold" />
+                <span>
+                  <span className="font-semibold text-forest-deep">Tujuan: </span>
+                  {lesson.summary}
+                </span>
+              </p>
+            </div>
+            <div className="flex items-center justify-between gap-6 lg:shrink-0">
+              {lesson.arabicText && (
+                <p className="whitespace-pre-line font-arabic text-2xl leading-[1.9] text-gold lg:text-right" lang="ar" dir="rtl">
+                  {lesson.arabicText}
+                </p>
+              )}
+              <FullscreenToggle />
+            </div>
+          </header>
+
+          <MeetingLesson plan={plan} ayahs={drilledAyahs} pages={pageAyahs} />
+
+          {/* Fullscreen is for the materi and the practice only. */}
+          <div className="fullview:hidden">
+            <div className="mx-auto mt-10 max-w-3xl">
+              <LessonDoneToggle slug={lesson.slug} />
+            </div>
+            {neighbours}
+          </div>
+        </div>
+
+        <div className="fullview:hidden">
+          <SiteFooter />
+        </div>
+      </main>
+    );
+  }
+
+  return (
+    <main className="grain relative min-h-screen overflow-hidden">
+      {jsonLd}
       <BackgroundGlow />
       <SiteHeader />
 
@@ -163,32 +298,7 @@ export default async function LessonPage({ params }: Props) {
 
         <LessonDoneToggle slug={lesson.slug} />
 
-        <nav className="mt-8 grid gap-4 sm:grid-cols-2" aria-label="Materi lain">
-          {previous ? (
-            <Link
-              href={`/belajar/${previous.slug}`}
-              className="group rounded-2xl border border-forest/10 bg-surface/60 p-5 transition hover:border-gold/40 hover:bg-surface"
-            >
-              <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gold">
-                <ArrowLeft aria-hidden="true" size={14} /> Sebelumnya
-              </span>
-              <span className="mt-2 block font-display text-lg text-forest-deep">{previous.title}</span>
-            </Link>
-          ) : (
-            <span />
-          )}
-          {next && (
-            <Link
-              href={`/belajar/${next.slug}`}
-              className="group rounded-2xl border border-forest/10 bg-surface/60 p-5 text-right transition hover:border-gold/40 hover:bg-surface"
-            >
-              <span className="flex items-center justify-end gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gold">
-                Berikutnya <ArrowRight aria-hidden="true" size={14} />
-              </span>
-              <span className="mt-2 block font-display text-lg text-forest-deep">{next.title}</span>
-            </Link>
-          )}
-        </nav>
+        {neighbours}
       </article>
 
       <SiteFooter />

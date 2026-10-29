@@ -41,7 +41,7 @@ export function PracticeNavDrawer({
       >
         <ChartNoAxesColumn aria-hidden="true" size={18} className="text-gold" />
         <span className="font-display text-xs font-semibold">{percent}%</span>
-        <span className="sr-only">Buka progres dan daftar praktik</span>
+        <span className="sr-only">Buka progres dan daftar latihan</span>
       </button>
 
       {open && <div className="fixed inset-0 z-40 bg-ink/30 backdrop-blur-sm md:hidden" onClick={() => setOpen(false)} />}
@@ -55,7 +55,7 @@ export function PracticeNavDrawer({
         }`}
       >
         <div className="mb-2 flex items-center justify-between md:hidden">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Progres praktik</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Progres Ibtida</p>
           <button
             type="button"
             onClick={() => setOpen(false)}

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { lessons as jazariyahLessons } from "../scripts/data/jazariyah.mjs";
-import { lessons as tajwidLessons } from "../scripts/data/tajwid-ringkas.mjs";
+import { lessons as tajwidLessons } from "../scripts/data/tajwid-pertemuan.mjs";
 import { materiCategories } from "../src/lib/categories";
 import { drawQuiz, parseScores, QUIZ_LENGTH, recordScore } from "../src/lib/quiz";
 import { quizBanks } from "../src/lib/quiz-data";

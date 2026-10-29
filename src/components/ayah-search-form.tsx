@@ -21,7 +21,7 @@ export function AyahSearchForm({ defaultValue = "", autoFocus = false }: { defau
         type="submit"
         className="shrink-0 rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-cream transition hover:bg-brand-deep"
       >
-        Cari ayat
+        Cari
       </button>
     </form>
   );

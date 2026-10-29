@@ -5,8 +5,8 @@ import { ThemeToggle } from "./theme-toggle";
 
 const navLinks = [
   { href: "/quran", label: "Al-Qur'an" },
-  { href: "/praktik", label: "Praktik" },
-  { href: "/belajar?kategori=tajwid", label: "Tajwid" },
+  { href: "/praktik", label: "Ibtida" },
+  { href: "/belajar?kategori=tajwid", label: "Tartil" },
   { href: "/tes", label: "Tes" },
   { href: "/daftar", label: "Kelas Online" }
 ];
@@ -44,7 +44,13 @@ export function SiteFooter() {
         <Logo className="size-4 text-forest" />
         Fathway Quran
       </span>
-      <span>Belajar dengan niat baik dan konsisten.</span>
+      <span className="flex flex-wrap items-center justify-center gap-x-2">
+        <span>quran.fathway.com</span>
+        <span aria-hidden="true">·</span>
+        <a href="https://instagram.com/fathwayquran" target="_blank" rel="noopener noreferrer" className="transition hover:text-forest">
+          Instagram @fathwayquran
+        </a>
+      </span>
     </footer>
   );
 }

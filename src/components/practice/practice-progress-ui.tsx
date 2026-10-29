@@ -78,30 +78,22 @@ export function ContinuePractice({ practices }: { practices: PracticeLink[] }) {
       href={`/praktik/${practices[index].slug}`}
       className="group mt-8 inline-flex items-center gap-3 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-cream shadow-xl shadow-brand/20 transition hover:-translate-y-0.5 hover:bg-brand-deep"
     >
-      Lanjutkan Praktik {index + 1}: {practices[index].title}
+      Lanjutkan Ibtida {index + 1}: {practices[index].title}
       <ArrowRight aria-hidden="true" size={16} className="transition group-hover:translate-x-1" />
     </Link>
   );
 }
 
 /**
- * Progress across every practice; `totals` maps each practice to its number of drill sections.
- * With `part`, the compact bar tracks that part and the whole series is shown as a figure beside it.
+ * Compact progress bar across every practice; `totals` maps each practice to its number of drill sections.
+ * With `part`, the bar tracks that part and the whole series is shown as a figure beside it.
  */
-export function OverallProgress({
-  totals,
-  compact = false,
-  part
-}: {
-  totals: Record<string, number>;
-  compact?: boolean;
-  part?: CurrentPart;
-}) {
+export function OverallProgress({ totals, part }: { totals: Record<string, number>; part?: CurrentPart }) {
   const [progress] = usePracticeProgress();
-  const { doneSections, totalSections, donePractices, totalPractices, percent } = overallProgress(progress, totals);
+  const { totalSections, donePractices, totalPractices, percent } = overallProgress(progress, totals);
   if (totalSections === 0) return null;
 
-  if (compact && part) {
+  if (part) {
     const partTotals = Object.fromEntries(part.slugs.map((slug) => [slug, totals[slug] ?? 0]));
     const inPart = overallProgress(progress, partTotals);
 
@@ -123,50 +115,33 @@ export function OverallProgress({
           </span>
         </span>
         <span className="hidden shrink-0 sm:inline">
-          {inPart.donePractices}/{inPart.totalPractices} praktik
+          {inPart.donePractices}/{inPart.totalPractices} latihan
         </span>
-        <span className="shrink-0 border-l border-forest/15 pl-3" title={`${donePractices}/${totalPractices} praktik selesai`}>
+        <span className="shrink-0 border-l border-forest/15 pl-3" title={`${donePractices}/${totalPractices} latihan selesai`}>
           Keseluruhan {percent}%
         </span>
       </div>
     );
   }
 
-  const bar = (
-    <span
-      role="progressbar"
-      aria-label="Progres keseluruhan praktik"
-      aria-valuemin={0}
-      aria-valuemax={100}
-      aria-valuenow={percent}
-      className={`block overflow-hidden rounded-full bg-forest/10 ${compact ? "h-1.5" : "h-2.5"}`}
-    >
-      <span className="block h-full rounded-full bg-gold transition-all duration-500" style={{ width: `${percent}%` }} />
-    </span>
-  );
-
-  if (compact) {
-    return (
-      <div className="flex items-center gap-3 text-xs text-ink-soft">
-        <span className="shrink-0 font-semibold text-forest-deep">Keseluruhan {percent}%</span>
-        <span className="min-w-16 flex-1">{bar}</span>
-        <span className="hidden shrink-0 sm:inline">
-          {donePractices}/{totalPractices} praktik selesai
-        </span>
-      </div>
-    );
-  }
-
   return (
-    <div className="mt-10 max-w-xl rounded-3xl border border-gold/30 bg-surface/60 p-5 backdrop-blur">
-      <div className="flex items-baseline justify-between gap-4">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Progres keseluruhan</p>
-        <p className="font-display text-3xl font-light text-forest-deep">{percent}%</p>
-      </div>
-      <div className="mt-3">{bar}</div>
-      <p className="mt-3 text-sm text-ink-soft">
-        {doneSections} dari {totalSections} bagian lancar · {donePractices} dari {totalPractices} praktik selesai
-      </p>
+    <div className="flex items-center gap-3 text-xs text-ink-soft">
+      <span className="shrink-0 font-semibold text-forest-deep">Keseluruhan {percent}%</span>
+      <span className="min-w-16 flex-1">
+        <span
+          role="progressbar"
+          aria-label="Progres keseluruhan Ibtida"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={percent}
+          className="block h-1.5 overflow-hidden rounded-full bg-forest/10"
+        >
+          <span className="block h-full rounded-full bg-gold transition-all duration-500" style={{ width: `${percent}%` }} />
+        </span>
+      </span>
+      <span className="hidden shrink-0 sm:inline">
+        {donePractices}/{totalPractices} latihan selesai
+      </span>
     </div>
   );
 }

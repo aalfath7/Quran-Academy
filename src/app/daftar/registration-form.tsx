@@ -59,7 +59,7 @@ export function RegistrationForm() {
           href="/praktik"
           className="mt-4 rounded-full px-6 py-3 text-sm font-semibold text-forest-deep transition hover:bg-surface"
         >
-          Sambil menunggu, mulai praktik
+          Sambil menunggu, mulai Ibtida
         </Link>
       </div>
     );

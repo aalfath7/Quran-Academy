@@ -1,25 +1,24 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ContinuePractice, OverallProgress, PracticeCardStatus } from "@/components/practice/practice-progress-ui";
+import { ContinuePractice, PracticeCardStatus } from "@/components/practice/practice-progress-ui";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { Star } from "@/components/star";
 import { getDb } from "@/db";
 import { categoryInfo } from "@/lib/categories";
-import { listPublishedLessons, practiceDrillCount } from "@/lib/lessons";
+import { listPublishedLessons } from "@/lib/lessons";
 import { groupByPart, PRACTICE_TOTAL, practiceParts } from "@/lib/practice-curriculum";
 import { pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Latihan Membaca Huruf Hijaiyah dari Nol",
+  title: "Ibtida: Latihan Membaca Huruf Hijaiyah dari Nol",
   description: `${categoryInfo.praktik.description} Latihan membaca Al-Qur'an untuk pemula, bertahap dengan penanda kemajuan.`,
   path: "/praktik"
 });
 
 export default async function PracticeListPage() {
   const practices = await listPublishedLessons(await getDb(), "praktik");
-  const totals = Object.fromEntries(practices.map(({ slug, content }) => [slug, practiceDrillCount(content)]));
 
   return (
     <main className="grain relative min-h-screen overflow-hidden">
@@ -27,7 +26,7 @@ export default async function PracticeListPage() {
       <SiteHeader />
 
       <section className="relative mx-auto max-w-6xl px-6 pb-24 pt-10 md:pt-16">
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold">Praktik dasar bacaan</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold">Ibtida · dasar bacaan</p>
         <h1 className="mt-4 max-w-3xl font-display text-5xl font-light leading-[1.08] tracking-tight text-forest-deep md:text-6xl">
           Latihan,{" "}
           <span className="font-arabic text-4xl text-gold md:text-5xl" lang="ar" dir="rtl">
@@ -35,10 +34,9 @@ export default async function PracticeListPage() {
           </span>
         </h1>
         <p className="mt-5 max-w-xl text-lg leading-8 text-ink-soft">
-          {PRACTICE_TOTAL} praktik dalam {practiceParts.length} bagian, dari huruf tunggal sampai siap membaca mushaf. Pilih
-          nomor praktik dan langsung berlatih.
+          {PRACTICE_TOTAL} latihan dalam {practiceParts.length} bagian, dari huruf tunggal sampai siap membaca mushaf. Pilih
+          nomor latihan dan langsung berlatih.
         </p>
-        <OverallProgress totals={totals} />
         <ContinuePractice practices={practices.map(({ slug, title }) => ({ slug, title }))} />
 
         <div className="mt-14 space-y-14">
@@ -46,7 +44,7 @@ export default async function PracticeListPage() {
             <section key={number} aria-labelledby={`bagian-${number}`}>
               <div className="border-b border-gold/25 pb-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold">
-                  Bagian {number} · Praktik {from}–{to}
+                  Bagian {number} · Ibtida {from}–{to}
                 </p>
                 <h2 id={`bagian-${number}`} className="mt-2 font-display text-3xl font-light text-forest-deep">
                   {title}
@@ -85,7 +83,7 @@ export default async function PracticeListPage() {
               ) : (
                 <div className="mt-6 flex items-center gap-4 rounded-3xl border border-dashed border-gold/40 bg-paper-deep/40 px-6 py-8">
                   <Star className="size-10 shrink-0 text-gold/50" />
-                  <p className="text-ink-soft">Praktik bagian ini sedang disiapkan. Silakan kembali lagi nanti.</p>
+                  <p className="text-ink-soft">Latihan bagian ini sedang disiapkan. Silakan kembali lagi nanti.</p>
                 </div>
               )}
             </section>

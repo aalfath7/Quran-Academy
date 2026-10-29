@@ -1,10 +1,10 @@
-// Memasukkan materi praktik dasar bacaan, tajwid dasar (level satu), dan syarah Al-Jazariyah ke tabel lessons.
+// Memasukkan materi praktik dasar bacaan, kelas tajwid (26 pertemuan), dan syarah Al-Jazariyah ke tabel lessons.
 //
 //   npm run lessons:seed            (local D1)
 //   npm run lessons:seed -- --remote (remote D1)
 //
 // Aman dijalankan ulang: materi dengan slug yang sama diperbarui, status publish-nya tidak diubah.
-// Praktik dari versi lama Bagian 1 (obsoleteSlugs) dihapus.
+// Praktik dari versi lama Bagian 1 dan materi tajwid lama (obsoleteSlugs) dihapus.
 
 import { spawnSync } from "node:child_process";
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -14,10 +14,10 @@ import { lessons as jazariyah } from "./data/jazariyah.mjs";
 import { lessons as praktikBagian2 } from "./data/praktik-bagian-2.mjs";
 import { lessons as praktikBagian3 } from "./data/praktik-bagian-3.mjs";
 import { lessons as praktikBagian4 } from "./data/praktik-bagian-4.mjs";
-import { obsoleteSlugs, lessons as praktikDasar } from "./data/praktik-dasar.mjs";
-import { lessons as tajwidRingkas } from "./data/tajwid-ringkas.mjs";
+import { obsoleteSlugs as obsoletePraktik, lessons as praktikDasar } from "./data/praktik-dasar.mjs";
+import { obsoleteSlugs as obsoleteTajwid, lessons as tajwidPertemuan } from "./data/tajwid-pertemuan.mjs";
 
-const lessons = [...praktikDasar, ...praktikBagian2, ...praktikBagian3, ...praktikBagian4, ...tajwidRingkas, ...jazariyah];
+const lessons = [...praktikDasar, ...praktikBagian2, ...praktikBagian3, ...praktikBagian4, ...tajwidPertemuan, ...jazariyah];
 
 const remote = process.argv.includes("--remote");
 
@@ -38,7 +38,8 @@ for (const lesson of lessons) {
 const quote = (value) => (value == null ? "NULL" : `'${value.replaceAll("'", "''")}'`);
 
 const removeObsolete = `
-DELETE FROM lessons WHERE category = 'praktik' AND slug IN (${obsoleteSlugs.map(quote).join(", ")});`;
+DELETE FROM lessons WHERE category = 'praktik' AND slug IN (${obsoletePraktik.map(quote).join(", ")});
+DELETE FROM lessons WHERE category = 'tajwid' AND slug IN (${obsoleteTajwid.map(quote).join(", ")});`;
 
 const sql = [removeObsolete]
   .concat(

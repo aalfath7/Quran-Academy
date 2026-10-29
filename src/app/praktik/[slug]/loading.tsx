@@ -21,7 +21,7 @@ export default function Loading() {
 
         <div className="mt-8 rounded-[2rem] border border-gold/30 bg-surface/80 px-4 sm:px-8 md:px-12 fullview:mx-auto fullview:mt-0 fullview:max-w-[110rem] fullview:border-0 fullview:bg-transparent">
           <div className="border-b border-gold/30 py-6">
-            <LoadingIndicator label="Memuat praktik…" />
+            <LoadingIndicator label="Memuat latihan…" />
             <Skeleton className="mt-4 h-8 w-72 max-w-full" />
           </div>
           {Array.from({ length: 3 }, (_, i) => (

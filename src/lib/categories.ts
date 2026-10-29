@@ -3,7 +3,7 @@
 export const lessonCategories = ["praktik", "tajwid", "jazariyah"] as const;
 export type LessonCategory = (typeof lessonCategories)[number];
 
-/** Categories shown together under the "Tajwid" menu; praktik has its own pages under /praktik. Jazari is on hold for now. */
+/** Categories shown together under the "Tartil" menu; praktik has its own pages under /praktik. Jazari is on hold for now. */
 export const materiCategories = ["tajwid"] as const satisfies readonly LessonCategory[];
 export type MateriCategory = (typeof materiCategories)[number];
 
@@ -11,8 +11,8 @@ export type MateriCategory = (typeof materiCategories)[number];
 export const activeCategories = ["praktik", ...materiCategories] as const satisfies readonly LessonCategory[];
 
 export const categoryInfo: Record<LessonCategory, { label: string; arabic: string; description: string }> = {
-  praktik: { label: "Praktik", arabic: "تَدْرِيب", description: "Latihan membaca huruf hijaiyah dari nol." },
-  tajwid: { label: "Tajwid", arabic: "تَجْوِيد", description: "Memahami kaidah bacaan yang benar." },
+  praktik: { label: "Ibtida", arabic: "اِبْتِدَاء", description: "Latihan membaca huruf hijaiyah dari nol." },
+  tajwid: { label: "Tartil", arabic: "تَرْتِيل", description: "Memahami kaidah bacaan yang benar." },
   jazariyah: { label: "Jazari", arabic: "الْجَزَرِيَّة", description: "Matan Al-Jazariyah bait demi bait." }
 };
 

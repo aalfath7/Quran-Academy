@@ -8,8 +8,8 @@ import { useLastLearned, useLessonProgress } from "./learning-progress-ui";
 import { usePracticeProgress } from "./practice/use-practice-progress";
 
 const choices = [
-  { href: "/praktik", label: "Praktik", description: categoryInfo.praktik.description, icon: PenLine },
-  { href: "/belajar", label: "Materi", description: "Kaidah tajwid langkah demi langkah.", icon: BookOpen }
+  { href: "/praktik", label: "Ibtida", description: categoryInfo.praktik.description, icon: PenLine },
+  { href: "/belajar", label: "Tartil", description: "Kaidah tajwid langkah demi langkah.", icon: BookOpen }
 ];
 
 /**
@@ -78,7 +78,7 @@ export function StartLearningMenu({
               <h2 id={titleId} className="font-display text-2xl font-medium text-forest-deep">
                 Mulai dari mana?
               </h2>
-              <p className="mt-1 text-sm text-ink-soft">Pilih latihan praktik atau baca materi lebih dulu.</p>
+              <p className="mt-1 text-sm text-ink-soft">Mulai dari Ibtida, atau lanjut ke Tartil.</p>
             </div>
             <button
               type="button"

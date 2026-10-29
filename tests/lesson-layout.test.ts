@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { lessons } from "../scripts/data/tajwid-ringkas.mjs";
 import { arabicRuns, exampleGroups, lessonLayout, readingMinutes, verseParts, type Part } from "../src/lib/lesson-layout";
 
 const parts = (content: string) => lessonLayout(content).sections.flatMap((section) => section.parts);
@@ -103,14 +102,6 @@ Contoh:
 • Jika berhenti dengan sukun, ra dibaca tebal.`);
 
     expect(numbered).toMatchObject({ kind: "numbered", items: [{ number: "1", points: [{ text: "Jika berhenti dengan sukun, ra dibaca tebal." }] }] });
-  });
-
-  it("lays out every seeded tajwid lesson with its reference", () => {
-    for (const lesson of lessons) {
-      const layout = lessonLayout(lesson.content);
-      expect(layout.source, lesson.slug).toMatch(/^Kitab/);
-      expect(layout.sections.flatMap(({ parts }) => parts).length, lesson.slug).toBeGreaterThan(0);
-    }
   });
 });
 

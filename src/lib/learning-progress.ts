@@ -49,15 +49,3 @@ export function toggleLessonDone(progress: LessonProgress, slug: string): Lesson
 
   return { last: slug, done };
 }
-
-/** Progress across `slugs`, the published lessons in view; marks on lessons no longer published are ignored. */
-export function lessonOverallProgress(progress: LessonProgress, slugs: string[]) {
-  const done = new Set(progress.done);
-  const doneLessons = slugs.filter((slug) => done.has(slug)).length;
-
-  return {
-    doneLessons,
-    totalLessons: slugs.length,
-    percent: slugs.length ? Math.round((doneLessons / slugs.length) * 100) : 0
-  };
-}

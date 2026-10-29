@@ -1,4 +1,4 @@
-import { and, asc, count, eq, inArray, min, sql } from "drizzle-orm";
+import { and, asc, count, eq, inArray, min, or, sql } from "drizzle-orm";
 import type { createDb } from "@/db/connection";
 import { ayahs, surahs } from "@/db/schema";
 
@@ -52,27 +52,50 @@ export function listSurahPages(db: Db) {
   return db.select({ number: surahs.number, nameLatin: surahs.nameLatin, page: surahs.page }).from(surahs).orderBy(asc(surahs.number));
 }
 
+const pageAyah = {
+  id: ayahs.id,
+  page: ayahs.page,
+  surahNumber: ayahs.surahNumber,
+  number: ayahs.number,
+  juz: ayahs.juz,
+  arabic: ayahs.arabic,
+  nameArabic: surahs.nameArabic,
+  nameLatin: surahs.nameLatin,
+  ayahCount: surahs.ayahCount,
+  location: surahs.location
+};
+
 /** Every ayah printed on one mushaf page, in order, with the surah it belongs to. */
 export function listPageAyahs(db: Db, page: number) {
-  return db
-    .select({
-      id: ayahs.id,
-      surahNumber: ayahs.surahNumber,
-      number: ayahs.number,
-      juz: ayahs.juz,
-      arabic: ayahs.arabic,
-      nameArabic: surahs.nameArabic,
-      nameLatin: surahs.nameLatin,
-      ayahCount: surahs.ayahCount,
-      location: surahs.location
-    })
-    .from(ayahs)
-    .innerJoin(surahs, eq(surahs.number, ayahs.surahNumber))
-    .where(eq(ayahs.page, page))
-    .orderBy(asc(ayahs.id));
+  return db.select(pageAyah).from(ayahs).innerJoin(surahs, eq(surahs.number, ayahs.surahNumber)).where(eq(ayahs.page, page)).orderBy(asc(ayahs.id));
 }
 
 export type PageAyah = Awaited<ReturnType<typeof listPageAyahs>>[number];
+
+/** Every ayah printed on the given mushaf pages, in mushaf order; each ayah keeps its page. */
+export function listPagesAyahs(db: Db, pages: number[]): Promise<PageAyah[]> {
+  if (pages.length === 0) return Promise.resolve([]);
+
+  return db
+    .select(pageAyah)
+    .from(ayahs)
+    .innerJoin(surahs, eq(surahs.number, ayahs.surahNumber))
+    .where(inArray(ayahs.page, pages))
+    .orderBy(asc(ayahs.id));
+}
+
+/** The given ayahs ({ surah, ayah } pairs) with their surah name; pairs without an ayah are skipped. */
+export function listAyahsByRef(db: Db, refs: { surah: number; ayah: number }[]) {
+  if (refs.length === 0) return Promise.resolve([]);
+
+  return db
+    .select({ surahNumber: ayahs.surahNumber, number: ayahs.number, arabic: ayahs.arabic, nameLatin: surahs.nameLatin })
+    .from(ayahs)
+    .innerJoin(surahs, eq(surahs.number, ayahs.surahNumber))
+    .where(or(...refs.map(({ surah, ayah }) => and(eq(ayahs.surahNumber, surah), eq(ayahs.number, ayah)))));
+}
+
+export type AyahByRef = Awaited<ReturnType<typeof listAyahsByRef>>[number];
 
 /** Surahs commonly read on their own, in the order they are featured. */
 export const featuredSurahNumbers = [1, 18, 36, 55, 56, 67];

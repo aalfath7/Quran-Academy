@@ -3,7 +3,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { createDb } from "../src/db/connection";
 import { ayahs, surahs } from "../src/db/schema";
 import { juzEntryInSurah, surahHref } from "../src/lib/juz";
-import { getAyah, getNeighbourAyahs, getSurah, listAyahs, listJuzPages, listJuzStarts, listPageAyahs, listSurahPages, listSurahs, listSurahsByNumber, paragraphs, parsePositiveInt, searchAyahs, showsBismillah } from "../src/lib/quran";
+import { getAyah, getNeighbourAyahs, getSurah, listAyahs, listAyahsByRef, listJuzPages, listJuzStarts, listPageAyahs, listPagesAyahs, listSurahPages, listSurahs, listSurahsByNumber, paragraphs, parsePositiveInt, searchAyahs, showsBismillah } from "../src/lib/quran";
 import { groupBySurah, pauseSegments, parseMushafPage, parseMushafSize, stepMushafSize, swipeDirection, toArabicDigits } from "../src/lib/mushaf";
 import { findSurah, highlight, parseAyahReference, searchTerms } from "../src/lib/quran-search";
 
@@ -94,6 +94,33 @@ describe("quran queries", () => {
       { juz: 1, page: 1 },
       { juz: 2, page: 1 }
     ]);
+  });
+
+  it("lists the ayahs of several mushaf pages in mushaf order", async () => {
+    const db = createDb(env.DB);
+
+    expect((await listPagesAyahs(db, [1, 99])).map(({ id, page }) => [id, page])).toEqual([
+      [1, 1],
+      [2, 1],
+      [3, 1],
+      [4, 1]
+    ]);
+    expect(await listPagesAyahs(db, [])).toEqual([]);
+  });
+
+  it("finds ayahs by reference, skipping ones that do not exist", async () => {
+    const db = createDb(env.DB);
+    const found = await listAyahsByRef(db, [
+      { surah: 2, ayah: 1 },
+      { surah: 1, ayah: 2 },
+      { surah: 9, ayah: 9 }
+    ]);
+
+    expect(found.map(({ surahNumber, number, nameLatin }) => [surahNumber, number, nameLatin]).sort()).toEqual([
+      [1, 2, "Al-Fātiḥah"],
+      [2, 1, "Al-Baqarah"]
+    ]);
+    expect(await listAyahsByRef(db, [])).toEqual([]);
   });
 
   it("searches translations for every term, in mushaf order", async () => {

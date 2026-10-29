@@ -1,7 +1,7 @@
 // Turns the plain-text content of a tajwid lesson into structured parts the page can lay out visually.
-// The content keeps its writing conventions (see scripts/data/tajwid-ringkas.mjs), so lessons written in
-// the admin form render the same way: a short first line of a paragraph is a heading, "•" starts a point,
-// "①" a step, "Contoh:" a set of examples, "Hukum:" a key fact and "Penting:" a note.
+// The content keeps its writing conventions, so lessons written in the admin form render the same way: a short
+// first line of a paragraph is a heading, "•" starts a point, "①" a step, "Contoh:" a set of examples, "Hukum:" a
+// key fact and "Penting:" a note.
 
 const ARABIC = /[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\ufb50-\ufdff\ufe70-\ufeff]/;
 const LATIN = /[A-Za-z]/;
