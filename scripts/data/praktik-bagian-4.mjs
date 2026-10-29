@@ -273,8 +273,8 @@ Ayat ketujuh dipecah menjadi tiga baris; baca bersambung sampai akhir ayat.`,
         ]
       },
       {
-        label: `Latihan B — Lima surah pendek, dibaca dari mushaf atau halaman Al-Qur'an di web
-[QS. An-Nas](/quran/114) · [QS. Al-Falaq](/quran/113) · [QS. Al-Ikhlas](/quran/112) · [QS. Al-Kautsar](/quran/108) · [QS. Al-'Ashr](/quran/103)`
+        label: `Latihan B — Lima surah pendek, dibaca dari mushaf
+QS. An-Nas · QS. Al-Falaq · QS. Al-Ikhlas · QS. Al-Kautsar · QS. Al-'Ashr`
       },
       {
         label: `Latihan C — Setor ujian ke guru

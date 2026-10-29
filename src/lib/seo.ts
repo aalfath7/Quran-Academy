@@ -6,7 +6,7 @@ export const SITE_URL = "https://quran-academy.alfath7.workers.dev";
 export const SITE_NAME = "Fathway Quran";
 export const SITE_TAGLINE = "Belajar Tajwid & Baca Al-Qur'an Online";
 export const SITE_DESCRIPTION =
-  "Belajar membaca Al-Qur'an dari huruf hijaiyah, kaidah tajwid, dan tes pemahaman, lengkap dengan mushaf, terjemahan, dan tafsir Kemenag RI. Gratis dan bisa diakses kapan saja.";
+  "Belajar membaca Al-Qur'an dari huruf hijaiyah sampai kaidah tajwid, dengan latihan ayat, praktik mushaf, dan tes pemahaman. Gratis dan bisa diakses kapan saja.";
 
 const ogImage = { url: "/og-image.png", width: 1200, height: 627, alt: `${SITE_NAME} — ${SITE_TAGLINE}` };
 

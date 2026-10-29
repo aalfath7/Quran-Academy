@@ -4,7 +4,6 @@ import { Logo } from "./logo";
 import { ThemeToggle } from "./theme-toggle";
 
 const navLinks = [
-  { href: "/quran", label: "Al-Qur'an" },
   { href: "/ibtida", label: "Ibtida" },
   { href: "/tartil", label: "Tartil" },
   { href: "/tes", label: "Tes" },

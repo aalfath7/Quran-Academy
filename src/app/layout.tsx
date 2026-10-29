@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   title: { default: homeTitle, template: `%s · ${SITE_NAME}` },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
-  keywords: ["belajar Al-Qur'an", "belajar tajwid", "hukum tajwid", "huruf hijaiyah", "tahsin online", "kelas tajwid online", "mushaf online", "tafsir Al-Qur'an", "terjemahan Al-Qur'an Kemenag"],
+  keywords: ["belajar Al-Qur'an", "belajar tajwid", "hukum tajwid", "huruf hijaiyah", "tahsin online", "kelas tajwid online"],
   authors: [{ name: SITE_NAME, url: SITE_URL }],
   creator: SITE_NAME,
   category: "education",

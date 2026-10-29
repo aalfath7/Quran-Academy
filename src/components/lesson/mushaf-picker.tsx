@@ -1,7 +1,5 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
-import Link from "next/link";
 import { useState, type ReactNode } from "react";
 
 /** The mushaf pages of a practice shown in place, one at a time; a row of page numbers switches between them. */
@@ -12,7 +10,7 @@ export function MushafPicker({ pages }: { pages: { page: number; view: ReactNode
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="flex flex-wrap items-center gap-3">
         {pages.length > 1 ? (
           <ul className="flex flex-wrap gap-1.5" aria-label="Pilih halaman">
             {pages.map(({ page }) => (
@@ -33,13 +31,6 @@ export function MushafPicker({ pages }: { pages: { page: number; view: ReactNode
         ) : (
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">Halaman {shown.page}</p>
         )}
-        <Link
-          href={`/quran/halaman/${shown.page}`}
-          className="inline-flex items-center gap-1 text-sm font-medium text-ink-soft transition hover:text-forest"
-        >
-          Buka di pembaca mushaf
-          <ArrowUpRight aria-hidden="true" size={15} />
-        </Link>
       </div>
       {shown.view}
     </div>

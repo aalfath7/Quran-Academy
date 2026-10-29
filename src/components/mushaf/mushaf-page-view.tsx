@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { QuranText } from "@/components/quran-text";
 import { Star } from "@/components/star";
 import { groupBySurah, toArabicDigits } from "@/lib/mushaf";
@@ -9,15 +8,14 @@ export const surahNames = (ayahs: PageAyah[]) => groupBySurah(ayahs).map(({ ayah
 
 function AyahMarker({ ayah }: { ayah: PageAyah }) {
   return (
-    <Link
-      href={`/quran/${ayah.surahNumber}/${ayah.number}`}
-      title={`${ayah.nameLatin} ${ayah.surahNumber}:${ayah.number} · buka tafsir`}
-      aria-label={`Ayat ${ayah.number}, buka tafsir`}
-      className="relative mx-[0.15em] inline-flex size-[1.3em] items-center justify-center align-middle text-gold transition hover:text-forest"
+    <span
+      title={`${ayah.nameLatin} ${ayah.surahNumber}:${ayah.number}`}
+      aria-label={`Ayat ${ayah.number}`}
+      className="relative mx-[0.15em] inline-flex size-[1.3em] items-center justify-center align-middle text-gold"
     >
       <Star className="absolute inset-0 size-full" />
       <span className="relative font-sans text-[0.4em] font-bold leading-none">{toArabicDigits(ayah.number)}</span>
-    </Link>
+    </span>
   );
 }
 

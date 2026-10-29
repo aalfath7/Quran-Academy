@@ -45,7 +45,7 @@ The script prompts for the password (or reads `ADMIN_PASSWORD`). Passwords are s
 
 ## Al-Qur'an
 
-`/quran` lists the 114 surahs, `/quran/[surah]` shows each ayah with Arabic text, Latin transliteration, Indonesian translation, footnotes and the short tafsir (wajiz), and `/quran/[surah]/[ayat]` shows the full tafsir (tahlili). The text, translation and tafsir are from Kementerian Agama RI, via the Kaggle dataset [ronnieaban/alquran](https://www.kaggle.com/datasets/ronnieaban/alquran).
+There is no standalone Qur'an reader (old `/quran` links redirect home). The Tartil lessons (`/tartil/[slug]`) show the full text of each drilled ayah and the mushaf pages they practise on, read from the Kementerian Agama RI text via the Kaggle dataset [ronnieaban/alquran](https://www.kaggle.com/datasets/ronnieaban/alquran).
 
 The data lives in the `surahs` and `ayahs` D1 tables and is not committed. Download the dataset (it contains a single `surah.csv`) and import it:
 

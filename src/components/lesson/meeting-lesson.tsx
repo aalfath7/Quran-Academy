@@ -1,8 +1,6 @@
-import { ArrowUpRight, BookMarked, BookOpen, ClipboardCheck, Ear, GraduationCap, ListChecks, Mic } from "lucide-react";
+import { BookMarked, BookOpen, ClipboardCheck, Ear, GraduationCap, ListChecks, Mic } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import Link from "next/link";
 import { QuranText } from "@/components/quran-text";
-import { surahHref } from "@/lib/juz";
 import { arabicRuns, isArabicOnly, type Item, type Part, type Section } from "@/lib/lesson-layout";
 import { mushafRange, type MeetingPlan, type MeetingStep } from "@/lib/meeting-plan";
 import type { AyahByRef, PageAyah } from "@/lib/quran";
@@ -191,13 +189,9 @@ function Drills({ step, ayahs }: { step: Extract<MeetingStep, { kind: "drills" }
                   <span className="flex size-7 shrink-0 items-center justify-center rounded-full border border-gold/40 font-display text-xs font-semibold text-gold">
                     {i + 1}
                   </span>
-                  <Link
-                    href={surahHref(drill.surah, drill.ayah)}
-                    className="group inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-[0.14em] text-gold transition hover:text-forest"
-                  >
+                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-gold">
                     {ayah?.nameLatin ?? `Surah ${drill.surah}`} · {drill.ayah}
-                    <ArrowUpRight aria-hidden="true" size={14} className="transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                  </Link>
+                  </span>
                 </div>
                 <p className="mt-4 text-right font-arabic text-3xl leading-[2.2] text-forest-deep md:text-[2rem]" lang="ar" dir="rtl">
                   {ayah ? <QuranText text={ayah.arabic} /> : drill.words}
