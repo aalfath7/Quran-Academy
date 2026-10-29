@@ -8,8 +8,8 @@ import { useLastLearned, useLessonProgress } from "./learning-progress-ui";
 import { usePracticeProgress } from "./practice/use-practice-progress";
 
 const choices = [
-  { href: "/praktik", label: "Ibtida", description: categoryInfo.praktik.description, icon: PenLine },
-  { href: "/belajar", label: "Tartil", description: "Kaidah tajwid langkah demi langkah.", icon: BookOpen }
+  { href: "/ibtida", label: "Ibtida", description: categoryInfo.praktik.description, icon: PenLine },
+  { href: "/tartil", label: "Tartil", description: "Kaidah tajwid langkah demi langkah.", icon: BookOpen }
 ];
 
 /**
@@ -31,8 +31,8 @@ export function StartLearningMenu({
   // Progress saved before the last page was recorded still points somewhere: practice first, then materi.
   const resume =
     lastLearned ??
-    (practiceProgress.last ? { href: `/praktik/${practiceProgress.last}`, title: "" } : null) ??
-    (lessonProgress.last ? { href: `/belajar/${lessonProgress.last}`, title: "" } : null);
+    (practiceProgress.last ? { href: `/ibtida/${practiceProgress.last}`, title: "" } : null) ??
+    (lessonProgress.last ? { href: `/tartil/${lessonProgress.last}`, title: "" } : null);
 
   if (resume) {
     return (

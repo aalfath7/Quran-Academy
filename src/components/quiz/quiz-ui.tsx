@@ -119,7 +119,7 @@ export function QuizRunner({ category, bank }: { category: MateriCategory; bank:
                   </p>
                   <p className="mt-2 text-sm leading-6 text-ink-soft">{item.explanation}</p>
                   <Link
-                    href={`/belajar/${item.lesson}`}
+                    href={`/tartil/${item.lesson}`}
                     className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-forest underline decoration-gold/50 decoration-2 underline-offset-4 transition hover:decoration-gold"
                   >
                     <BookOpen aria-hidden="true" size={14} /> Pelajari materinya
@@ -215,7 +215,7 @@ export function QuizRunner({ category, bank }: { category: MateriCategory; bank:
           <p className="mt-1 leading-7 text-ink-soft">{item.explanation}</p>
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
             <Link
-              href={`/belajar/${item.lesson}`}
+              href={`/tartil/${item.lesson}`}
               target="_blank"
               className="inline-flex items-center gap-1.5 text-sm font-medium text-forest underline decoration-gold/50 decoration-2 underline-offset-4 transition hover:decoration-gold"
             >

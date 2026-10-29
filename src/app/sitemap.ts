@@ -23,8 +23,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     entry("/", 1),
     entry("/daftar", 0.9),
-    entry("/belajar", 0.9),
-    entry("/praktik", 0.9),
+    entry("/tartil", 0.9),
+    entry("/ibtida", 0.9),
     entry("/quran", 0.9),
     entry("/tes", 0.6),
     ...materiCategories.map((category) => entry(`/tes/${category}`, 0.5)),

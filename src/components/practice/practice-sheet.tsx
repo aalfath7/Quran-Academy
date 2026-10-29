@@ -108,7 +108,7 @@ export function PracticeSheet({
   // Saved automatically: opening a practice makes it the one to continue.
   useEffect(() => {
     update((saved) => visitPractice(saved, slug, total));
-    setLastLearned(() => ({ href: `/praktik/${slug}`, title: `Ibtida ${number}: ${title}` }));
+    setLastLearned(() => ({ href: `/ibtida/${slug}`, title: `Ibtida ${number}: ${title}` }));
   }, [slug, total, update, number, title, setLastLearned]);
 
   return (
@@ -146,7 +146,7 @@ export function PracticeSheet({
           {/* Previous and next stay reachable when the page navigation is hidden in fullscreen. */}
           {fullscreen.active && previous && (
             <Link
-              href={`/praktik/${previous.slug}`}
+              href={`/ibtida/${previous.slug}`}
               title={previous.title}
               className="flex size-10 items-center justify-center rounded-full border border-forest/15 text-forest-deep transition hover:border-forest/40"
             >
@@ -156,7 +156,7 @@ export function PracticeSheet({
           )}
           {fullscreen.active && next && (
             <Link
-              href={`/praktik/${next.slug}`}
+              href={`/ibtida/${next.slug}`}
               title={next.title}
               className="flex size-10 items-center justify-center rounded-full border border-forest/15 text-forest-deep transition hover:border-forest/40"
             >
@@ -318,7 +318,7 @@ export function PracticeSheet({
               </p>
               {next && (
                 <Link
-                  href={`/praktik/${next.slug}`}
+                  href={`/ibtida/${next.slug}`}
                   className="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 font-semibold text-cream transition hover:bg-brand-deep"
                 >
                   Lanjut ke Ibtida {next.number}{" "}

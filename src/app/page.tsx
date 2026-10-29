@@ -92,7 +92,7 @@ const plans = [
     price: "Gratis",
     items: [`Semua ${MEETING_TOTAL} materi tajwid`, "Latihan ayat dan halaman praktik mushaf", "Tes pemahaman tajwid di menu Tes", "Catatan progres belajar"],
     cta: "Mulai Gratis",
-    href: "/praktik"
+    href: "/ibtida"
   },
   {
     name: "Kelas",
@@ -172,7 +172,7 @@ export default function Home() {
             Materi singkat per hukum, lalu latihan di ayat dan halaman mushaf pilihan. Rekam bacaanmu dan dapatkan koreksi dari pengajar.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <Link className={primaryButton} href="/praktik">
+            <Link className={primaryButton} href="/ibtida">
               Mulai Belajar Gratis
               <ArrowRight aria-hidden="true" size={16} />
             </Link>
@@ -281,7 +281,7 @@ export default function Home() {
             </div>
             <Link
               className="group inline-flex items-center gap-2 self-start text-sm font-semibold text-forest underline decoration-gold/50 decoration-2 underline-offset-[6px] transition hover:decoration-gold md:self-auto"
-              href="/belajar"
+              href="/tartil"
             >
               Semua materi
               <ArrowRight aria-hidden="true" size={16} className="transition group-hover:translate-x-1" />
@@ -305,7 +305,7 @@ export default function Home() {
 
           <p className="mt-6 text-sm leading-6 text-ink-soft">
             Setiap tahap ditutup dengan evaluasi bacaan 1 halaman mushaf. Belum bisa membaca?{" "}
-            <Link href="/praktik" className="font-semibold text-forest underline decoration-gold/50 underline-offset-4 hover:decoration-gold">
+            <Link href="/ibtida" className="font-semibold text-forest underline decoration-gold/50 underline-offset-4 hover:decoration-gold">
               Kelas Ibtida&apos;
             </Link>{" "}
             mengajarkan dari mengenal huruf.
@@ -431,7 +431,7 @@ export default function Home() {
               Bacaan yang benar dimulai dari <em className="italic text-gold-soft">satu ayat hari ini.</em>
             </h2>
             <Link
-              href="/praktik"
+              href="/ibtida"
               className="mt-10 inline-flex items-center gap-2 rounded-full bg-gold-soft px-7 py-4 text-sm font-semibold text-brand-deep transition hover:-translate-y-0.5 hover:bg-cream"
             >
               Mulai Belajar Gratis

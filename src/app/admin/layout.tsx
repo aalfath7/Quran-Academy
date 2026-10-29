@@ -35,7 +35,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <ThemeToggle />
             <Link
               className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-ink-soft transition hover:bg-surface/70 hover:text-forest"
-              href="/belajar"
+              href="/tartil"
               target="_blank"
             >
               <ExternalLink aria-hidden="true" size={15} />

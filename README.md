@@ -32,7 +32,7 @@ The read-only `/api/health` endpoint performs a D1 query through the Workers bin
 
 ## Admin and lessons
 
-Admins sign in at `/login` and manage lessons (tilawah, tajwid, tahfidz) at `/admin`. Published lessons appear at `/belajar`.
+Admins sign in at `/login` and manage lessons (tilawah, tajwid, tahfidz) at `/admin`. Published lessons appear at `/tartil`.
 
 There is no public sign-up. Create an admin, or reset an existing admin's password, with:
 

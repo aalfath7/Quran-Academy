@@ -3,7 +3,7 @@
 export const lessonCategories = ["praktik", "tajwid", "jazariyah"] as const;
 export type LessonCategory = (typeof lessonCategories)[number];
 
-/** Categories shown together under the "Tartil" menu; praktik has its own pages under /praktik. Jazari is on hold for now. */
+/** Categories shown together under the "Tartil" menu; praktik has its own pages under /ibtida. Jazari is on hold for now. */
 export const materiCategories = ["tajwid"] as const satisfies readonly LessonCategory[];
 export type MateriCategory = (typeof materiCategories)[number];
 
@@ -26,10 +26,10 @@ export function isMateriCategory(value: unknown): value is MateriCategory {
 
 /** Where a lesson is read: practice drills have their own focused pages. */
 export function lessonHref(lesson: { slug: string; category: LessonCategory }) {
-  return lesson.category === "praktik" ? `/praktik/${lesson.slug}` : `/belajar/${lesson.slug}`;
+  return lesson.category === "praktik" ? `/ibtida/${lesson.slug}` : `/tartil/${lesson.slug}`;
 }
 
 /** Where a category's lessons are listed. */
 export function categoryHref(category: LessonCategory) {
-  return category === "praktik" ? "/praktik" : `/belajar?kategori=${category}`;
+  return category === "praktik" ? "/ibtida" : `/tartil?kategori=${category}`;
 }

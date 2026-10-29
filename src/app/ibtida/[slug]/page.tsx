@@ -19,7 +19,7 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const practice = await getPublishedLesson(await getDb(), (await params).slug);
 
-  return practice ? pageMetadata({ title: `${practice.title} · Ibtida`, description: practice.summary, path: `/praktik/${practice.slug}` }) : {};
+  return practice ? pageMetadata({ title: `${practice.title} · Ibtida`, description: practice.summary, path: `/ibtida/${practice.slug}` }) : {};
 }
 
 export default async function PracticePage({ params }: Props) {
@@ -52,7 +52,7 @@ export default async function PracticePage({ params }: Props) {
         <nav aria-label="Pilih latihan" className="rounded-3xl border border-forest/10 bg-surface/60 p-4 md:p-5 md:backdrop-blur fullview:hidden">
           <div className="flex items-center justify-between gap-4">
             <Link
-              href="/praktik"
+              href="/ibtida"
               className="inline-flex items-center gap-2 text-sm font-medium text-ink-soft transition hover:text-forest"
             >
               <LayoutGrid aria-hidden="true" size={16} />
@@ -69,7 +69,7 @@ export default async function PracticePage({ params }: Props) {
                 {parts.map(({ number, title, items }) => (
                   <li key={number}>
                     <Link
-                      href={`/praktik/${items[0].practice.slug}`}
+                      href={`/ibtida/${items[0].practice.slug}`}
                       title={title}
                       aria-current={number === currentPart.number ? "true" : undefined}
                       className={`inline-block rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
@@ -115,7 +115,7 @@ export default async function PracticePage({ params }: Props) {
         <nav className="mt-14 grid gap-4 sm:grid-cols-2 fullview:mx-auto fullview:max-w-[110rem]" aria-label="Latihan sebelumnya dan berikutnya">
           {previous ? (
             <Link
-              href={`/praktik/${previous.slug}`}
+              href={`/ibtida/${previous.slug}`}
               className="rounded-2xl border border-forest/10 bg-surface/60 p-5 transition hover:border-gold/40 hover:bg-surface"
             >
               <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gold">
@@ -128,7 +128,7 @@ export default async function PracticePage({ params }: Props) {
           )}
           {next && (
             <Link
-              href={`/praktik/${next.slug}`}
+              href={`/ibtida/${next.slug}`}
               className="rounded-2xl border border-forest/10 bg-surface/60 p-5 text-right transition hover:border-gold/40 hover:bg-surface"
             >
               <span className="flex items-center justify-end gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gold">

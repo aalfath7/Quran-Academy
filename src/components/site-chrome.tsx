@@ -5,8 +5,8 @@ import { ThemeToggle } from "./theme-toggle";
 
 const navLinks = [
   { href: "/quran", label: "Al-Qur'an" },
-  { href: "/praktik", label: "Ibtida" },
-  { href: "/belajar?kategori=tajwid", label: "Tartil" },
+  { href: "/ibtida", label: "Ibtida" },
+  { href: "/tartil", label: "Tartil" },
   { href: "/tes", label: "Tes" },
   { href: "/daftar", label: "Kelas Online" }
 ];

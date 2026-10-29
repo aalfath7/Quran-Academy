@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = pageMetadata({
   title: "Ibtida: Latihan Membaca Huruf Hijaiyah dari Nol",
   description: `${categoryInfo.praktik.description} Latihan membaca Al-Qur'an untuk pemula, bertahap dengan penanda kemajuan.`,
-  path: "/praktik"
+  path: "/ibtida"
 });
 
 export default async function PracticeListPage() {
@@ -58,7 +58,7 @@ export default async function PracticeListPage() {
                   {items.map(({ practice, number: practiceNumber }) => (
                     <li key={practice.id}>
                       <Link
-                        href={`/praktik/${practice.slug}`}
+                        href={`/ibtida/${practice.slug}`}
                         className="group flex h-full items-center gap-5 rounded-3xl border border-forest/10 bg-surface/60 p-5 backdrop-blur transition duration-500 hover:-translate-y-0.5 hover:border-gold/40 hover:bg-surface hover:shadow-xl hover:shadow-brand/10"
                       >
                         <span className="relative flex size-12 shrink-0 items-center justify-center text-gold">

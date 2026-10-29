@@ -22,7 +22,7 @@ export function PracticePills({ practices, current }: { practices: NumberedPract
         return (
           <li key={slug}>
             <Link
-              href={`/praktik/${slug}`}
+              href={`/ibtida/${slug}`}
               title={status === "done" ? `${title} (sudah lancar)` : title}
               aria-current={isCurrent ? "page" : undefined}
               className={`relative flex size-10 items-center justify-center rounded-full border font-display text-sm font-semibold transition ${
@@ -75,7 +75,7 @@ export function ContinuePractice({ practices }: { practices: PracticeLink[] }) {
 
   return (
     <Link
-      href={`/praktik/${practices[index].slug}`}
+      href={`/ibtida/${practices[index].slug}`}
       className="group mt-8 inline-flex items-center gap-3 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-cream shadow-xl shadow-brand/20 transition hover:-translate-y-0.5 hover:bg-brand-deep"
     >
       Lanjutkan Ibtida {index + 1}: {practices[index].title}

@@ -25,7 +25,7 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const lesson = await getPublishedLesson(await getDb(), (await params).slug);
 
-  return lesson ? pageMetadata({ title: `${lesson.title} · Tartil`, description: lesson.summary, path: `/belajar/${lesson.slug}` }) : {};
+  return lesson ? pageMetadata({ title: `${lesson.title} · Tartil`, description: lesson.summary, path: `/tartil/${lesson.slug}` }) : {};
 }
 
 export default async function LessonPage({ params }: Props) {
@@ -33,7 +33,7 @@ export default async function LessonPage({ params }: Props) {
   const db = await getDb();
   const lesson = await getPublishedLesson(db, slug);
   if (!lesson) notFound();
-  if (lesson.category === "praktik") redirect(`/praktik/${lesson.slug}`);
+  if (lesson.category === "praktik") redirect(`/ibtida/${lesson.slug}`);
 
   const category = categoryInfo[lesson.category];
   const siblings = await listPublishedLessons(db, lesson.category);
@@ -57,7 +57,7 @@ export default async function LessonPage({ params }: Props) {
             "@type": "LearningResource",
             name: lesson.title,
             description: lesson.summary,
-            url: absoluteUrl(`/belajar/${lesson.slug}`),
+            url: absoluteUrl(`/tartil/${lesson.slug}`),
             inLanguage: "id-ID",
             learningResourceType: "Materi",
             educationalLevel: "Pemula",
@@ -67,7 +67,7 @@ export default async function LessonPage({ params }: Props) {
             dateModified: lesson.updatedAt.toISOString(),
             provider: { "@type": "EducationalOrganization", name: SITE_NAME, url: SITE_URL }
           },
-          breadcrumbJsonLd([["Beranda", "/"], [category.label, "/belajar"], [lesson.title, `/belajar/${lesson.slug}`]])
+          breadcrumbJsonLd([["Beranda", "/"], [category.label, "/tartil"], [lesson.title, `/tartil/${lesson.slug}`]])
         ]} />
   );
 
@@ -75,7 +75,7 @@ export default async function LessonPage({ params }: Props) {
     <nav className="mx-auto mt-8 grid max-w-3xl gap-4 sm:grid-cols-2" aria-label="Materi lain">
       {previous ? (
         <Link
-          href={`/belajar/${previous.slug}`}
+          href={`/tartil/${previous.slug}`}
           className="group rounded-2xl border border-forest/10 bg-surface/60 p-5 transition hover:border-gold/40 hover:bg-surface"
         >
           <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gold">
@@ -88,7 +88,7 @@ export default async function LessonPage({ params }: Props) {
       )}
       {next && (
         <Link
-          href={`/belajar/${next.slug}`}
+          href={`/tartil/${next.slug}`}
           className="group rounded-2xl border border-forest/10 bg-surface/60 p-5 text-right transition hover:border-gold/40 hover:bg-surface"
         >
           <span className="flex items-center justify-end gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gold">
@@ -117,7 +117,7 @@ export default async function LessonPage({ params }: Props) {
         <div className="relative mx-auto max-w-5xl px-4 pb-24 pt-4 sm:px-6 md:pt-8 fullview:py-4">
           <nav aria-label="Pilih materi" className="rounded-3xl border border-forest/10 bg-surface/60 p-4 md:p-5 md:backdrop-blur fullview:hidden">
             <div className="flex items-center justify-between gap-4">
-              <Link href="/belajar" className="inline-flex items-center gap-2 text-sm font-medium text-ink-soft transition hover:text-forest">
+              <Link href="/tartil" className="inline-flex items-center gap-2 text-sm font-medium text-ink-soft transition hover:text-forest">
                 <LayoutGrid aria-hidden="true" size={16} />
                 Semua materi
               </Link>
@@ -128,7 +128,7 @@ export default async function LessonPage({ params }: Props) {
                 {stages.map(({ number, title, items }) => (
                   <li key={number}>
                     <Link
-                      href={`/belajar/${items[0].meeting.slug}`}
+                      href={`/tartil/${items[0].meeting.slug}`}
                       title={title}
                       aria-current={number === stage.number ? "true" : undefined}
                       className={`inline-block rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
@@ -199,7 +199,7 @@ export default async function LessonPage({ params }: Props) {
       <RecordLessonVisit slug={lesson.slug} title={lesson.title} />
       <article className="relative mx-auto max-w-3xl px-6 pb-24 pt-8 md:pt-14">
         <Link
-          href={`/belajar?kategori=${lesson.category}`}
+          href={`/tartil?kategori=${lesson.category}`}
           className="inline-flex items-center gap-2 text-sm font-medium text-ink-soft transition hover:text-forest"
         >
           <ArrowLeft aria-hidden="true" size={16} />

@@ -66,7 +66,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
                 <tr key={lesson.id} className="transition hover:bg-surface/80">
                   <td className="px-6 py-4">
                     <p className="font-medium text-forest-deep">{lesson.title}</p>
-                    <p className="mt-0.5 text-xs text-ink-soft/70">/belajar/{lesson.slug}</p>
+                    <p className="mt-0.5 text-xs text-ink-soft/70">/tartil/{lesson.slug}</p>
                   </td>
                   <td className="hidden px-4 py-4 text-ink-soft md:table-cell">{categoryInfo[lesson.category].label}</td>
                   <td className="hidden px-4 py-4 text-ink-soft sm:table-cell">{lesson.position}</td>

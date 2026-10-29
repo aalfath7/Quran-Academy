@@ -13,28 +13,19 @@ import { groupByStage, tajwidStages } from "@/lib/tajwid-curriculum";
 
 export const dynamic = "force-dynamic";
 
-// Category filters (?kategori=) list the same lessons, so they all point search engines at /belajar.
+// Category filters (?kategori=) list the same lessons, so they all point search engines at /tartil.
 export const metadata: Metadata = pageMetadata({
   title: "Tartil: Belajar Tajwid Online, Hukum Bacaan Al-Qur'an",
   description:
     "Materi tajwid berjenjang untuk pemula: kaidah bacaan Al-Qur'an yang benar, dijelaskan ringkas lengkap dengan contoh ayat.",
-  path: "/belajar"
+  path: "/tartil"
 });
 
 export default async function LearnPage({ searchParams }: { searchParams: Promise<{ kategori?: string }> }) {
   const { kategori } = await searchParams;
-  if (kategori === "praktik") redirect("/praktik");
+  if (kategori === "praktik") redirect("/ibtida");
   const active = isMateriCategory(kategori) ? kategori : undefined;
   const lessons = await listPublishedLessons(await getDb(), active ?? materiCategories);
-
-  const filters = [
-    { href: "/belajar", label: "Semua", isActive: !active },
-    ...materiCategories.map((category) => ({
-      href: `/belajar?kategori=${category}`,
-      label: categoryInfo[category].label,
-      isActive: active === category
-    }))
-  ];
 
   return (
     <main className="grain relative min-h-screen overflow-hidden">
@@ -63,23 +54,6 @@ export default async function LearnPage({ searchParams }: { searchParams: Promis
             : `Kelas tajwid dalam ${tajwidStages.length} tahap, untuk yang sudah bisa membaca. Setiap materi berisi penjelasan, latihan ayat, praktik mushaf, dan tugas mandiri.`}
         </p>
         <ContinueLesson lessons={lessons.map(({ slug, title }) => ({ slug, title }))} />
-
-        <nav className="mt-10 flex flex-wrap gap-2" aria-label="Filter kategori">
-          {filters.map(({ href, label, isActive }) => (
-            <Link
-              key={href}
-              href={href}
-              aria-current={isActive ? "page" : undefined}
-              className={`rounded-full border px-5 py-2 text-sm font-medium transition ${
-                isActive
-                  ? "border-brand bg-brand text-cream"
-                  : "border-forest/15 bg-surface/50 text-forest-deep hover:border-forest/40"
-              }`}
-            >
-              {label}
-            </Link>
-          ))}
-        </nav>
       </section>
 
       <section className="relative mx-auto max-w-6xl px-6 pb-24">
@@ -105,7 +79,7 @@ export default async function LearnPage({ searchParams }: { searchParams: Promis
                     {items.map(({ meeting, number: meetingNumber }) => (
                       <li key={meeting.id}>
                         <Link
-                          href={`/belajar/${meeting.slug}`}
+                          href={`/tartil/${meeting.slug}`}
                           className="group flex h-full items-start gap-5 rounded-3xl border border-forest/10 bg-surface/60 p-5 backdrop-blur transition duration-500 hover:-translate-y-0.5 hover:border-gold/40 hover:bg-surface hover:shadow-xl hover:shadow-brand/10"
                         >
                           <span className="relative flex size-12 shrink-0 items-center justify-center text-gold">
