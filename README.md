@@ -92,3 +92,5 @@ npm run build
 ## Cloudflare deployment
 
 `wrangler.jsonc` configures the OpenNext Worker, static assets, and D1 binding. `npm run preview` builds and runs the Worker locally; `npm run deploy` builds and deploys it. A remote database ID and Cloudflare authentication are required for production deployment. No production deployment has been performed as part of this setup.
+
+thanks
