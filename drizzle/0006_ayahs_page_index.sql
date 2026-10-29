@@ -1,1 +1,0 @@
-CREATE INDEX `ayahs_page_idx` ON `ayahs` (`page`);

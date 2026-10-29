@@ -1,52 +1,26 @@
-import { and, asc, eq, inArray, or } from "drizzle-orm";
-import type { createDb } from "@/db/connection";
-import { ayahs, surahs } from "@/db/schema";
+import quran from "@/data/quran.json";
 
-// Qur'an data read by the Tartil lessons: the ayahs they drill and the mushaf pages they practise on.
+// Qur'an data read by the Lanjutan lessons: the ayahs they drill and the mushaf pages they practise on.
+// src/data/quran.json holds only those ayahs; scripts/build-quran-data.mjs rebuilds it from the Kemenag text.
 
-type Db = ReturnType<typeof createDb>;
+type Surah = { nameArabic: string; nameLatin: string; ayahCount: number; location: string };
 
-const pageAyah = {
-  id: ayahs.id,
-  page: ayahs.page,
-  surahNumber: ayahs.surahNumber,
-  number: ayahs.number,
-  juz: ayahs.juz,
-  arabic: ayahs.arabic,
-  nameArabic: surahs.nameArabic,
-  nameLatin: surahs.nameLatin,
-  ayahCount: surahs.ayahCount,
-  location: surahs.location
-};
+const surahs: Record<string, Surah> = quran.surahs;
+
+export type PageAyah = (typeof quran.ayahs)[number] & Surah;
+
+const ayahs: PageAyah[] = quran.ayahs.map((ayah) => ({ ...ayah, ...surahs[ayah.surahNumber] }));
 
 /** Every ayah printed on the given mushaf pages, in mushaf order; each ayah keeps its page and surah. */
-export function listPagesAyahs(db: Db, pages: number[]) {
-  if (pages.length === 0) return Promise.resolve([]);
+export function listPagesAyahs(pages: number[]) {
+  const wanted = new Set(pages);
 
-  return db
-    .select(pageAyah)
-    .from(ayahs)
-    .innerJoin(surahs, eq(surahs.number, ayahs.surahNumber))
-    .where(inArray(ayahs.page, pages))
-    .orderBy(asc(ayahs.id));
+  return ayahs.filter(({ page }) => wanted.has(page));
 }
-
-export type PageAyah = Awaited<ReturnType<typeof listPagesAyahs>>[number];
 
 /** The given ayahs ({ surah, ayah } pairs) with their surah name; pairs without an ayah are skipped. */
-export function listAyahsByRef(db: Db, refs: { surah: number; ayah: number }[]) {
-  if (refs.length === 0) return Promise.resolve([]);
-
-  return db
-    .select({ surahNumber: ayahs.surahNumber, number: ayahs.number, arabic: ayahs.arabic, nameLatin: surahs.nameLatin })
-    .from(ayahs)
-    .innerJoin(surahs, eq(surahs.number, ayahs.surahNumber))
-    .where(or(...refs.map(({ surah, ayah }) => and(eq(ayahs.surahNumber, surah), eq(ayahs.number, ayah)))));
+export function listAyahsByRef(refs: { surah: number; ayah: number }[]) {
+  return ayahs.filter(({ surahNumber, number }) => refs.some(({ surah, ayah }) => surah === surahNumber && ayah === number));
 }
 
-export type AyahByRef = Awaited<ReturnType<typeof listAyahsByRef>>[number];
-
-/** Bismillah is printed before every surah except Al-Fatihah (where it is ayah 1) and At-Taubah. */
-export function showsBismillah(surahNumber: number) {
-  return surahNumber !== 1 && surahNumber !== 9;
-}
+export type AyahByRef = PageAyah;

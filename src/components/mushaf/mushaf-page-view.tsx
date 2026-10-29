@@ -1,7 +1,7 @@
 import { QuranText } from "@/components/quran-text";
 import { Star } from "@/components/star";
-import { groupBySurah, toArabicDigits } from "@/lib/mushaf";
-import { showsBismillah, type PageAyah } from "@/lib/quran";
+import { groupBySurah, showsBismillah, toArabicDigits } from "@/lib/mushaf";
+import type { PageAyah } from "@/lib/quran";
 
 /** Latin names of the surahs on a page, in order: "Al-Fātiḥah", "An-Nās · Al-Falaq". */
 export const surahNames = (ayahs: PageAyah[]) => groupBySurah(ayahs).map(({ ayahs: [first] }) => first.nameLatin);

@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { lessons as bagian2 } from "../scripts/data/praktik-bagian-2.mjs";
-import { lessons as bagian3 } from "../scripts/data/praktik-bagian-3.mjs";
-import { lessons as bagian4 } from "../scripts/data/praktik-bagian-4.mjs";
-import { lessons as bagian1, obsoleteSlugs } from "../scripts/data/praktik-dasar.mjs";
+import { lessons as bagian2 } from "../src/data/praktik-bagian-2";
+import { lessons as bagian3 } from "../src/data/praktik-bagian-3";
+import { lessons as bagian4 } from "../src/data/praktik-bagian-4";
+import { lessons as bagian1 } from "../src/data/praktik-dasar";
 import { practiceSections, soundKey } from "../src/lib/lessons";
 import { groupByPart, PRACTICE_TOTAL, practicePart, practiceParts } from "../src/lib/practice-curriculum";
 
@@ -80,8 +80,6 @@ describe("practices from the workbooks", () => {
     const positions = lessons.map(({ position }: { position: number }) => position);
     expect(positions).toEqual([...positions].sort((a, b) => a - b));
     expect(groupByPart(lessons).map(({ items }) => items.length)).toEqual([7, 11, 11, 10]);
-    const slugs = lessons.map(({ slug }: { slug: string }) => slug);
-    expect(slugs.filter((slug: string) => obsoleteSlugs.includes(slug))).toEqual([]);
   });
 
   it("gives every practice a guide and exercises A, B, C, the last one handed to the teacher", () => {

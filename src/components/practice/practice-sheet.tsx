@@ -108,7 +108,7 @@ export function PracticeSheet({
   // Saved automatically: opening a practice makes it the one to continue.
   useEffect(() => {
     update((saved) => visitPractice(saved, slug, total));
-    setLastLearned(() => ({ href: `/ibtida/${slug}`, title: `Ibtida ${number}: ${title}` }));
+    setLastLearned(() => ({ href: `/pemula/${slug}`, title: `Latihan ${number}: ${title}` }));
   }, [slug, total, update, number, title, setLastLearned]);
 
   return (
@@ -116,7 +116,7 @@ export function PracticeSheet({
       <header className="sticky top-0 z-10 -mx-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-gold/30 bg-surface/95 px-4 py-5 backdrop-blur sm:-mx-8 sm:px-8 md:-mx-12 md:px-12 rounded-t-[2rem] fullview:rounded-none fullview:bg-paper fullview:backdrop-blur-none">
         <div className="min-w-0">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-            Ibtida {number} / {PRACTICE_TOTAL} · Bagian {part.number}: {part.title}
+            Latihan {number} / {PRACTICE_TOTAL} · Bagian {part.number}: {part.title}
           </p>
           <h1 className="mt-1 font-display text-2xl font-light leading-tight tracking-tight text-forest-deep md:text-3xl">
             {title}
@@ -146,22 +146,22 @@ export function PracticeSheet({
           {/* Previous and next stay reachable when the page navigation is hidden in fullscreen. */}
           {fullscreen.active && previous && (
             <Link
-              href={`/ibtida/${previous.slug}`}
+              href={`/pemula/${previous.slug}`}
               title={previous.title}
               className="flex size-10 items-center justify-center rounded-full border border-forest/15 text-forest-deep transition hover:border-forest/40"
             >
               <ArrowLeft aria-hidden="true" size={16} />
-              <span className="sr-only">Ibtida {previous.number}</span>
+              <span className="sr-only">Latihan {previous.number}</span>
             </Link>
           )}
           {fullscreen.active && next && (
             <Link
-              href={`/ibtida/${next.slug}`}
+              href={`/pemula/${next.slug}`}
               title={next.title}
               className="flex size-10 items-center justify-center rounded-full border border-forest/15 text-forest-deep transition hover:border-forest/40"
             >
               <ArrowRight aria-hidden="true" size={16} />
-              <span className="sr-only">Ibtida {next.number}</span>
+              <span className="sr-only">Latihan {next.number}</span>
             </Link>
           )}
           <button
@@ -318,10 +318,10 @@ export function PracticeSheet({
               </p>
               {next && (
                 <Link
-                  href={`/ibtida/${next.slug}`}
+                  href={`/pemula/${next.slug}`}
                   className="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 font-semibold text-cream transition hover:bg-brand-deep"
                 >
-                  Lanjut ke Ibtida {next.number}{" "}
+                  Lanjut ke Latihan {next.number}{" "}
                   <ArrowRight aria-hidden="true" size={16} />
                 </Link>
               )}

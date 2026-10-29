@@ -1,12 +1,13 @@
-import { ArrowRight, BookOpen, BookOpenText, Check, ChevronDown, ClipboardCheck, Ear, Mic, TrendingUp } from "lucide-react";
+import { ArrowRight, BookOpen, BookOpenCheck, BookOpenText, ChevronDown, ClipboardCheck, ListChecks, TrendingUp } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
+import { categoryInfo } from "@/lib/categories";
 import { Star } from "@/components/star";
-import { CLASS_PRICE, teacher } from "@/lib/class-offer";
 import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
+import { PRACTICE_TOTAL, practiceParts } from "@/lib/practice-curriculum";
 import { MEETING_TOTAL, tajwidStages } from "@/lib/tajwid-curriculum";
 
 export const metadata: Metadata = { alternates: { canonical: "/" } };
@@ -33,18 +34,29 @@ const siteJsonLd = {
   ]
 };
 
-const stats = [`${MEETING_TOTAL} materi bertahap`, "130 ayat latihan", "Koreksi bacaan dari pengajar"];
+const teacher = {
+  name: "Farhan Abdillah Alfath",
+  photo: "/pengajar.webp",
+  credentials: ["Murid Syekh Khanova Maulana", "Alumni Indonesian Al-Quran Center"]
+};
+
+const stats = [`${MEETING_TOTAL} materi bertahap`, "130 ayat latihan", "Gratis, tanpa mendaftar"];
+
+const levels = [
+  { href: "/pemula", ...categoryInfo.praktik, cta: "Mulai dari nol" },
+  { href: "/lanjutan", ...categoryInfo.tajwid, cta: "Perlancar bacaan" }
+];
 
 const steps = [
   { title: "Pahami", description: "Baca penjelasan singkat: apa hukumnya, hurufnya apa saja, dan cara membacanya." },
-  { title: "Dengar & tirukan", description: "Putar contoh bacaan pada 5 ayat pilihan, lalu ulangi sampai mirip." },
+  { title: "Latihan ayat", description: "Baca 5 ayat pilihan yang memuat hukum tersebut, dengan bagian yang perlu diperhatikan sudah ditandai." },
   {
     title: "Praktik di mushaf",
     description: "Baca satu halaman mushaf yang penuh dengan hukum tersebut. Tandai sendiri di mana hukumnya muncul."
   },
   {
-    title: "Rekam & dikoreksi",
-    description: "Kirim rekaman bacaanmu. Pengajar menunjukkan 2–3 bagian yang perlu diperbaiki dan latihan berikutnya."
+    title: "Tugas mandiri",
+    description: "Ulangi bacaan setiap hari dengan tugas singkat, sampai hukum yang baru dipelajari terbiasa di lisan."
   }
 ];
 
@@ -55,7 +67,7 @@ const features = [
     description: "Satu hukum per materi, dijelaskan dengan bahasa sederhana. Cukup 5 menit dibaca, sisanya untuk praktik."
   },
   {
-    icon: Ear,
+    icon: BookOpenCheck,
     title: "Latihan ayat",
     description: "5 ayat pilihan di setiap materi, lengkap dengan bagian yang perlu diperhatikan dan hukumnya."
   },
@@ -67,13 +79,17 @@ const features = [
   {
     icon: ClipboardCheck,
     title: "Tes pemahaman tajwid",
-    description: "Uji pemahamanmu di menu Tes. Setiap materi dan tahap punya tes sendiri, lengkap dengan pembahasan jawabannya."
+    description: "Uji pemahamanmu di menu Tes dengan soal dari setiap pertemuan kelas Lanjutan, lengkap dengan pembahasan jawabannya."
   },
-  { icon: Mic, title: "Rekam bacaan", description: "Rekam langsung dari HP atau laptop dan kirim untuk dikoreksi pengajar." },
+  {
+    icon: ListChecks,
+    title: "Tugas mandiri",
+    description: "Setiap materi ditutup dengan tugas latihan harian, agar hukum yang baru dipelajari langsung terbiasa di lisan."
+  },
   {
     icon: TrendingUp,
     title: "Progres belajar",
-    description: "Lihat materi yang sudah selesai, nilai evaluasi tiap tahap, dan riwayat koreksi bacaanmu."
+    description: "Lihat materi yang sudah selesai dan nilai tesmu. Progres tersimpan di perangkatmu, tanpa perlu akun."
   }
 ];
 
@@ -86,65 +102,35 @@ const stageOutcomes = [
   { title: "Waqaf & ibtida", outcome: "Berhenti dan memulai di tempat yang benar, isti'adzah, basmalah, bacaan khusus" }
 ];
 
-const plans = [
-  {
-    name: "Belajar Mandiri",
-    price: "Gratis",
-    items: [`Semua ${MEETING_TOTAL} materi tajwid`, "Latihan ayat dan halaman praktik mushaf", "Tes pemahaman tajwid di menu Tes", "Catatan progres belajar"],
-    cta: "Mulai Gratis",
-    href: "/ibtida"
-  },
-  {
-    name: "Kelas",
-    price: CLASS_PRICE,
-    period: "/ bulan",
-    label: "Paling lengkap",
-    featured: true,
-    items: [
-      "Semua fitur Belajar Mandiri",
-      "4 pertemuan online per bulan, 60 menit, maksimal 5 murid",
-      "Membaca dan dikoreksi langsung setiap pertemuan",
-      "Evaluasi di akhir setiap tahap"
-    ],
-    cta: "Daftar Kelas",
-    href: "/daftar?paket=kelas"
-  },
-  {
-    name: "Koreksi Rekaman",
-    price: "Rp50.000",
-    period: "/ bulan",
-    label: "Belajar dari rumah, kapan saja",
-    items: [
-      "Semua fitur Belajar Mandiri",
-      "4 rekaman per bulan, masing-masing maksimal 2 menit",
-      "Koreksi suara atau tulisan dari pengajar",
-      "2–3 perbaikan terpenting dan saran latihan berikutnya"
-    ],
-    cta: "Mulai Kirim Rekaman",
-    href: "/daftar?paket=rekaman"
-  }
-];
-
 const faqs = [
   {
     question: "Apakah benar gratis?",
     answer:
-      "Ya. Semua materi, latihan ayat, halaman mushaf, dan tes pemahaman tajwid bisa dipakai tanpa biaya. Yang berbayar hanya bimbingan dari pengajar: kelas dan koreksi rekaman."
+      "Ya. Kelas Pemula dan Lanjutan, latihan ayat, halaman mushaf, dan tes pemahaman tajwid bisa dipakai tanpa biaya, tanpa mendaftar, dan tanpa membuat akun."
   },
   {
-    question: "Saya belum bisa membaca Al-Qur'an, bisa ikut?",
-    answer: "Materi tajwid ditujukan untuk yang sudah bisa membaca. Jika belum, mulai dari kelas Ibtida'."
+    question: "Saya belum bisa membaca Al-Qur'an sama sekali. Mulai dari mana?",
+    answer: `Mulai dari kelas Pemula: ${PRACTICE_TOTAL} latihan dalam ${practiceParts.length} bagian, dari mengenal huruf hijaiyah dan harakat sampai bisa membaca langsung dari mushaf.`
   },
   {
-    question: "Apa bedanya belajar mandiri dengan koreksi rekaman?",
-    answer:
-      "Belajar mandiri membantu kamu tahu aturannya dan berlatih. Koreksi rekaman memastikan bacaanmu benar, karena kesalahan bacaan sering tidak terdengar oleh diri sendiri."
+    question: "Saya sudah bisa membaca, tetapi belum lancar. Kelas mana yang cocok?",
+    answer: `Kelas Lanjutan: ${MEETING_TOTAL} materi dalam ${tajwidStages.length} tahap yang memperlancar bacaan sambil memahami hukum tajwid, dari makhraj sampai waqaf. Jika masih sering mengeja huruf demi huruf, selesaikan dulu bagian akhir kelas Pemula.`
   },
   {
     question: "Mushaf apa yang dipakai?",
-    answer: "Mushaf pojok 15 baris (604 halaman), agar nomor halaman latihan sama."
+    answer: "Mushaf 15 baris (604 halaman) yang setiap halamannya berakhir di ujung ayat (mushaf pojok), agar nomor halaman latihan sama dengan mushafmu."
   }
 ];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map(({ question, answer }) => ({
+    "@type": "Question",
+    name: question,
+    acceptedAnswer: { "@type": "Answer", text: answer }
+  }))
+};
 
 const sectionLabel = "text-xs font-semibold uppercase tracking-[0.22em] text-gold";
 const sectionTitle = "mt-4 font-display text-4xl font-light leading-tight tracking-tight text-forest-deep md:text-5xl";
@@ -155,6 +141,7 @@ export default function Home() {
   return (
     <main className="grain relative min-h-screen overflow-hidden">
       <JsonLd data={siteJsonLd} />
+      <JsonLd data={faqJsonLd} />
       <BackgroundGlow />
       <SiteHeader />
 
@@ -163,24 +150,24 @@ export default function Home() {
         <div className="rise">
           <p className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-surface/50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
             <span className="size-1.5 rounded-full bg-gold" />
-            Platform belajar tajwid · Gratis untuk mulai
+            Platform belajar tajwid · Gratis
           </p>
           <h1 className="mt-7 max-w-2xl font-display text-5xl font-light leading-[1.05] tracking-tight text-forest-deep md:text-6xl">
             Belajar tajwid dengan mudah, <em className="font-normal italic text-gold">langsung praktik di ayatnya.</em>
           </h1>
           <p className="mt-7 max-w-xl text-lg leading-8 text-ink-soft">
-            Materi singkat per hukum, lalu latihan di ayat dan halaman mushaf pilihan. Rekam bacaanmu dan dapatkan koreksi dari pengajar.
+            Materi singkat per hukum, lalu latihan di ayat dan halaman mushaf pilihan. Semuanya gratis, langsung dari HP atau laptop.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <Link className={primaryButton} href="/ibtida">
+            <Link className={primaryButton} href="/pemula">
               Mulai Belajar Gratis
               <ArrowRight aria-hidden="true" size={16} />
             </Link>
             <Link
               className="inline-flex items-center rounded-full border border-forest/20 bg-surface/50 px-7 py-4 text-sm font-semibold text-forest-deep transition hover:-translate-y-0.5 hover:border-forest/40 hover:bg-surface"
-              href="#materi"
+              href="#kelas"
             >
-              Lihat Materi
+              Pilih Kelas
             </Link>
           </div>
           <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm text-ink-soft">
@@ -216,6 +203,38 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Levels */}
+      <section id="kelas" className="relative mx-auto max-w-6xl scroll-mt-8 px-6 pb-24 md:pb-28">
+        <div className="max-w-2xl">
+          <p className={sectionLabel}>Pilih kelas</p>
+          <h2 className={sectionTitle}>
+            Mulai dari <em className="italic text-gold">kemampuanmu sekarang.</em>
+          </h2>
+        </div>
+        <div className="mt-12 grid gap-5 md:grid-cols-2">
+          {levels.map(({ href, label, arabic, audience, description, cta }) => (
+            <Link
+              key={href}
+              href={href}
+              className="group flex flex-col rounded-3xl border border-forest/10 bg-surface/60 p-8 backdrop-blur transition duration-500 hover:-translate-y-1 hover:border-gold/40 hover:bg-surface hover:shadow-2xl hover:shadow-brand/10"
+            >
+              <div className="flex items-center justify-between gap-4">
+                <h3 className="font-display text-2xl font-medium text-forest-deep">{label}</h3>
+                <span className="font-arabic text-2xl text-gold/60 transition group-hover:text-gold" lang="ar" dir="rtl">
+                  {arabic}
+                </span>
+              </div>
+              <p className="mt-4 font-medium leading-7 text-forest">{audience}</p>
+              <p className="mt-2 flex-1 leading-7 text-ink-soft">{description}</p>
+              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-forest">
+                {cta}
+                <ArrowRight aria-hidden="true" size={16} className="transition group-hover:translate-x-1" />
+              </span>
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -281,7 +300,7 @@ export default function Home() {
             </div>
             <Link
               className="group inline-flex items-center gap-2 self-start text-sm font-semibold text-forest underline decoration-gold/50 decoration-2 underline-offset-[6px] transition hover:decoration-gold md:self-auto"
-              href="/tartil"
+              href="/lanjutan"
             >
               Semua materi
               <ArrowRight aria-hidden="true" size={16} className="transition group-hover:translate-x-1" />
@@ -305,94 +324,39 @@ export default function Home() {
 
           <p className="mt-6 text-sm leading-6 text-ink-soft">
             Setiap tahap ditutup dengan evaluasi bacaan 1 halaman mushaf. Belum bisa membaca?{" "}
-            <Link href="/ibtida" className="font-semibold text-forest underline decoration-gold/50 underline-offset-4 hover:decoration-gold">
-              Kelas Ibtida&apos;
+            <Link href="/pemula" className="font-semibold text-forest underline decoration-gold/50 underline-offset-4 hover:decoration-gold">
+              Kelas Pemula
             </Link>{" "}
             mengajarkan dari mengenal huruf.
           </p>
         </div>
       </section>
 
-      {/* Pricing */}
-      <section id="harga" className="relative mx-auto max-w-6xl scroll-mt-8 px-6 py-24 md:py-32">
-        <div className="max-w-2xl">
-          <p className={sectionLabel}>Harga</p>
-          <h2 className={sectionTitle}>
-            Mulai gratis, <em className="italic text-gold">tambah bimbingan saat kamu siap.</em>
-          </h2>
-        </div>
-        <div className="mt-14 grid gap-5 lg:grid-cols-3">
-          {plans.map(({ name, price, period, label, featured, items, cta, href }) => (
-            <article
-              key={name}
-              className={`flex flex-col rounded-3xl border p-8 ${
-                featured ? "border-brand bg-brand-deep text-cream shadow-2xl shadow-brand/20" : "border-forest/10 bg-surface/60 backdrop-blur"
-              }`}
-            >
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <h3 className={`font-display text-xl font-medium ${featured ? "text-cream" : "text-forest-deep"}`}>{name}</h3>
-                {label && (
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-semibold ${featured ? "bg-gold-soft text-brand-deep" : "bg-gold/15 text-gold"}`}
-                  >
-                    {label}
-                  </span>
-                )}
-              </div>
-              <p className={`mt-6 font-display text-4xl font-light ${featured ? "text-cream" : "text-forest-deep"}`}>
-                {price}
-                {period && <span className={`text-base ${featured ? "text-cream/70" : "text-ink-soft"}`}> {period}</span>}
-              </p>
-              <ul className="mt-6 flex-1 space-y-3">
-                {items.map((item) => (
-                  <li key={item} className={`flex gap-3 leading-6 ${featured ? "text-cream/85" : "text-ink-soft"}`}>
-                    <Check aria-hidden="true" size={18} className={`mt-0.5 shrink-0 ${featured ? "text-gold-soft" : "text-gold"}`} />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href={href}
-                className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition hover:-translate-y-0.5 ${
-                  featured ? "bg-gold-soft text-brand-deep hover:bg-cream" : "border border-forest/20 text-forest-deep hover:border-forest/40 hover:bg-surface"
-                }`}
-              >
-                {cta}
-                <ArrowRight aria-hidden="true" size={16} />
-              </Link>
-            </article>
-          ))}
-        </div>
-        <p className="mt-6 text-sm leading-6 text-ink-soft">
-          Pembayaran per bulan, bisa berhenti kapan saja. Kelas ikhwan dibuka; kelas akhwat segera hadir.
-        </p>
-      </section>
-
       {/* Teacher */}
-      <section id="pengajar" className="relative mx-auto max-w-4xl px-6 pb-24 md:pb-28">
-        <div className="pattern-girih relative overflow-hidden rounded-[2rem] bg-brand-deep px-6 py-6 md:px-8">
+      <section id="pengajar" className="relative mx-auto max-w-6xl px-6 py-24 md:py-28">
+        <div className="pattern-girih relative overflow-hidden rounded-[2.5rem] bg-brand-deep px-6 py-10 md:px-12 md:py-12">
           <div className="absolute inset-0 bg-radial from-brand/50 to-brand-deep" />
-          <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center">
+          <div className="relative flex flex-col items-center gap-8 text-center md:flex-row md:items-center md:gap-10 md:text-left">
             <Image
               src={teacher.photo}
               alt={`Foto ${teacher.name}`}
-              width={160}
-              height={160}
+              width={256}
+              height={256}
               unoptimized
-              className="size-20 shrink-0 rounded-full border-2 border-gold-soft/60 bg-cream object-cover"
+              className="size-28 shrink-0 rounded-full border-2 border-gold-soft/60 bg-cream object-cover md:size-36"
             />
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-soft/80">Pengajar</p>
-              <h2 className="mt-1 font-display text-xl font-light leading-snug text-cream md:text-2xl">
-                Dibuat dan dikoreksi oleh pengajar <span className="whitespace-nowrap">Al-Qur&apos;an</span>
+              <h2 className="mt-3 font-display text-3xl font-light leading-tight text-cream md:text-4xl">
+                Materi dari pengajar <span className="whitespace-nowrap">Al-Qur&apos;an</span>
               </h2>
-              <p className="mt-2 text-sm leading-6 text-cream/80">
+              <p className="mt-4 max-w-2xl leading-7 text-cream/80">
                 Disusun oleh <span className="font-semibold text-cream">{teacher.name}</span>. Fathway dibangun agar belajar tajwid yang benar
-                dan terbimbing bisa dilakukan dari mana saja.
+                dan bertahap bisa dilakukan dari mana saja.
               </p>
-              <ul className="mt-3 flex flex-wrap gap-1.5">
+              <ul className="mt-5 flex flex-wrap justify-center gap-2 md:justify-start">
                 {teacher.credentials.map((line) => (
-                  <li key={line} className="rounded-full border border-gold-soft/30 bg-cream/10 px-3 py-1 text-xs text-cream/90">
+                  <li key={line} className="rounded-full border border-gold-soft/30 bg-cream/10 px-3.5 py-1.5 text-sm text-cream/90">
                     {line}
                   </li>
                 ))}
@@ -431,7 +395,7 @@ export default function Home() {
               Bacaan yang benar dimulai dari <em className="italic text-gold-soft">satu ayat hari ini.</em>
             </h2>
             <Link
-              href="/ibtida"
+              href="/pemula"
               className="mt-10 inline-flex items-center gap-2 rounded-full bg-gold-soft px-7 py-4 text-sm font-semibold text-brand-deep transition hover:-translate-y-0.5 hover:bg-cream"
             >
               Mulai Belajar Gratis

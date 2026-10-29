@@ -55,7 +55,7 @@ export function PracticeNavDrawer({
         }`}
       >
         <div className="mb-2 flex items-center justify-between md:hidden">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Progres Ibtida</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Progres Pemula</p>
           <button
             type="button"
             onClick={() => setOpen(false)}

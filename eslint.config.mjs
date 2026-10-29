@@ -10,7 +10,6 @@ export default defineConfig([
     ".open-next/**",
     ".wrangler/**",
     "node_modules/**",
-    "drizzle/meta/**",
     "worker-configuration.d.ts"
   ])
 ]);

@@ -1,13 +1,13 @@
 import Link from "next/link";
+import { categoryInfo } from "@/lib/categories";
 import { StartLearningMenu } from "./start-learning-menu";
 import { Logo } from "./logo";
 import { ThemeToggle } from "./theme-toggle";
 
 const navLinks = [
-  { href: "/ibtida", label: "Ibtida" },
-  { href: "/tartil", label: "Tartil" },
-  { href: "/tes", label: "Tes" },
-  { href: "/daftar", label: "Kelas Online" }
+  { href: "/pemula", label: "Pemula", description: categoryInfo.praktik.audience },
+  { href: "/lanjutan", label: "Lanjutan", description: categoryInfo.tajwid.audience },
+  { href: "/tes", label: "Tes", description: "Uji pemahaman tajwid dengan soal pilihan ganda." }
 ];
 
 export function SiteHeader() {
@@ -19,8 +19,8 @@ export function SiteHeader() {
       </Link>
       {/* Below md the links take their own row under the logo, so the menu stays reachable on phones. */}
       <nav className="order-last flex w-full flex-wrap items-center justify-center gap-x-5 gap-y-2 border-t border-gold/20 pt-4 text-sm text-ink-soft md:order-0 md:w-auto md:gap-8 md:border-0 md:pt-0">
-        {navLinks.map(({ href, label }) => (
-          <Link key={href} className="transition hover:text-forest" href={href}>
+        {navLinks.map(({ href, label, description }) => (
+          <Link key={href} className="transition hover:text-forest" href={href} title={description}>
             {label}
           </Link>
         ))}

@@ -1,21 +1,19 @@
 import { describe, expect, it } from "vitest";
-import { lessons as jazariyahLessons } from "../scripts/data/jazariyah.mjs";
-import { lessons as tajwidLessons } from "../scripts/data/tajwid-pertemuan.mjs";
+import { lessons as tajwidLessons } from "../src/data/tajwid-pertemuan";
 import { materiCategories } from "../src/lib/categories";
 import { drawQuiz, parseScores, QUIZ_LENGTH, recordScore } from "../src/lib/quiz";
 import { quizBanks } from "../src/lib/quiz-data";
 
 const lessonSlugs = {
-  tajwid: new Set(tajwidLessons.map(({ slug }: { slug: string }) => slug)),
-  jazariyah: new Set(jazariyahLessons.map(({ slug }: { slug: string }) => slug))
+  tajwid: new Set(tajwidLessons.map(({ slug }) => slug))
 };
 
 describe("quiz banks", () => {
   for (const category of materiCategories) {
     const bank = quizBanks[category];
 
-    it(`${category} has 50 well-formed questions`, () => {
-      expect(bank).toHaveLength(50);
+    it(`${category} has well-formed questions`, () => {
+      expect(bank.length).toBeGreaterThanOrEqual(QUIZ_LENGTH * 5);
       expect(new Set(bank.map(({ question }) => question)).size).toBe(bank.length);
 
       for (const { question, options, explanation, lesson } of bank) {
@@ -25,6 +23,14 @@ describe("quiz banks", () => {
       }
     });
   }
+});
+
+describe("tajwid quiz coverage", () => {
+  it("asks about every Lanjutan meeting except the teaching practice", () => {
+    const asked = new Set(quizBanks.tajwid.map(({ lesson }) => lesson));
+    const missing = tajwidLessons.map(({ slug }) => slug).filter((slug) => slug !== "praktik-mengajar" && !asked.has(slug));
+    expect(missing).toEqual([]);
+  });
 });
 
 describe("drawQuiz", () => {
@@ -53,8 +59,8 @@ describe("quiz scores", () => {
   it("tolerates corrupt saved values", () => {
     expect(parseScores(null)).toEqual({});
     expect(parseScores("not json")).toEqual({});
-    expect(parseScores('{"tajwid":{"best":"x"},"jazariyah":{"best":9,"last":8,"attempts":3}}')).toEqual({
-      jazariyah: { best: 9, last: 8, attempts: 3 }
+    expect(parseScores('{"tajwid":{"best":"x"},"lain":{"best":9,"last":8,"attempts":3}}')).toEqual({
+      lain: { best: 9, last: 8, attempts: 3 }
     });
   });
 });

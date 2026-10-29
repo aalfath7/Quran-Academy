@@ -27,7 +27,7 @@ export function RecordLessonVisit({ slug, title }: LessonLink) {
 
   useEffect(() => {
     update((saved) => visitLesson(saved, slug));
-    setLastLearned(() => ({ href: `/tartil/${slug}`, title }));
+    setLastLearned(() => ({ href: `/lanjutan/${slug}`, title }));
   }, [slug, title, update, setLastLearned]);
 
   return null;
@@ -96,7 +96,7 @@ export function LessonPills({ lessons, current }: { lessons: (LessonLink & { num
         return (
           <li key={slug}>
             <Link
-              href={`/tartil/${slug}`}
+              href={`/lanjutan/${slug}`}
               title={done ? `${title} (sudah selesai)` : title}
               aria-current={isCurrent ? "page" : undefined}
               className={`relative flex size-10 items-center justify-center rounded-full border font-display text-sm font-semibold transition ${
@@ -129,7 +129,7 @@ export function ContinueLesson({ lessons }: { lessons: LessonLink[] }) {
 
   return (
     <Link
-      href={`/tartil/${lesson.slug}`}
+      href={`/lanjutan/${lesson.slug}`}
       className="group mt-8 inline-flex items-center gap-3 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-cream shadow-xl shadow-brand/20 transition hover:-translate-y-0.5 hover:bg-brand-deep"
     >
       Lanjutkan: {lesson.title}

@@ -1,370 +1,642 @@
 import type { QuizQuestion } from "../quiz";
 
-// Disusun dari materi tajwid kitab "Tajwid Ringkas"; tiap soal menautkan pertemuan kelas tajwid (scripts/data/tajwid-pertemuan.mjs) yang membahasnya. Opsi pertama selalu jawaban yang benar.
+// Disusun dari materi kelas Lanjutan (src/data/tajwid-pertemuan.ts); tiap soal menautkan pertemuan yang membahasnya.
+// Opsi pertama selalu jawaban yang benar.
 export const tajwidQuiz: QuizQuestion[] = [
+  // Tahap 1 — Makhraj & sifat lewat ayat
   {
-    question: "Apa makna kata tajwid secara bahasa?",
-    options: ["Memperbagus atau memperindah", "Menghafal dengan cepat", "Memanjangkan suara", "Membaca dengan pelan"],
-    explanation: "Tajwid secara bahasa bermakna memperbagus atau memperindah.",
-    lesson: "sifat-huruf-hukum-tajwid-dan-lahn"
-  },
-  {
-    question: "Apa hukum mempraktikkan tajwid setiap kali membaca Al-Qur'an?",
-    options: ["Fardhu 'ain", "Fardhu kifayah", "Sunnah", "Mubah"],
-    explanation: "Sisi praktik (al-'amali) hukumnya fardhu 'ain, wajib bagi setiap muslim yang membaca Al-Qur'an.",
-    lesson: "sifat-huruf-hukum-tajwid-dan-lahn"
-  },
-  {
-    question: "Apa hukum mempelajari teori (kaidah) ilmu tajwid?",
-    options: ["Fardhu kifayah", "Fardhu 'ain", "Makruh", "Sunnah muakkadah"],
-    explanation: "Sisi teori (an-nazhari) hukumnya fardhu kifayah: cukup jika sebagian umat menguasainya.",
-    lesson: "sifat-huruf-hukum-tajwid-dan-lahn"
-  },
-  {
-    question: "Sifat bawaan yang selalu melekat pada huruf, seperti jahr dan syiddah, disebut…",
-    options: ["Hak huruf", "Mustahak huruf", "Lahn", "Makhraj"],
-    explanation: "Hak huruf adalah sifat yang selalu melekat; mustahak huruf muncul pada keadaan tertentu seperti idgham dan ikhfa.",
-    lesson: "sifat-huruf-hukum-tajwid-dan-lahn"
-  },
-  {
-    question: "Manakah yang termasuk lahn jaly (kesalahan yang jelas)?",
-    options: [
-      "Huruf ح pada الْحَمْدُ dibaca seperti هـ",
-      "Panjang mad kurang pas",
-      "Ghunnah sedikit kurang",
-      "Ra kurang ditebalkan"
-    ],
-    explanation: "Lahn jaly mengenai bentuk kata, misalnya huruf tertukar. Tiga lainnya adalah contoh lahn khafy.",
-    lesson: "sifat-huruf-hukum-tajwid-dan-lahn"
-  },
-  {
-    question: "Menurut hadits, siapa yang membaca satu huruf dari Al-Qur'an mendapat…",
-    options: [
-      "Satu kebaikan yang dilipatgandakan sepuluh kali",
-      "Satu kebaikan saja",
-      "Pahala yang sama dengan satu ayat",
-      "Pahala hanya jika membaca satu surat penuh"
-    ],
-    explanation: "Satu huruf bernilai satu kebaikan dan setiap kebaikan dilipatgandakan sepuluh kali (HR. At-Tirmidzi).",
+    question: "Berapa jumlah makhraj umum dan makhraj khusus?",
+    options: ["5 makhraj umum, 17 makhraj khusus", "3 makhraj umum, 17 makhraj khusus", "5 makhraj umum, 29 makhraj khusus", "4 makhraj umum, 10 makhraj khusus"],
+    explanation: "Ada 5 makhraj umum (al-jauf, al-halq, al-lisan, asy-syafatain, al-khaisyum) yang terbagi menjadi 17 makhraj khusus.",
     lesson: "tes-awal-dan-peta-makhraj"
   },
   {
-    question: "Apa hukum membaca isti'adzah sebelum tilawah menurut pendapat yang dipilih?",
-    options: ["Mustahab (sunnah)", "Wajib", "Makruh", "Mubah tanpa keutamaan"],
-    explanation: "Pendapat kebanyakan ulama qira'at dan fikih, dan inilah yang dipilih: isti'adzah hukumnya mustahab.",
-    lesson: "istiadzah-dan-basmalah"
+    question: "Dari makhraj manakah huruf mad keluar?",
+    options: ["Al-jauf (rongga mulut dan tenggorokan)", "Al-halq (tenggorokan)", "Al-khaisyum (rongga hidung)", "Asy-syafatain (dua bibir)"],
+    explanation: "Al-jauf adalah ruang kosong di mulut dan tenggorokan; satu makhraj ini untuk 3 huruf mad.",
+    lesson: "tes-awal-dan-peta-makhraj"
   },
   {
-    question: "Surat manakah yang tidak diawali basmalah ketika dibaca dari awal suratnya?",
-    options: ["At-Taubah", "Al-Fatihah", "Al-Ikhlas", "Yasin"],
-    explanation: "Basmalah dibaca setiap memulai dari awal surat, kecuali surat At-Taubah.",
-    lesson: "istiadzah-dan-basmalah"
+    question: "Al-khaisyum (rongga hidung) adalah tempat keluarnya…",
+    options: ["Ghunnah (dengung)", "Huruf mad", "Huruf qalqalah", "Huruf ق dan ك"],
+    explanation: "Al-khaisyum menghubungkan hidung dengan tenggorokan; ghunnah yang menyertai nun dan mim keluar dari sini.",
+    lesson: "tes-awal-dan-peta-makhraj"
   },
   {
-    question: "Saat berpindah dari satu surat ke surat berikutnya, cara manakah yang tidak boleh?",
+    question: "Apa cara mudah memeriksa dengung pada نّ?",
     options: [
-      "Akhir surat disambung basmalah, lalu berhenti, baru awal surat berikutnya",
-      "Semua dipisah dengan berhenti",
-      "Semua disambung tanpa jeda",
-      "Berhenti setelah akhir surat, lalu basmalah disambung awal surat berikutnya"
+      "Tutup hidung; jika suara terhenti, dengung sudah keluar dari hidung",
+      "Tutup mulut; jika suara tetap keluar, dengungnya salah",
+      "Baca sekeras mungkin sampai terdengar bergetar",
+      "Tahan napas sebelum mulai membaca"
     ],
-    explanation: "Cara itu dilarang karena basmalah bisa dikira penutup surat sebelumnya, padahal ia pembuka surat.",
-    lesson: "istiadzah-dan-basmalah"
+    explanation: "Ghunnah keluar dari rongga hidung, jadi suaranya terhenti ketika hidung ditutup.",
+    lesson: "tes-awal-dan-peta-makhraj"
   },
   {
-    question: "Area makhraj manakah yang bukan tempat keluarnya huruf tertentu, melainkan tempat keluarnya ghunnah?",
-    options: ["Al-khaisyum (rongga hidung)", "Al-jauf (rongga mulut)", "Al-halq (tenggorokan)", "Asy-syafatain (dua bibir)"],
-    explanation: "Al-khaisyum adalah tempat keluarnya ghunnah, dengung yang selalu ada pada nun dan mim.",
+    question: "Huruf apa yang keluar dari pangkal tenggorokan (aqshal halq)?",
+    options: ["ء dan ه", "ع dan ح", "غ dan خ", "ق dan ك"],
+    explanation: "Pangkal tenggorokan (daerah pita suara) untuk ء dan ه; tengah untuk ع dan ح; ujung untuk غ dan خ.",
+    lesson: "huruf-tenggorokan"
+  },
+  {
+    question: "Huruf ع dan ح keluar dari…",
+    options: ["Tengah tenggorokan", "Pangkal tenggorokan", "Ujung tenggorokan", "Pangkal lidah"],
+    explanation: "Tengah tenggorokan (wasthul halq), daerah epiglotis, adalah makhraj ع dan ح.",
+    lesson: "huruf-tenggorokan"
+  },
+  {
+    question: "Membaca ح pada الْحَمْدُ seperti ه termasuk kesalahan…",
+    options: ["Lahn jali, karena hurufnya berganti", "Lahn khafi, karena hanya kurang sempurna", "Bukan kesalahan", "Kesalahan panjang mad"],
+    explanation: "Tertukarnya ح dengan ه, ع dengan hamzah, atau خ dengan ك mengganti huruf, sehingga termasuk lahn jali.",
+    lesson: "huruf-tenggorokan"
+  },
+  {
+    question: "Apa beda makhraj ق dan ك?",
+    options: [
+      "ق dari pangkal lidah dan langit-langit lunak; ك sedikit lebih ke depan",
+      "ق dari tenggorokan; ك dari pangkal lidah",
+      "Keduanya keluar dari tempat yang sama persis",
+      "ق dari ujung lidah; ك dari tengah lidah"
+    ],
+    explanation: "ق: pangkal lidah bertemu langit-langit lunak. ك: sedikit lebih ke depan, bertemu langit-langit lunak dan keras.",
+    lesson: "pangkal-dan-tengah-lidah-huruf-dhad"
+  },
+  {
+    question: "Huruf ض keluar dari…",
+    options: [
+      "Sisi lidah yang menempel ke geraham atas",
+      "Ujung lidah dan pangkal gigi seri atas",
+      "Tengah lidah dan langit-langit atas",
+      "Pangkal lidah dan langit-langit lunak"
+    ],
+    explanation: "ض keluar dari satu sisi lidah (kanan, kiri, atau keduanya) yang menempel ke geraham atas.",
+    lesson: "pangkal-dan-tengah-lidah-huruf-dhad"
+  },
+  {
+    question: "Sifat istithalah (suara memanjang di sepanjang sisi lidah) dimiliki huruf…",
+    options: ["ض", "ش", "ق", "ج"],
+    explanation: "Istithalah pada ض: suaranya memanjang di sepanjang sisi lidah sampai mendekati makhraj ل.",
+    lesson: "pangkal-dan-tengah-lidah-huruf-dhad"
+  },
+  {
+    question: "Sifat tafasysyi (udara menyebar di dalam mulut) dimiliki huruf…",
+    options: ["ش", "ض", "س", "ص"],
+    explanation: "Tafasysyi pada ش: udara menyebar di dalam mulut sampai mengenai bagian dalam gigi seri atas.",
+    lesson: "pangkal-dan-tengah-lidah-huruf-dhad"
+  },
+  {
+    question: "Huruf ظ ذ ث keluar dari…",
+    options: [
+      "Ujung lidah bertemu ujung dua gigi seri atas",
+      "Ujung lidah bertemu pangkal dua gigi seri atas",
+      "Ujung lidah mendekati dinding dalam gigi seri bawah",
+      "Bibir bawah bertemu ujung gigi seri atas"
+    ],
+    explanation: "Untuk ظ ذ ث, ujung lidah bertemu ujung dua gigi seri atas dengan lidah sedikit keluar.",
     lesson: "ujung-lidah-dan-bibir"
   },
   {
-    question: "Huruf apa saja yang keluar dari al-jauf (rongga mulut)?",
-    options: ["Tiga huruf mad", "Lima huruf qalqalah", "Hamzah dan ha (هـ)", "Ba, mim, dan wawu"],
-    explanation: "Al-jauf adalah makhraj tiga huruf mad: alif setelah fathah, wawu sukun setelah dhammah, ya sukun setelah kasrah.",
-    lesson: "huruf-tenggorokan"
-  },
-  {
-    question: "Huruf apa yang keluar dari bagian terdalam tenggorokan (aqshal halq)?",
-    options: ["Hamzah (ء) dan ha (هـ)", "'Ain (ع) dan ha (ح)", "Ghain (غ) dan kha (خ)", "Qaf (ق) dan kaf (ك)"],
-    explanation: "Aqshal halq untuk ء dan هـ; tengah tenggorokan untuk ع dan ح; yang terdekat ke mulut untuk غ dan خ.",
-    lesson: "huruf-tenggorokan"
-  },
-  {
-    question: "Apa arti tanda waqaf قلى dalam mushaf?",
+    question: "Huruf ف keluar dari…",
     options: [
-      "Boleh melanjutkan, tetapi berhenti lebih utama",
-      "Boleh berhenti, tetapi melanjutkan lebih utama",
-      "Harus berhenti",
-      "Jangan berhenti"
-    ],
-    explanation: "قلى: berhenti lebih utama. Kebalikannya صلى: melanjutkan lebih utama.",
-    lesson: "tanda-waqaf-dan-ibtida"
-  },
-  {
-    question: "Lidah memiliki berapa titik makhraj, untuk berapa huruf?",
-    options: ["10 titik untuk 18 huruf", "5 titik untuk 10 huruf", "17 titik untuk 29 huruf", "3 titik untuk 6 huruf"],
-    explanation: "Lidah adalah area makhraj terbanyak: 10 titik untuk 18 huruf.",
-    lesson: "pangkal-dan-tengah-lidah-huruf-dhad"
-  },
-  {
-    question: "Dari mana huruf dhad (ض) keluar?",
-    options: [
-      "Tepi lidah yang menempel pada gigi geraham atas",
-      "Ujung lidah dan ujung gigi seri atas",
-      "Pangkal lidah dan langit-langit lunak",
-      "Tengah lidah dan langit-langit di atasnya"
-    ],
-    explanation: "Dhad keluar dari tepi lidah yang menempel pada gigi geraham atas, sisi kanan, kiri, atau keduanya.",
-    lesson: "pangkal-dan-tengah-lidah-huruf-dhad"
-  },
-  {
-    question: "Dari mana huruf fa (ف) keluar?",
-    options: [
-      "Bagian dalam bibir bawah dengan ujung gigi seri atas",
-      "Pertemuan dua bibir yang dirapatkan",
+      "Bagian dalam bibir bawah bertemu ujung gigi seri atas",
+      "Dua bibir yang dirapatkan",
       "Ujung lidah dan gusi atas",
-      "Rongga hidung"
+      "Dua bibir yang dibulatkan"
     ],
-    explanation: "Fa keluar dari bagian dalam bibir bawah yang disentuhkan ke ujung gigi seri atas.",
+    explanation: "ف keluar dari bagian dalam bibir bawah dengan ujung gigi seri atas; ب م و dari dua bibir.",
     lesson: "ujung-lidah-dan-bibir"
   },
   {
-    question: "Huruf-huruf hams terkumpul dalam kalimat…",
-    options: ["فَحَثَّهُ شَخْصٌ سَكَتَ", "أَجِدْ قَطٍ بَكَتْ", "لِنْ عُمَرَ", "خُصَّ ضَغْطٍ قِظْ"],
-    explanation: "Sepuluh huruf hams: فَحَثَّهُ شَخْصٌ سَكَتَ. أَجِدْ قَطٍ بَكَتْ adalah huruf syiddah.",
+    question: "Sifat shafir (bunyi desis) dimiliki huruf…",
+    options: ["ز س ص", "ظ ذ ث", "ط د ت", "ب م و"],
+    explanation: "Desis pada ز س ص inilah yang membedakan ص dari ث, dan ز dari ذ.",
+    lesson: "ujung-lidah-dan-bibir"
+  },
+  {
+    question: "Tajwid secara bahasa berarti…",
+    options: ["Memperindah", "Menghafal", "Memanjangkan", "Memperlambat"],
+    explanation: "Secara istilah, tajwid adalah ilmu untuk memberikan setiap huruf hak dan mustahaknya.",
     lesson: "sifat-huruf-hukum-tajwid-dan-lahn"
   },
   {
-    question: "Huruf-huruf tawassuth (di antara syiddah dan rakhawah) adalah…",
-    options: ["لِنْ عُمَرَ", "قُطْبُ جَدٍّ", "فِرَّ مِنْ لُبٍّ", "يَرْمُلُونَ"],
-    explanation: "Tawassuth ada pada lima huruf: لِنْ عُمَرَ.",
+    question: "Apa hukum membaca Al-Qur'an dengan tajwid bagi setiap muslim?",
+    options: ["Fardhu 'ain", "Fardhu kifayah", "Sunnah", "Mubah"],
+    explanation: "Membaca dengan tajwid fardhu 'ain; mempelajari teorinya fardhu kifayah.",
     lesson: "sifat-huruf-hukum-tajwid-dan-lahn"
   },
   {
-    question: "Manakah huruf-huruf ithbaq?",
-    options: ["ص ض ط ظ", "خ ص ض غ ط ق ظ", "ق ط ب ج د", "ص ز س"],
-    explanation: "Ithbaq hanya empat huruf: ص ض ط ظ. Tujuh huruf خص ضغط قظ adalah huruf isti'la.",
+    question: "Sifat yang muncul karena bertemu huruf lain, seperti izhar, idgham, dan ikhfa, disebut…",
+    options: ["Mustahak huruf", "Hak huruf", "Lahn khafi", "Makhraj khusus"],
+    explanation: "Hak huruf adalah sifat tetap seperti jahr dan syiddah; mustahak huruf muncul karena bertemu huruf lain.",
     lesson: "sifat-huruf-hukum-tajwid-dan-lahn"
   },
   {
-    question: "Huruf-huruf idzlaq, yang ringan diucapkan, terkumpul dalam…",
-    options: ["فِرَّ مِنْ لُبٍّ", "لِنْ عُمَرَ", "يَنْمُو", "سَنَقُصُّ لَكُمْ"],
-    explanation: "Enam huruf idzlaq: فِرَّ مِنْ لُبٍّ, keluar dari ujung lidah atau bibir.",
+    question: "Manakah contoh lahn khafi (kesalahan samar)?",
+    options: ["Mad tidak dipanjangkan sesuai ukurannya", "ح pada الْحَمْدُ dibaca ه", "أَنْعَمْتَ dibaca أَنْعَمْتِ", "Menambah satu huruf pada kata"],
+    explanation: "Lahn khafi berkaitan dengan kesempurnaan bacaan, seperti ukuran mad dan ghunnah. Tiga lainnya lahn jali.",
     lesson: "sifat-huruf-hukum-tajwid-dan-lahn"
   },
   {
-    question: "Manakah huruf-huruf qalqalah?",
-    options: ["قُطْبُ جَدٍّ", "خُصَّ ضَغْطٍ قِظْ", "ص ز س", "ل dan ر"],
-    explanation: "Qalqalah ada pada lima huruf: قُطْبُ جَدٍّ, terutama ketika sukun.",
+    question: "Huruf hams (napas mengalir) terhimpun dalam…",
+    options: ["فَحَثَّهُ شَخْصٌ سَكَتَ", "أَجِدْ قَطٍ بَكَتْ", "لِنْ عُمَرْ", "فِرَّ مِنْ لُبٍّ"],
+    explanation: "10 huruf hams terhimpun dalam فَحَثَّهُ شَخْصٌ سَكَتَ; lawannya jahr.",
     lesson: "sifat-huruf-hukum-tajwid-dan-lahn"
   },
   {
-    question: "Sifat tafasysyi (udara menyebar di dalam mulut) dimiliki oleh huruf…",
-    options: ["Syin (ش)", "Dhad (ض)", "Ra (ر)", "Sin (س)"],
-    explanation: "Tafasysyi khusus pada huruf syin.",
+    question: "Huruf syiddah (suara tertahan) terhimpun dalam…",
+    options: ["أَجِدْ قَطٍ بَكَتْ", "فَحَثَّهُ شَخْصٌ سَكَتَ", "لِنْ عُمَرْ", "يَنْمُو"],
+    explanation: "8 huruf syiddah terhimpun dalam أَجِدْ قَطٍ بَكَتْ; huruf tawassuth dalam لِنْ عُمَرْ.",
     lesson: "sifat-huruf-hukum-tajwid-dan-lahn"
   },
+
+  // Tahap 2 — Nun sukun, tanwin, mim sukun
   {
-    question: "Sifat istithalah (suara memanjang di sepanjang sisi lidah) dimiliki oleh huruf…",
-    options: ["Dhad (ض)", "Zha (ظ)", "Syin (ش)", "Lam (ل)"],
-    explanation: "Istithalah khusus pada dhad, yang suaranya memanjang hingga mendekati makhraj lam.",
-    lesson: "sifat-huruf-hukum-tajwid-dan-lahn"
-  },
-  {
-    question: "Sifat takrir pada huruf ra perlu diketahui agar…",
-    options: [
-      "Getarannya ditahan dan tidak berlebihan",
-      "Getarannya diperbanyak",
-      "Ra selalu dibaca tebal",
-      "Ra dibaca dengan dengung"
-    ],
-    explanation: "Takrir dipelajari justru agar getaran ra ditahan, bukan diperbanyak.",
-    lesson: "sifat-huruf-hukum-tajwid-dan-lahn"
-  },
-  {
-    question: "Huruf-huruf izhhar halqi adalah…",
-    options: ["ء هـ ع ح غ خ", "ي ر م ل و ن", "ب saja", "ص ذ ث ك ج ش"],
-    explanation: "Izhhar halqi berlaku jika nun sukun atau tanwin bertemu enam huruf tenggorokan: ء هـ ع ح غ خ.",
+    question: "Huruf izhar halqi adalah…",
+    options: ["6 huruf tenggorokan: ء ه ع ح غ خ", "4 huruf: ي ن م و", "15 huruf sisanya", "2 huruf: ل ر"],
+    explanation: "Disebut halqi karena hurufnya dari tenggorokan (halq).",
     lesson: "izhar-halqi-dan-nun-mim-bertasydid"
   },
   {
-    question: "Idgham bilaa ghunnah (tanpa dengung) terjadi jika nun sukun atau tanwin bertemu…",
-    options: ["Lam (ل) dan ra (ر)", "Ya (ي) dan wawu (و)", "Mim (م) dan nun (ن)", "Ba (ب)"],
-    explanation: "Idgham tanpa dengung hanya untuk ل dan ر. Huruf يَنْمُو dibaca idgham bighunnah.",
-    lesson: "idgham-bighunnah-dan-bilaghunnah"
-  },
-  {
-    question: "Idgham nun sukun dan tanwin hanya terjadi jika…",
+    question: "Mengapa nun sukun dibaca jelas sebelum huruf tenggorokan?",
     options: [
-      "Nun dan huruf sesudahnya berada di dua kata yang berbeda",
-      "Nun dan huruf sesudahnya berada dalam satu kata",
-      "Bacaan dihentikan di akhir ayat",
-      "Huruf sesudahnya bersukun"
+      "Karena makhraj nun jauh dari makhraj tenggorokan",
+      "Karena huruf tenggorokan selalu bertasydid",
+      "Karena nun selalu dibaca jelas di mana pun",
+      "Karena tanwin tidak tertulis sebagai huruf"
     ],
-    explanation: "Jika masih dalam satu kata, tidak dibaca idgham.",
+    explanation: "Jauhnya makhraj membuat nun tidak bisa dilebur atau disamarkan, sehingga dibaca jelas tanpa dengung.",
+    lesson: "izhar-halqi-dan-nun-mim-bertasydid"
+  },
+  {
+    question: "Nun dan mim bertasydid dibaca…",
+    options: ["Didengungkan sempurna sekitar 2 harakat", "Jelas tanpa dengung", "Didengungkan 6 harakat", "Didengungkan hanya saat berhenti"],
+    explanation: "Nun dan mim bertasydid wajib didengungkan sempurna, baik saat sambung maupun berhenti. Contoh: النَّاسِ، ثُمَّ.",
+    lesson: "izhar-halqi-dan-nun-mim-bertasydid"
+  },
+  {
+    question: "Apa beda tanwin dengan nun sukun?",
+    options: [
+      "Tanwin terbaca tetapi tidak tertulis sebagai huruf, dan hilang saat berhenti",
+      "Tanwin tertulis sebagai huruf nun",
+      "Tanwin hanya ada di tengah kata",
+      "Tanwin tetap dibaca nun saat berhenti"
+    ],
+    explanation: "Tanwin adalah nun sukun tambahan di akhir isim; tandanya harakat ganda dan ia hilang saat berhenti.",
+    lesson: "izhar-halqi-dan-nun-mim-bertasydid"
+  },
+  {
+    question: "Huruf idgham terhimpun dalam kata…",
+    options: ["يَرْمَلُونَ", "يَنْمُو", "قُطْبُ جَدٍّ", "سَنَقُصُّ لَكُمْ"],
+    explanation: "Huruf idgham ada 6: ي ر م ل و ن. Yang berdengung (bighunnah) terhimpun dalam يَنْمُو.",
     lesson: "idgham-bighunnah-dan-bilaghunnah"
   },
   {
-    question: "Nun sukun atau tanwin dibaca iqlab ketika bertemu huruf…",
-    options: ["Ba (ب)", "Mim (م)", "Lam (ل)", "Kaf (ك)"],
-    explanation: "Huruf iqlab hanya satu, yaitu ba: bunyi nun berubah menjadi mim yang samar dengan dengung.",
+    question: "Idgham bilaghunnah (tanpa dengung) terjadi ketika nun sukun atau tanwin bertemu…",
+    options: ["ل dan ر", "ي dan و", "م dan ن", "ب"],
+    explanation: "Contoh: مِن لَّدُنْهُ، مِن رَّبِّهِمْ. Huruf ي ن م و dilebur dengan dengung.",
+    lesson: "idgham-bighunnah-dan-bilaghunnah"
+  },
+  {
+    question: "Mengapa nun pada دُنْيَا dibaca jelas padahal diikuti ي?",
+    options: [
+      "Nun dan ي berada dalam satu kata (izhar mutlaq)",
+      "Karena ي termasuk huruf tenggorokan",
+      "Karena kata itu dibaca saat berhenti",
+      "Karena ada tanda mad di atasnya"
+    ],
+    explanation: "Idgham nun sukun hanya terjadi antara dua kata. Dalam satu kata (دُنْيَا، بُنْيَانٌ، صِنْوَانٌ، قِنْوَانٌ) nun dibaca jelas.",
+    lesson: "idgham-bighunnah-dan-bilaghunnah"
+  },
+  {
+    question: "Idgham naqish, yang dengung nunnya masih tersisa, terjadi pada huruf…",
+    options: ["ي dan و", "ن dan م", "ل dan ر", "ب dan م"],
+    explanation: "Pada ي و huruf sesudahnya tanpa tasydid dan dengung nun masih tersisa; pada ن م ل ر idghamnya kamil.",
+    lesson: "idgham-bighunnah-dan-bilaghunnah"
+  },
+  {
+    question: "Iqlab terjadi jika nun sukun atau tanwin bertemu huruf…",
+    options: ["ب", "م", "ف", "و"],
+    explanation: "Nun sukun atau tanwin diubah menjadi mim samar dengan dengung 2 harakat ketika bertemu ب.",
+    lesson: "iqlab-dan-ikhfa-haqiqi"
+  },
+  {
+    question: "Apa penanda iqlab di mushaf?",
+    options: [
+      "Mim kecil di atas nun, atau menggantikan harakat kedua tanwin",
+      "Tasydid pada huruf sesudahnya",
+      "Sukun di atas nun",
+      "Tanwin yang ditulis bertumpuk sejajar"
+    ],
+    explanation: "Mim kecil menggantikan sukun pada nun; pada tanwin, mim kecil menggantikan harakat kedua.",
     lesson: "iqlab-dan-ikhfa-haqiqi"
   },
   {
     question: "Berapa jumlah huruf ikhfa haqiqi?",
-    options: ["15 huruf", "6 huruf", "14 huruf", "7 huruf"],
-    explanation: "Ikhfa berlaku pada 15 huruf yang tersisa setelah huruf izhhar, idgham, dan iqlab.",
+    options: ["15", "6", "4", "14"],
+    explanation: "15 huruf, yaitu sisa huruf setelah huruf izhar, idgham, dan iqlab.",
     lesson: "iqlab-dan-ikhfa-haqiqi"
   },
   {
-    question: "Tebal-tipisnya dengung ikhfa ditentukan oleh…",
-    options: ["Huruf sesudahnya", "Huruf sebelumnya", "Harakat sebelum nun", "Panjang mad di dekatnya"],
-    explanation: "Jika huruf sesudahnya huruf isti'la, dengungnya tebal; jika tipis, dengungnya tipis.",
+    question: "Kapan ghunnah ikhfa dibaca tebal?",
+    options: [
+      "Jika huruf sesudahnya huruf tebal, seperti مِنْ قَبْلُ",
+      "Selalu tebal pada setiap ikhfa",
+      "Jika huruf sesudahnya huruf tipis",
+      "Hanya saat berhenti"
+    ],
+    explanation: "Ghunnah ikhfa mengikuti huruf sesudahnya: tebal sebelum huruf tebal, tipis sebelum huruf tipis (إِنْ كُنْتُمْ).",
     lesson: "iqlab-dan-ikhfa-haqiqi"
   },
   {
-    question: "Mim sukun yang bertemu ba, seperti pada أَمْ بِظَاهِرٍ, dibaca…",
-    options: ["Ikhfa syafawi", "Idgham syafawi", "Izhhar syafawi", "Iqlab"],
-    explanation: "Mim sukun bertemu ba disamarkan sambil berdengung: ikhfa syafawi.",
+    question: "Mim sukun bertemu ب hukumnya…",
+    options: ["Ikhfa syafawi", "Idgham mimi", "Izhar syafawi", "Iqlab"],
+    explanation: "Mim disamarkan dengan dengung, misalnya تَرْمِيهِمْ بِحِجَارَةٍ. Hanya terjadi antara dua kata.",
     lesson: "hukum-mim-sukun"
   },
   {
-    question: "Bagaimana membaca mim sukun yang bertemu wawu atau fa, seperti هُمْ فِيهَا?",
-    options: ["Izhhar syafawi, mim dibaca jelas", "Ikhfa syafawi", "Idgham syafawi", "Iqlab"],
-    explanation: "Hukumnya izhhar syafawi. Kesalahan yang sering terjadi justru menyamarkannya karena makhrajnya berdekatan.",
+    question: "Mim sukun bertemu م hukumnya…",
+    options: ["Idgham syafawi (idgham mimi)", "Ikhfa syafawi", "Izhar syafawi", "Idgham bilaghunnah"],
+    explanation: "Dilebur dengan dengung penuh, misalnya أَطْعَمَهُم مِّن جُوعٍ.",
     lesson: "hukum-mim-sukun"
   },
   {
-    question: "Bagaimana ghunnah pada nun dan mim bertasydid dibaca?",
+    question: "Mengapa mim sukun sebelum و dan ف perlu diperhatikan?",
     options: [
-      "Dengung sempurna, baik saat washal maupun waqaf",
-      "Tanpa dengung sama sekali",
-      "Dengung hanya ketika waqaf",
-      "Dibaca ikhfa"
+      "Mudah tanpa sadar didengungkan, padahal harus dibaca jelas",
+      "Karena di sana mim wajib didengungkan",
+      "Karena mim harus dibaca panjang",
+      "Karena mim berubah menjadi nun"
     ],
-    explanation: "Pada nun dan mim bertasydid, dengung mencapai kadar paling sempurna dan wajib ditahan utuh.",
-    lesson: "izhar-halqi-dan-nun-mim-bertasydid"
+    explanation: "Makhraj م sama dengan و dan dekat dengan ف, sehingga mudah didengungkan. Hukumnya izhar syafawi.",
+    lesson: "hukum-mim-sukun"
   },
   {
-    question: "Bagaimana lam ta'rif dibaca jika sesudahnya huruf qamariyah?",
-    options: ["Dibaca jelas (izhhar)", "Dilebur ke huruf sesudahnya", "Disamarkan (ikhfa)", "Ditebalkan"],
-    explanation: "Sebelum 14 huruf ابْغِ حَجَّكَ وَخَفْ عَقِيمَهُ, lam dibaca jelas dan diberi tanda sukun.",
-    lesson: "lam-tarif-dan-lafzh-jalalah"
+    question: "Pada مَاءً ثَجَّاجًا, tanwin bertemu ث. Apa hukumnya?",
+    options: ["Ikhfa", "Izhar", "Idgham bighunnah", "Iqlab"],
+    explanation: "ث termasuk 15 huruf ikhfa, jadi tanwin disamarkan dengan dengung.",
+    lesson: "review-nun-sukun-tanwin-dan-mim-sukun"
   },
   {
-    question: "Manakah contoh lam syamsiyah?",
-    options: ["الرَّزَّاقُ", "الْقَمَرُ", "الْكَهْفِ", "الْحَجِّ"],
-    explanation: "Pada الرَّزَّاقُ lam dilebur ke ra yang bertasydid. Tiga lainnya lam qamariyah.",
-    lesson: "lam-tarif-dan-lafzh-jalalah"
+    question: "Pada حَبًّا وَنَبَاتًا, tanwin bertemu و. Apa hukumnya?",
+    options: ["Idgham bighunnah", "Idgham bilaghunnah", "Izhar", "Ikhfa"],
+    explanation: "و termasuk huruf يَنْمُو, jadi tanwin dilebur dengan dengung.",
+    lesson: "review-nun-sukun-tanwin-dan-mim-sukun"
   },
-  {
-    question: "Kelompok huruf manakah yang selalu dibaca tebal dalam keadaan apa pun?",
-    options: ["Huruf isti'la (خُصَّ ضَغْطٍ قِظْ)", "Huruf hams", "Huruf idzlaq", "Huruf syamsiyah"],
-    explanation: "Ulama sepakat huruf isti'la selalu tebal, baik berharakat maupun sukun.",
-    lesson: "huruf-tebal-dan-alif"
-  },
-  {
-    question: "Tebal atau tipisnya alif ditentukan oleh…",
-    options: ["Huruf sebelumnya", "Huruf sesudahnya", "Harakat alif itu sendiri", "Selalu tebal"],
-    explanation: "Alif tidak punya sifat tebal atau tipis sendiri; ia mengikuti huruf di depannya.",
-    lesson: "huruf-tebal-dan-alif"
-  },
-  {
-    question: "Pada lafazh manakah lam lafzhul jalalah dibaca tipis?",
-    options: ["بِسْمِ اللَّهِ", "عَبْدُ اللَّهِ", "عِبَادَ اللَّهِ", "قَالُوا اللَّهُمَّ"],
-    explanation: "Lam lafzhul jalalah tipis jika didahului kasrah, seperti بِسْمِ اللَّهِ.",
-    lesson: "huruf-tebal-dan-alif"
-  },
-  {
-    question: "Bagaimana ra pada kata فِرْعَوْنَ dibaca?",
-    options: ["Tipis", "Tebal", "Boleh tebal atau tipis", "Dengan dengung"],
-    explanation: "Ra sukun setelah kasrah asli dan sesudahnya tidak ada huruf isti'la dibaca tipis.",
-    lesson: "hukum-ra-tebal-dan-tipis"
-  },
-  {
-    question: "Mengapa ra pada ارْجِعُوا dibaca tebal padahal didahului kasrah?",
-    options: [
-      "Kasrahnya bersifat sementara ('aridh), dari hamzah washal",
-      "Ra-nya berharakat kasrah",
-      "Sesudahnya ada huruf isti'la",
-      "Ra-nya bertasydid"
-    ],
-    explanation: "Ra sukun setelah kasrah 'aridh dibaca tebal. Tanda mudahnya: ra sukun yang didahului hamzah washal.",
-    lesson: "hukum-ra-tebal-dan-tipis"
-  },
-  {
-    question: "Mengapa ra pada قِرْطَاسٍ dibaca tebal?",
-    options: [
-      "Sesudahnya ada huruf isti'la yang tidak berkasrah dalam kata yang sama",
-      "Ra-nya berharakat fathah",
-      "Kasrah sebelumnya bersifat sementara",
-      "Didahului ya sukun"
-    ],
-    explanation: "Ra sukun setelah kasrah tetap tebal jika diikuti huruf isti'la dalam satu kata, seperti قِرْطَاسٍ dan فِرْقَةٍ.",
-    lesson: "hukum-ra-tebal-dan-tipis"
-  },
+
+  // Tahap 3 — Mad
   {
     question: "Berapa panjang mad thabi'i?",
-    options: ["Dua harakat", "Empat harakat", "Enam harakat", "Boleh 2, 4, atau 6 harakat"],
-    explanation: "Mad thabi'i tepat dua harakat, sama untuk semua qari'.",
+    options: ["Tepat 2 harakat", "4–5 harakat", "6 harakat", "Boleh 2, 4, atau 6 harakat"],
+    explanation: "Mad thabi'i tepat 2 harakat untuk semua qari, tidak dikurangi dan tidak ditambah.",
     lesson: "mad-thabii-iwadh-dan-badal"
   },
   {
-    question: "Mad 'iwadh terjadi ketika…",
-    options: [
-      "Berhenti pada kata bertanwin fathah",
-      "Hamzah berada sebelum huruf mad dalam satu kata",
-      "Huruf mad bertemu hamzah dalam satu kata",
-      "Ha' dhamir berada di antara dua huruf berharakat"
-    ],
-    explanation: "Ketika waqaf pada tanwin fathah, tanwin diganti bunyi alif dua harakat, seperti عَلِيمًا.",
+    question: "Bagaimana عَلِيمًا dibaca saat berhenti?",
+    options: ["عَلِيمَا, 2 harakat (mad 'iwadh)", "عَلِيمْ, tanpa mad", "Tetap dengan tanwin", "Dipanjangkan 6 harakat"],
+    explanation: "Tanwin fathah di akhir kata saat berhenti diganti alif dan dibaca 2 harakat.",
     lesson: "mad-thabii-iwadh-dan-badal"
   },
   {
-    question: "Kata آمَنُوا adalah contoh mad…",
-    options: ["Badal", "'Iwadh", "Wajib muttashil", "Lazim"],
-    explanation: "Mad badal: hamzah berada sebelum huruf mad dalam satu kata.",
+    question: "Mad 'iwadh tidak berlaku pada…",
+    options: ["Ta marbuthah, seperti رَحْمَةً yang dibaca رَحْمَهْ", "Tanwin fathah di akhir ayat", "Kata أَفْوَاجًا", "Kata تَوَّابًا"],
+    explanation: "Ta marbuthah bertanwin fathah dibaca ha sukun saat berhenti, bukan alif.",
     lesson: "mad-thabii-iwadh-dan-badal"
   },
   {
-    question: "Berapa panjang mad shilah kubra?",
-    options: ["4 atau 5 harakat", "2 harakat", "6 harakat", "1 harakat"],
-    explanation: "Shilah kubra (ha' dhamir diikuti hamzah) mengikuti mad munfashil: 4 atau 5 harakat.",
+    question: "Manakah contoh mad badal?",
+    options: ["آمَنُوا", "جَاءَ", "الضَّالِّينَ", "خَوْفٍ"],
+    explanation: "Mad badal: hamzah mendahului huruf mad dalam satu kata, panjangnya 2 harakat.",
     lesson: "mad-thabii-iwadh-dan-badal"
   },
   {
-    question: "Mad wajib muttashil terjadi ketika…",
-    options: [
-      "Huruf mad dan hamzah berada dalam satu kata",
-      "Huruf mad di akhir kata dan hamzah di awal kata berikutnya",
-      "Huruf mad diikuti sukun asli",
-      "Huruf mad diikuti sukun karena waqaf"
-    ],
-    explanation: "Muttashil berarti bersambung: huruf mad dan hamzah menyatu dalam satu kata, seperti السَّمَاءِ.",
+    question: "Huruf mad yang diikuti hamzah dalam satu kata disebut…",
+    options: ["Mad wajib muttashil", "Mad jaiz munfashil", "Mad badal", "Mad lazim"],
+    explanation: "Contoh: وَجَاءَ، السَّمَاءِ. Panjangnya 4 atau 5 harakat.",
     lesson: "mad-wajib-muttashil-dan-jaiz-munfashil"
+  },
+  {
+    question: "إِنَّا أَعْطَيْنَاكَ adalah contoh…",
+    options: ["Mad jaiz munfashil", "Mad wajib muttashil", "Mad 'aridh lissukun", "Mad shilah sughra"],
+    explanation: "Huruf mad di akhir kata, hamzah di awal kata berikutnya.",
+    lesson: "mad-wajib-muttashil-dan-jaiz-munfashil"
+  },
+  {
+    question: "Jika muttashil dibaca 4 harakat, munfashil dalam bacaan yang sama dibaca…",
+    options: ["4 harakat juga", "2 harakat", "6 harakat", "Bebas berbeda-beda"],
+    explanation: "Dalam satu bacaan, panjang muttashil dan munfashil disamakan.",
+    lesson: "mad-wajib-muttashil-dan-jaiz-munfashil"
+  },
+  {
+    question: "Berapa panjang mad 'aridh lissukun?",
+    options: ["Boleh 2, 4, atau 6 harakat", "Tepat 2 harakat", "Wajib 6 harakat", "4–5 harakat"],
+    explanation: "Boleh dipilih, tetapi dianjurkan sama panjang dalam satu bacaan.",
+    lesson: "mad-aridh-lissukun-dan-mad-lin"
+  },
+  {
+    question: "Jika disambung (tidak berhenti), mad 'aridh lissukun menjadi…",
+    options: ["Mad thabi'i, 2 harakat", "Mad lazim, 6 harakat", "Mad lin", "Tetap 4 harakat"],
+    explanation: "Sukunnya hanya muncul karena berhenti, jadi saat disambung kembali menjadi mad thabi'i.",
+    lesson: "mad-aridh-lissukun-dan-mad-lin"
+  },
+  {
+    question: "Huruf lin adalah…",
+    options: ["Wawu dan ya sukun yang didahului fathah", "Alif setelah fathah", "Wawu sukun setelah dhammah", "Ya sukun setelah kasrah"],
+    explanation: "Contoh: خَوْفٍ، يَوْمِ، الْبَيْتِ. Saat berhenti menjadi mad lin.",
+    lesson: "mad-aridh-lissukun-dan-mad-lin"
   },
   {
     question: "Berapa panjang mad lazim?",
-    options: ["Selalu 6 harakat", "2, 4, atau 6 harakat", "4 atau 5 harakat", "2 harakat"],
-    explanation: "Mad lazim selalu 6 harakat untuk semua jenisnya dan bagi semua qari'.",
-    lesson: "mad-wajib-muttashil-dan-jaiz-munfashil"
+    options: ["6 harakat", "4–5 harakat", "2 harakat", "Boleh 2, 4, atau 6 harakat"],
+    explanation: "6 harakat untuk semua jenis mad lazim dan semua qari.",
+    lesson: "mad-lazim"
   },
   {
-    question: "Huruf muqaththa'ah yang dibaca mad lazim dirangkum dalam…",
-    options: ["سَنَقُصُّ لَكُمْ", "يَرْمُلُونَ", "لِنْ عُمَرَ", "فِرَّ مِنْ لُبٍّ"],
-    explanation: "Tujuh huruf pembuka surat yang dibaca mad lazim harfi: سَنَقُصُّ لَكُمْ.",
-    lesson: "mad-wajib-muttashil-dan-jaiz-munfashil"
+    question: "آلْآنَ (Yunus 51 dan 91) adalah satu-satunya contoh…",
+    options: ["Mad lazim kalimi mukhaffaf", "Mad lazim harfi mutsaqqal", "Mad wajib muttashil", "Mad badal"],
+    explanation: "Setelah huruf mad ada sukun asli tanpa tasydid, dan hanya ada di dua tempat itu.",
+    lesson: "mad-lazim"
   },
   {
-    question: "Berhenti karena napas habis, batuk, atau bersin disebut waqaf…",
+    question: "Huruf mad lazim harfi (6 harakat) terhimpun dalam…",
+    options: ["سَنَقُصُّ لَكُمْ", "حَيٌّ طَهُرَ", "يَرْمَلُونَ", "خُصَّ ضَغْطٍ قِظْ"],
+    explanation: "Huruf pembuka surat yang ejaannya 3 huruf dengan huruf tengah berupa huruf mad. حَيٌّ طَهُرَ dibaca 2 harakat.",
+    lesson: "mad-lazim"
+  },
+  {
+    question: "Huruf ط pada طه dibaca…",
+    options: ["2 harakat, karena ejaannya hanya 2 huruf", "6 harakat", "4 harakat", "Tidak dipanjangkan sama sekali"],
+    explanation: "Huruf pembuka ح ي ط ه ر (حَيٌّ طَهُرَ) ejaannya 2 huruf, jadi dibaca 2 harakat.",
+    lesson: "mad-lazim"
+  },
+  {
+    question: "Shilah kubra terjadi bila setelah ha' dhamir ada…",
+    options: ["Hamzah", "Huruf sukun", "Huruf tebal", "Akhir ayat"],
+    explanation: "Contoh: مَالَهُۥٓ أَخْلَدَهُۥ. Panjangnya 4–5 harakat, sama dengan munfashil.",
+    lesson: "mad-shilah-dan-ujian-tahap-3"
+  },
+  {
+    question: "Mengapa ha' pada عَلَيْهِ أَحَدٌ tidak dipanjangkan?",
+    options: [
+      "Sebelum ha' ada huruf sukun (ya sukun)",
+      "Karena setelahnya ada hamzah",
+      "Karena dibaca saat berhenti",
+      "Karena ha' itu bukan ha' dhamir"
+    ],
+    explanation: "Mad shilah hanya terjadi jika ha' dhamir berada di antara dua huruf berharakat.",
+    lesson: "mad-shilah-dan-ujian-tahap-3"
+  },
+  {
+    question: "Manakah pengecualian riwayat Hafs yang tetap dipanjangkan meski sebelum ha' ada sukun?",
+    options: ["فِيهِۦ مُهَانًا (Al-Furqan 69)", "عَلَيْهِ (Al-Balad 5)", "مِنْهُ", "رَبَّهُۥ (Al-Insyiqaq 15)"],
+    explanation: "Dalam riwayat Hafs, فِيهِۦ مُهَانًا tetap dibaca panjang.",
+    lesson: "mad-shilah-dan-ujian-tahap-3"
+  },
+
+  // Tahap 4 — Tebal-tipis, qalqalah, ra & lam
+  {
+    question: "Huruf qalqalah terhimpun dalam…",
+    options: ["قُطْبُ جَدٍّ", "خُصَّ ضَغْطٍ قِظْ", "أَجِدْ قَطٍ بَكَتْ", "يَنْمُو"],
+    explanation: "Lima huruf ق ط ب ج د bersifat syiddah dan jahr, sehingga butuh pantulan saat sukun.",
+    lesson: "qalqalah"
+  },
+  {
+    question: "Pantulan qalqalah paling kuat terjadi pada…",
+    options: [
+      "Huruf qalqalah bertasydid di akhir kata saat berhenti, seperti وَتَبّْ",
+      "Huruf qalqalah sukun di tengah kata",
+      "Huruf qalqalah berharakat fathah",
+      "Huruf qalqalah saat disambung"
+    ],
+    explanation: "Urutannya: sughra (sukun asli), kubra (sukun karena berhenti), lalu bertasydid saat berhenti yang paling kuat.",
+    lesson: "qalqalah"
+  },
+  {
+    question: "Kesalahan apa yang harus dihindari saat qalqalah?",
+    options: [
+      "Memberi vokal pada pantulan, misalnya أَحَدْ menjadi \"ahadu\"",
+      "Memantulkan huruf qalqalah saat berhenti",
+      "Membaca huruf qalqalah dengan jelas",
+      "Membaca qalqalah sughra di tengah kata"
+    ],
+    explanation: "Pantulan tidak boleh diberi vokal, tetapi huruf qalqalah juga jangan dibaca mati tanpa pantulan.",
+    lesson: "qalqalah"
+  },
+  {
+    question: "Huruf isti'la (selalu tebal) terhimpun dalam…",
+    options: ["خُصَّ ضَغْطٍ قِظْ", "قُطْبُ جَدٍّ", "فِرَّ مِنْ لُبٍّ", "لِنْ عُمَرْ"],
+    explanation: "Tujuh huruf isti'la selalu tebal tanpa kecuali, baik berharakat maupun sukun.",
+    lesson: "huruf-tebal-dan-alif"
+  },
+  {
+    question: "Huruf ithbaq, yang paling tebal, adalah…",
+    options: ["ص ض ط ظ", "ق غ خ", "ر ل ا", "ب ج د"],
+    explanation: "Pada ithbaq, sebagian lidah menempel ke langit-langit sehingga suara terkurung.",
+    lesson: "huruf-tebal-dan-alif"
+  },
+  {
+    question: "Alif dibaca tebal atau tipis tergantung pada…",
+    options: ["Huruf sebelumnya", "Huruf sesudahnya", "Panjang madnya", "Letaknya di akhir ayat"],
+    explanation: "Alif tebal setelah huruf tebal (قَالُوا) dan tipis setelah huruf tipis (النَّاسِ).",
+    lesson: "huruf-tebal-dan-alif"
+  },
+  {
+    question: "Ra berharakat fathah, seperti pada رَمَضَانَ, dibaca…",
+    options: ["Tebal", "Tipis", "Boleh tebal atau tipis", "Tebal hanya saat berhenti"],
+    explanation: "Ra berharakat fathah atau dhammah selalu tebal; ra berharakat kasrah tipis.",
+    lesson: "hukum-ra-tebal-dan-tipis"
+  },
+  {
+    question: "Mengapa ra pada فِرْعَوْنَ dibaca tipis?",
+    options: [
+      "Ra sukun setelah kasrah asli, tanpa huruf isti'la sesudahnya",
+      "Karena ra berharakat kasrah",
+      "Karena ra terletak setelah ya sukun",
+      "Karena ra terletak setelah hamzah washal"
+    ],
+    explanation: "Ra sukun setelah kasrah asli tipis, kecuali diikuti huruf isti'la dalam satu kata seperti قِرْطَاسٍ.",
+    lesson: "hukum-ra-tebal-dan-tipis"
+  },
+  {
+    question: "Mengapa ra pada ارْجِعِي dibaca tebal?",
+    options: [
+      "Kasrah sebelumnya tidak asli, karena berasal dari hamzah washal",
+      "Karena ra berharakat fathah",
+      "Karena diikuti huruf isti'la",
+      "Karena ra terletak setelah dhammah"
+    ],
+    explanation: "Ra sukun setelah kasrah yang tidak asli (hamzah washal) dibaca tebal, seperti ارْجِعُوا dan أَمِ ارْتَابُوا.",
+    lesson: "hukum-ra-tebal-dan-tipis"
+  },
+  {
+    question: "Sifat takrir pada ra berarti…",
+    options: [
+      "Ujung lidah cenderung bergetar, dan getaran itu harus ditahan",
+      "Ra harus dibaca bergetar berkali-kali",
+      "Suara ra berbelok karena terhalang lidah",
+      "Ra selalu dibaca tebal"
+    ],
+    explanation: "Yang diajarkan adalah menahan getaran, bukan membuatnya. Suara berbelok adalah sifat inhiraf.",
+    lesson: "hukum-ra-tebal-dan-tipis"
+  },
+  {
+    question: "Bagaimana lam syamsiyah dibaca?",
+    options: ["Dilebur ke huruf sesudahnya (idgham)", "Dibaca jelas (izhar)", "Dipantulkan", "Didengungkan"],
+    explanation: "Tanda mushafnya: lam tanpa sukun, huruf sesudahnya bertasydid. Contoh: الشَّكُورُ.",
+    lesson: "lam-tarif-dan-lafzh-jalalah"
+  },
+  {
+    question: "Huruf lam qamariyah terhimpun dalam…",
+    options: ["ابْغِ حَجَّكَ وَخَفْ عَقِيمَهُ", "طِبْ ثُمَّ صِلْ رَحِمًا", "قُطْبُ جَدٍّ", "سَنَقُصُّ لَكُمْ"],
+    explanation: "14 huruf qamariyah, lamnya dibaca jelas dan diberi sukun di mushaf.",
+    lesson: "lam-tarif-dan-lafzh-jalalah"
+  },
+  {
+    question: "Lam lafzh Allah pada بِسْمِ اللَّهِ dibaca…",
+    options: ["Tipis, karena setelah kasrah", "Tebal, karena di awal bacaan", "Tebal, karena setelah sukun", "Boleh tebal atau tipis"],
+    explanation: "Lam lafzh Allah tipis setelah kasrah, setelah sukun yang didahului kasrah, dan setelah tanwin.",
+    lesson: "lam-tarif-dan-lafzh-jalalah"
+  },
+  {
+    question: "Lam lafzh Allah pada عَبْدُ اللَّهِ dibaca…",
+    options: ["Tebal, karena setelah dhammah", "Tipis, karena setelah dhammah", "Tipis, karena setelah sukun", "Boleh tebal atau tipis"],
+    explanation: "Lam lafzh Allah tebal di awal bacaan, setelah fathah, dan setelah dhammah.",
+    lesson: "lam-tarif-dan-lafzh-jalalah"
+  },
+  {
+    question: "قَدْ تَبَيَّنَ (د bertemu ت) termasuk idgham…",
+    options: ["Mutajanisain", "Mutamatsilain", "Mutaqaribain", "Bighunnah"],
+    explanation: "Mutajanisain: makhraj sama, sifat berbeda.",
+    lesson: "idgham-dua-huruf-dan-ujian-tahap-4"
+  },
+  {
+    question: "رَبِحَتْ تِجَارَتُهُمْ (ت bertemu ت) termasuk idgham…",
+    options: ["Mutamatsilain", "Mutajanisain", "Mutaqaribain", "Bilaghunnah"],
+    explanation: "Mutamatsilain: dua huruf yang sama.",
+    lesson: "idgham-dua-huruf-dan-ujian-tahap-4"
+  },
+
+  // Tahap 5 — Waqaf, ibtida, isti'adzah, gharib & ujian
+  {
+    question: "Berhenti karena kehabisan napas atau batuk disebut waqaf…",
     options: ["Idhthirari", "Ikhtibari", "Intizhari", "Ikhtiyari"],
-    explanation: "Waqaf idhthirari karena terpaksa; boleh di kata mana saja, lalu dilanjutkan dari tempat yang tepat.",
+    explanation: "Waqaf idhthirari (darurat) boleh di kata mana saja, lalu bacaan diulang dari tempat yang tepat.",
     lesson: "jenis-jenis-waqaf"
   },
   {
-    question: "Waqaf manakah yang tidak boleh dilakukan dengan sengaja?",
-    options: ["Waqaf qabih", "Waqaf tam", "Waqaf kafy", "Waqaf hasan"],
-    explanation: "Waqaf qabih berhenti pada kalimat yang belum tuntas sehingga makna bisa kurang, keliru, atau rusak.",
+    question: "Waqaf yang maknanya sempurna dan tidak berkaitan dengan sesudahnya, baik lafaz maupun makna, disebut…",
+    options: ["Tam", "Kafi", "Hasan", "Qabih"],
+    explanation: "Waqaf tam biasanya di akhir ayat atau akhir kisah; dianjurkan berhenti dan memulai dari sesudahnya.",
     lesson: "jenis-jenis-waqaf"
+  },
+  {
+    question: "Berhenti pada لَا تَقْرَبُوا الصَّلَاةَ termasuk waqaf…",
+    options: ["Qabih, karena maknanya berubah", "Tam", "Kafi", "Hasan"],
+    explanation: "Waqaf qabih membuat makna belum selesai, kurang, atau rusak, sehingga tidak boleh disengaja.",
+    lesson: "jenis-jenis-waqaf"
+  },
+  {
+    question: "Jika terpaksa berhenti di tempat waqaf qabih, apa yang sebaiknya dilakukan?",
+    options: ["Mengulang dari kata sebelumnya", "Melanjutkan dari kata sesudahnya", "Mengulang dari awal surat", "Langsung pindah ke ayat berikutnya"],
+    explanation: "Ulangi dari kata sebelumnya agar maknanya kembali utuh.",
+    lesson: "jenis-jenis-waqaf"
+  },
+  {
+    question: "Tanda مـ di mushaf berarti…",
+    options: ["Wajib berhenti (lazim)", "Jangan berhenti", "Boleh berhenti atau sambung", "Sambung lebih utama"],
+    explanation: "Menyambung pada tanda مـ bisa mengubah makna.",
+    lesson: "tanda-waqaf-dan-ibtida"
+  },
+  {
+    question: "Tanda قلى di mushaf berarti…",
+    options: ["Boleh sambung, tetapi berhenti lebih utama", "Boleh berhenti, tetapi sambung lebih utama", "Wajib berhenti", "Jangan berhenti"],
+    explanation: "قلى: berhenti lebih utama. Kebalikannya صلى: sambung lebih utama.",
+    lesson: "tanda-waqaf-dan-ibtida"
+  },
+  {
+    question: "Apa maksud tanda ∴ (mu'anaqah) pada لَا رَيْبَ ۛ فِيهِ ۛ?",
+    options: [
+      "Berhenti di salah satunya saja, atau tidak berhenti sama sekali",
+      "Wajib berhenti di keduanya",
+      "Sama sekali tidak boleh berhenti di sana",
+      "Berhenti di keduanya lebih utama"
+    ],
+    explanation: "Dua tanda mu'anaqah saling terkait: jika berhenti di salah satunya, jangan berhenti di yang lain.",
+    lesson: "tanda-waqaf-dan-ibtida"
+  },
+  {
+    question: "Setelah berhenti pada مِن, bagaimana memulai lagi dari مَالٍ pada مِن مَّالٍ?",
+    options: [
+      "Tasydid dilepas dan dibaca مَالٍ tanpa ghunnah tambahan",
+      "Tetap dengan tasydid dan dengung",
+      "Diawali dengan hamzah washal",
+      "Dipanjangkan 2 harakat"
+    ],
+    explanation: "Idgham hanya terjadi saat disambung, jadi saat memulai dari kata itu tasydidnya dilepas.",
+    lesson: "tanda-waqaf-dan-ibtida"
+  },
+  {
+    question: "Apa hukum isti'adzah sebelum membaca Al-Qur'an menurut mayoritas ulama?",
+    options: ["Mustahab (dianjurkan)", "Wajib", "Makruh", "Fardhu kifayah"],
+    explanation: "Mustahab menurut mayoritas ulama qira'at dan fiqih, baik memulai dari awal maupun tengah surat.",
+    lesson: "istiadzah-dan-basmalah"
+  },
+  {
+    question: "Ada berapa cara yang boleh untuk membaca isti'adzah, basmalah, dan awal surat?",
+    options: ["4 cara", "3 cara", "2 cara", "1 cara"],
+    explanation: "Putus semua, isti'adzah sambung basmalah, basmalah sambung surat, atau sambung semua.",
+    lesson: "istiadzah-dan-basmalah"
+  },
+  {
+    question: "Cara mana yang tidak boleh saat membaca basmalah di antara dua surat?",
+    options: [
+      "Akhir surat disambung basmalah, lalu berhenti sebelum awal surat berikutnya",
+      "Memutus semuanya",
+      "Menyambung semuanya",
+      "Berhenti di akhir surat, lalu basmalah disambung dengan awal surat"
+    ],
+    explanation: "Cara itu membuat pendengar mengira basmalah adalah ayat terakhir surat sebelumnya.",
+    lesson: "istiadzah-dan-basmalah"
+  },
+  {
+    question: "Surat apa yang tidak diawali basmalah?",
+    options: ["At-Taubah", "Al-Fatihah", "Al-Ikhlas", "An-Nas"],
+    explanation: "Basmalah wajib dibaca di awal setiap surat, kecuali At-Taubah.",
+    lesson: "istiadzah-dan-basmalah"
+  },
+  {
+    question: "Dalam riwayat Hafs, imalah hanya terdapat pada…",
+    options: ["مَجْر۪اهَا (Hud 41)", "لَا تَأْمَ۫نَّا (Yusuf 11)", "ءَا۬عْجَمِيٌّ (Fussilat 44)", "بَلْ ۜ رَانَ (Al-Muthaffifin 14)"],
+    explanation: "Imalah: fathah dimiringkan ke kasrah. Tiga lainnya adalah isymam, tashil, dan saktah.",
+    lesson: "bacaan-gharib-riwayat-hafs"
+  },
+  {
+    question: "Apa yang dimaksud saktah?",
+    options: ["Berhenti sejenak tanpa mengambil napas", "Berhenti sambil mengambil napas", "Memiringkan fathah ke kasrah", "Membaca hamzah kedua dengan ringan"],
+    explanation: "Saktah ada di 4 tempat: Al-Kahf 1, Yasin 52, Al-Qiyamah 27, dan Al-Muthaffifin 14.",
+    lesson: "bacaan-gharib-riwayat-hafs"
+  },
+  {
+    question: "Pada بَلْ ۜ رَانَ, mengapa lam tidak dilebur ke ra?",
+    options: ["Karena ada saktah di antara keduanya", "Karena lamnya lam qamariyah", "Karena ra dibaca tipis", "Karena berhenti di akhir ayat"],
+    explanation: "Saktah memisahkan lam dari ra, sehingga idgham tidak terjadi.",
+    lesson: "bacaan-gharib-riwayat-hafs"
+  },
+  {
+    question: "Isymam pada لَا تَأْمَ۫نَّا dilakukan dengan cara…",
+    options: ["Memonyongkan bibir saat dengung", "Memiringkan fathah ke kasrah", "Membaca hamzah dengan ringan", "Berhenti tanpa mengambil napas"],
+    explanation: "Isymam: bibir dimonyongkan saat dengung pada لَا تَأْمَ۫نَّا (Yusuf 11).",
+    lesson: "bacaan-gharib-riwayat-hafs"
+  },
+  {
+    question: "Apa kriteria lulus ujian akhir kelas Lanjutan?",
+    options: [
+      "Tanpa kesalahan jali, paling banyak 3 kesalahan khafi per halaman",
+      "Paling banyak 3 kesalahan jali per halaman",
+      "Tanpa kesalahan khafi sama sekali",
+      "Cukup menyelesaikan satu halaman"
+    ],
+    explanation: "Selain itu, murid harus mampu menjelaskan hukum dari bacaannya sendiri.",
+    lesson: "ujian-akhir"
   }
 ];

@@ -44,3 +44,8 @@ export function groupBySurah<T extends { surahNumber: number }>(ayahs: T[]) {
 
   return groups;
 }
+
+/** Bismillah is printed before every surah except Al-Fatihah (where it is ayah 1) and At-Taubah. */
+export function showsBismillah(surahNumber: number) {
+  return surahNumber !== 1 && surahNumber !== 9;
+}

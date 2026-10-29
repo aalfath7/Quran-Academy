@@ -1,4 +1,4 @@
-import { BookMarked, BookOpen, ClipboardCheck, Ear, GraduationCap, ListChecks, Mic } from "lucide-react";
+import { BookMarked, BookOpen, BookOpenCheck, ClipboardCheck, Eye, GraduationCap, ListChecks } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { QuranText } from "@/components/quran-text";
 import { arabicRuns, isArabicOnly, type Item, type Part, type Section } from "@/lib/lesson-layout";
@@ -13,7 +13,7 @@ type StepInfo = { id: string; label: string; icon: LucideIcon };
 
 const stepInfo: Record<Exclude<MeetingStep["kind"], "other">, StepInfo> = {
   materi: { id: "materi", label: "Materi", icon: BookOpen },
-  drills: { id: "latihan-ayat", label: "Latihan ayat", icon: Mic },
+  drills: { id: "latihan-ayat", label: "Latihan ayat", icon: BookOpenCheck },
   mushaf: { id: "praktik-mushaf", label: "Praktik mushaf", icon: GraduationCap },
   task: { id: "tugas-mandiri", label: "Tugas mandiri", icon: ClipboardCheck }
 };
@@ -172,8 +172,8 @@ function Drills({ step, ayahs }: { step: Extract<MeetingStep, { kind: "drills" }
     <>
       {step.drills.length > 0 && (
         <p className="flex items-start gap-2 leading-7 text-ink-soft">
-          <Ear aria-hidden="true" size={18} className="mt-1 shrink-0 text-gold" />
-          Dengarkan contoh bacaan, tirukan, lalu baca sendiri. Fokuskan telinga pada bagian yang perlu diperhatikan.
+          <Eye aria-hidden="true" size={18} className="mt-1 shrink-0 text-gold" />
+          Baca setiap ayat perlahan, lalu ulangi sampai lancar. Fokuskan perhatian pada bagian yang ditandai.
         </p>
       )}
       {step.intro.map((part, i) => (
@@ -251,7 +251,7 @@ function StepBody({ step, ayahs, pages }: { step: MeetingStep; ayahs: AyahByRef[
             <Inline text={step.text} />
           </p>
           <p className="rounded-2xl border border-forest/10 bg-forest/5 px-4 py-3 text-sm leading-6 text-ink-soft">
-            Latihan rutin setiap hari, dan simpan satu rekaman setiap pekan untuk melihat kemajuanmu.
+            Latihan rutin setiap hari, lalu tandai materi ini selesai saat bacaanmu sudah lancar.
           </p>
         </>
       );

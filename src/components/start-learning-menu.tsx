@@ -8,8 +8,8 @@ import { useLastLearned, useLessonProgress } from "./learning-progress-ui";
 import { usePracticeProgress } from "./practice/use-practice-progress";
 
 const choices = [
-  { href: "/ibtida", label: "Ibtida", description: categoryInfo.praktik.description, icon: PenLine },
-  { href: "/tartil", label: "Tartil", description: "Kaidah tajwid langkah demi langkah.", icon: BookOpen }
+  { href: "/pemula", ...categoryInfo.praktik, icon: PenLine },
+  { href: "/lanjutan", ...categoryInfo.tajwid, icon: BookOpen }
 ];
 
 /**
@@ -31,8 +31,8 @@ export function StartLearningMenu({
   // Progress saved before the last page was recorded still points somewhere: practice first, then materi.
   const resume =
     lastLearned ??
-    (practiceProgress.last ? { href: `/ibtida/${practiceProgress.last}`, title: "" } : null) ??
-    (lessonProgress.last ? { href: `/tartil/${lessonProgress.last}`, title: "" } : null);
+    (practiceProgress.last ? { href: `/pemula/${practiceProgress.last}`, title: "" } : null) ??
+    (lessonProgress.last ? { href: `/lanjutan/${lessonProgress.last}`, title: "" } : null);
 
   if (resume) {
     return (
@@ -78,7 +78,7 @@ export function StartLearningMenu({
               <h2 id={titleId} className="font-display text-2xl font-medium text-forest-deep">
                 Mulai dari mana?
               </h2>
-              <p className="mt-1 text-sm text-ink-soft">Mulai dari Ibtida, atau lanjut ke Tartil.</p>
+              <p className="mt-1 text-sm text-ink-soft">Pilih sesuai kemampuan membacamu saat ini.</p>
             </div>
             <button
               type="button"
@@ -91,7 +91,7 @@ export function StartLearningMenu({
           </div>
 
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
-            {choices.map(({ href, label, description, icon: Icon }) => (
+            {choices.map(({ href, label, audience, description, icon: Icon }) => (
               <Link
                 key={href}
                 href={href}
@@ -103,7 +103,8 @@ export function StartLearningMenu({
                 </span>
                 <span>
                   <span className="block font-display text-lg font-medium text-forest-deep">{label}</span>
-                  <span className="block text-sm leading-5 text-ink-soft">{description}</span>
+                  <span className="block text-sm font-medium leading-5 text-forest">{audience}</span>
+                  <span className="mt-1 block text-sm leading-5 text-ink-soft">{description}</span>
                 </span>
               </Link>
             ))}

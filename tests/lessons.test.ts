@@ -1,77 +1,32 @@
-import { env } from "cloudflare:workers";
 import { describe, expect, it } from "vitest";
-import { createDb } from "../src/db/connection";
-import {
-  contentBlocks,
-  drillRows,
-  practiceSections,
-  soundKey,
-  createLesson,
-  getPublishedLesson,
-  isSlugTaken,
-  lessonInputSchema,
-  listPublishedLessons,
-  slugify,
-  type LessonInput
-} from "../src/lib/lessons";
+import { contentBlocks, drillRows, getLesson, listAllLessons, listLessons, practiceSections, soundKey } from "../src/lib/lessons";
 
-function input(overrides: Partial<LessonInput> = {}): LessonInput {
-  return {
-    title: "Hukum nun sukun",
-    slug: "hukum-nun-sukun",
-    category: "tajwid",
-    summary: "Mengenal empat hukum nun sukun dan tanwin.",
-    arabicText: null,
-    content: "Nun sukun dan tanwin memiliki empat hukum bacaan.",
-    position: 0,
-    published: true,
-    ...overrides
-  };
-}
+describe("static lessons", () => {
+  it("lists each category in order, with unique slugs", () => {
+    const slugs = listAllLessons().map(({ slug }) => slug);
+    expect(new Set(slugs).size).toBe(slugs.length);
 
-describe("lesson input", () => {
-  it("derives a slug from the title when none is given", () => {
-    const parsed = lessonInputSchema.parse({ ...input(), slug: "", arabicText: "  " });
-
-    expect(parsed.slug).toBe("hukum-nun-sukun");
-    expect(parsed.arabicText).toBeNull();
+    for (const category of ["praktik", "tajwid"] as const) {
+      const lessons = listLessons(category);
+      expect(lessons.every((lesson) => lesson.category === category)).toBe(true);
+      const positions = lessons.map(({ position }) => position);
+      expect(positions).toEqual([...positions].sort((a, b) => a - b));
+    }
   });
 
-  it("slugifies accented and punctuated text", () => {
-    expect(slugify("  Qalqalah: Ṣughrā & Kubrā!  ")).toBe("qalqalah-sughra-kubra");
+  it("keeps every lesson within the old form limits", () => {
+    for (const { slug, title, summary, content } of listAllLessons()) {
+      expect(slug, slug).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/);
+      expect(title.length, slug).toBeGreaterThanOrEqual(3);
+      expect(summary.length, slug).toBeGreaterThanOrEqual(10);
+      expect(content.length, slug).toBeGreaterThanOrEqual(20);
+    }
   });
 
-  it("reports field errors", () => {
-    const result = lessonInputSchema.safeParse({ ...input(), title: "ab", category: "fiqih" });
-
-    expect(result.success).toBe(false);
-    expect(result.error?.issues.map((issue) => issue.path[0])).toEqual(expect.arrayContaining(["title", "category"]));
-  });
-});
-
-describe("lesson queries", () => {
-  it("only exposes published lessons, filtered and ordered", async () => {
-    const db = createDb(env.DB);
-    await createLesson(db, input({ slug: "tajwid-2", title: "Tajwid kedua", position: 2 }));
-    await createLesson(db, input({ slug: "tajwid-1", title: "Tajwid pertama", position: 1 }));
-    await createLesson(db, input({ slug: "tajwid-draft", published: false }));
-    await createLesson(db, input({ slug: "jazariyah-1", category: "jazariyah" }));
-    await createLesson(db, input({ slug: "praktik-1", category: "praktik" }));
-
-    const tajwid = await listPublishedLessons(db, "tajwid");
-    expect(tajwid.map(({ slug }) => slug)).toEqual(["tajwid-1", "tajwid-2"]);
-    expect(await getPublishedLesson(db, "tajwid-draft")).toBeNull();
-    expect((await listPublishedLessons(db)).map(({ slug }) => slug)).toEqual(["praktik-1", "tajwid-1", "tajwid-2", "jazariyah-1"]);
-    expect((await listPublishedLessons(db, ["tajwid", "jazariyah"])).map(({ slug }) => slug)).toEqual(["tajwid-1", "tajwid-2", "jazariyah-1"]);
-  });
-
-  it("detects slug conflicts except for the lesson itself", async () => {
-    const db = createDb(env.DB);
-    const id = await createLesson(db, input({ slug: "unik" }));
-
-    expect(await isSlugTaken(db, "unik")).toBe(true);
-    expect(await isSlugTaken(db, "unik", id)).toBe(false);
-    expect(await isSlugTaken(db, "lain")).toBe(false);
+  it("finds a lesson by slug", () => {
+    expect(getLesson("praktik-sukun")?.category).toBe("praktik");
+    expect(getLesson("tes-awal-dan-peta-makhraj")?.category).toBe("tajwid");
+    expect(getLesson("jazariyah-muqaddimah")).toBeNull();
   });
 });
 

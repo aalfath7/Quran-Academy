@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { lessons, obsoleteSlugs } from "../scripts/data/tajwid-pertemuan.mjs";
+import { lessons } from "../src/data/tajwid-pertemuan";
 import { meetingDrills, meetingPages, meetingPlan } from "../src/lib/meeting-plan";
 import { groupByStage, MEETING_TOTAL, tajwidStage, tajwidStages } from "../src/lib/tajwid-curriculum";
 
@@ -90,7 +90,6 @@ describe("tajwid class", () => {
   it("writes every seeded meeting as a plan with valid drills and pages", () => {
     expect(lessons).toHaveLength(MEETING_TOTAL);
     expect(new Set(lessons.map(({ slug }: { slug: string }) => slug)).size).toBe(MEETING_TOTAL);
-    expect(lessons.filter(({ slug }: { slug: string }) => obsoleteSlugs.includes(slug))).toEqual([]);
 
     for (const { slug, content, summary } of lessons as { slug: string; content: string; summary: string }[]) {
       const plan = meetingPlan(content);

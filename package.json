@@ -16,32 +16,20 @@
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate:local": "wrangler d1 migrations apply DB --local",
-    "db:migrate:remote": "wrangler d1 migrations apply DB --remote",
-    "db:studio": "drizzle-kit studio",
-    "admin:create": "node scripts/create-admin.mjs",
-    "lessons:seed": "node scripts/seed-tajwid.mjs",
-    "quran:import": "node scripts/import-quran.mjs"
+    "quran:build": "node scripts/build-quran-data.mjs"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.2.2",
-    "drizzle-orm": "^0.45.4",
     "lucide-react": "^1.59.0",
     "next": "^16.4.2",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1",
-    "react-hook-form": "^7.90.0",
-    "zod": "^4.6.7"
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "@cloudflare/vitest-plugin": "^1.4.4",
     "@opennextjs/cloudflare": "1.20.13",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^26.6.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "drizzle-kit": "^0.31.11",
     "eslint": "^9.0.0",
     "eslint-config-next": "^16.4.2",
     "tailwindcss": "^4.3.3",

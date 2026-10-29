@@ -22,7 +22,7 @@ export function PracticePills({ practices, current }: { practices: NumberedPract
         return (
           <li key={slug}>
             <Link
-              href={`/ibtida/${slug}`}
+              href={`/pemula/${slug}`}
               title={status === "done" ? `${title} (sudah lancar)` : title}
               aria-current={isCurrent ? "page" : undefined}
               className={`relative flex size-10 items-center justify-center rounded-full border font-display text-sm font-semibold transition ${
@@ -75,10 +75,10 @@ export function ContinuePractice({ practices }: { practices: PracticeLink[] }) {
 
   return (
     <Link
-      href={`/ibtida/${practices[index].slug}`}
+      href={`/pemula/${practices[index].slug}`}
       className="group mt-8 inline-flex items-center gap-3 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-cream shadow-xl shadow-brand/20 transition hover:-translate-y-0.5 hover:bg-brand-deep"
     >
-      Lanjutkan Ibtida {index + 1}: {practices[index].title}
+      Lanjutkan Latihan {index + 1}: {practices[index].title}
       <ArrowRight aria-hidden="true" size={16} className="transition group-hover:translate-x-1" />
     </Link>
   );
@@ -130,7 +130,7 @@ export function OverallProgress({ totals, part }: { totals: Record<string, numbe
       <span className="min-w-16 flex-1">
         <span
           role="progressbar"
-          aria-label="Progres keseluruhan Ibtida"
+          aria-label="Progres keseluruhan Pemula"
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={percent}

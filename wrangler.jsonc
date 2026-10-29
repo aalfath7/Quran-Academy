@@ -7,13 +7,5 @@
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
-  },
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "quran-academy",
-      "database_id": "1ea8738c-beb5-4ab5-b479-05466bd27acf",
-      "migrations_dir": "drizzle"
-    }
-  ]
+  }
 }
