@@ -30,7 +30,7 @@ export const readingLevels = [
 export const teacher = {
   name: "Farhan Abdillah Alfath",
   photo: "/pengajar.webp",
-  credentials: ["Murid Syekh Khanova Maulana", "Alumni Indonesian Al-Quran Center"]
+  credentials: ["Pengajar Al-Quran", "Alumni Indonesian Al-Quran Center"]
 };
 
 export type RegistrationValues = {
