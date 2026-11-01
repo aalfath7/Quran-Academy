@@ -1,6 +1,6 @@
 # Fathway Quran
 
-Fathway Quran is a Next.js application deployed to Cloudflare Workers with the OpenNext adapter. It has two classes, Pemula (for learners who cannot read the Qur'an yet, from the first letters) and Lanjutan (a 26-meeting tajwid class for learners who can read but not yet fluently), plus a tajwid quiz. All content is static data in the repository; there is no database, admin area, or sign-up, and learner progress lives in the browser's localStorage.
+Fathway Quran is a Next.js application deployed to Cloudflare Workers with the OpenNext adapter. It has two classes, Pemula (for learners who cannot read the Qur'an yet, from the first letters) and Lanjutan (a 26-meeting tajwid class for learners who can read but not yet fluently), plus a tajwid quiz. All content is static data in the repository; there is no database or admin area, and learner progress lives in the browser's localStorage. Sign-ups for the live class at `/daftar` are not stored: the form writes a WhatsApp message to the admin, and each new wave is an edit to `src/lib/class-offer.ts`.
 
 ## Requirements
 

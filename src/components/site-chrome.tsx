@@ -7,7 +7,8 @@ import { ThemeToggle } from "./theme-toggle";
 const navLinks = [
   { href: "/pemula", label: "Pemula", description: categoryInfo.praktik.audience },
   { href: "/lanjutan", label: "Lanjutan", description: categoryInfo.tajwid.audience },
-  { href: "/tes", label: "Tes", description: "Uji pemahaman tajwid dengan soal pilihan ganda." }
+  { href: "/tes", label: "Tes", description: "Uji pemahaman tajwid dengan soal pilihan ganda." },
+  { href: "/daftar", label: "Daftar Kelas", description: "Kelas perbaikan bacaan langsung bersama pengajar." }
 ];
 
 export function SiteHeader() {

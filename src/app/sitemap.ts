@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/", 1),
     entry("/lanjutan", 0.9),
     entry("/pemula", 0.9),
+    entry("/daftar", 0.8),
     entry("/tes", 0.6),
     ...materiCategories.map((category) => entry(`/tes/${category}`, 0.5)),
     ...listAllLessons().map((lesson) => entry(lessonHref(lesson), 0.8))

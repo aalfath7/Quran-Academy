@@ -19,8 +19,7 @@ const nextConfig: NextConfig = {
       // The standalone Qur'an reader is gone; its ayahs and pages live on inside the Lanjutan lessons.
       { source: "/quran", destination: "/", permanent: false },
       { source: "/quran/:path*", destination: "/", permanent: false },
-      // Online class sign-up and the admin area were removed; the lessons are now static.
-      { source: "/daftar", destination: "/", permanent: false },
+      // The admin area was removed; the lessons are now static.
       { source: "/admin/:path*", destination: "/", permanent: false },
       { source: "/login", destination: "/", permanent: false }
     ];

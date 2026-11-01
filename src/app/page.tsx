@@ -5,6 +5,7 @@ import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { BackgroundGlow, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { categoryInfo } from "@/lib/categories";
+import { CLASS_NAME, CLASS_PRICE, CURRENT_WAVE, teacher } from "@/lib/class-offer";
 import { Star } from "@/components/star";
 import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
 import { PRACTICE_TOTAL, practiceParts } from "@/lib/practice-curriculum";
@@ -32,12 +33,6 @@ const siteJsonLd = {
       publisher: { "@id": `${SITE_URL}/#organization` }
     }
   ]
-};
-
-const teacher = {
-  name: "Farhan Abdillah Alfath",
-  photo: "/pengajar.webp",
-  credentials: ["Murid Syekh Khanova Maulana", "Alumni Indonesian Al-Quran Center"]
 };
 
 const stats = [`${MEETING_TOTAL} materi bertahap`, "130 ayat latihan", "Gratis, tanpa mendaftar"];
@@ -119,6 +114,10 @@ const faqs = [
   {
     question: "Mushaf apa yang dipakai?",
     answer: "Mushaf 15 baris (604 halaman) yang setiap halamannya berakhir di ujung ayat (mushaf pojok), agar nomor halaman latihan sama dengan mushafmu."
+  },
+  {
+    question: "Apakah ada kelas langsung bersama pengajar?",
+    answer: `Ada. ${CLASS_NAME} berlangsung via Google Meet, khusus ikhwan, ${CLASS_PRICE}/bulan. Bacaanmu dikoreksi satu per satu. Pendaftarannya ada di halaman Daftar Kelas.`
   }
 ];
 
@@ -204,6 +203,24 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Live class */}
+      <section className="relative mx-auto max-w-6xl px-6 pb-16">
+        <Link
+          href="/daftar"
+          className="group flex flex-col justify-between gap-4 rounded-3xl border border-gold/30 bg-surface/60 p-6 backdrop-blur transition duration-500 hover:border-gold/60 hover:bg-surface md:flex-row md:items-center md:px-8"
+        >
+          <span>
+            <span className="block text-xs font-semibold uppercase tracking-[0.2em] text-gold">Gelombang {CURRENT_WAVE} · Khusus ikhwan</span>
+            <span className="mt-2 block font-display text-2xl font-medium text-forest-deep">{CLASS_NAME}</span>
+            <span className="mt-1 block leading-7 text-ink-soft">Baca langsung bersama pengajar, dikoreksi satu per satu. {CLASS_PRICE}/bulan.</span>
+          </span>
+          <span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-forest">
+            Lihat kelas
+            <ArrowRight aria-hidden="true" size={16} className="transition group-hover:translate-x-1" />
+          </span>
+        </Link>
       </section>
 
       {/* Levels */}
